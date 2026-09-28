@@ -17,8 +17,12 @@ test('packed tarball installs in a clean consumer and exposes public entry point
 
 	try {
 		const sourceManifest = JSON.parse(await readFile(join(packageRoot, 'package.json'), 'utf8'));
+		const npmEnvironment = { ...process.env };
+		delete npmEnvironment.npm_config_dry_run;
+		delete npmEnvironment.NPM_CONFIG_DRY_RUN;
 		const { stdout } = await run(npm, ['pack', '--pack-destination', tempDirectory, '--json'], {
 			cwd: packageRoot,
+			env: npmEnvironment,
 			shell: process.platform === 'win32',
 			windowsHide: true,
 		});
@@ -36,6 +40,7 @@ test('packed tarball installs in a clean consumer and exposes public entry point
 
 		await run(npm, ['install', '--ignore-scripts', '--no-audit', '--no-fund'], {
 			cwd: consumerDirectory,
+			env: npmEnvironment,
 			shell: process.platform === 'win32',
 			windowsHide: true,
 		});
