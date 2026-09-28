@@ -5,6 +5,10 @@ export interface RegistyleViteOptions extends CompileOptions {
 	entry?: string;
 	outFile?: string;
 	watch?: string;
+	/** Enable manifest caching (default: true) */
+	cache?: boolean;
+	/** Maximum cache size (default: 50) */
+	cacheSize?: number;
 }
 
 export declare function registyle(options?: RegistyleViteOptions): Plugin;

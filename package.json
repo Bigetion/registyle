@@ -1,6 +1,6 @@
 {
   "name": "registyle",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Semantic CSS registration with an optional Tailwind CSS v4 Vite build adapter",
   "homepage": "https://github.com/Bigetion/registyle#readme",
   "bugs": {
@@ -31,6 +31,30 @@
     "./vite": {
       "types": "./vite.d.ts",
       "import": "./vite.js"
+    },
+    "./cache": {
+      "types": "./cache.d.ts",
+      "import": "./cache.js"
+    },
+    "./optimize": {
+      "types": "./optimize.d.ts",
+      "import": "./optimize.js"
+    },
+    "./theme": {
+      "types": "./theme.d.ts",
+      "import": "./theme.js"
+    },
+    "./validate": {
+      "types": "./validate.d.ts",
+      "import": "./validate.js"
+    },
+    "./variants": {
+      "types": "./variants.d.ts",
+      "import": "./variants.js"
+    },
+    "./presets": {
+      "types": "./presets.d.ts",
+      "import": "./presets.js"
     }
   },
   "files": [
@@ -42,8 +66,21 @@
     "collector.d.ts",
     "vite.js",
     "vite.d.ts",
+    "cache.js",
+    "cache.d.ts",
+    "optimize.js",
+    "optimize.d.ts",
+    "theme.js",
+    "theme.d.ts",
+    "validate.js",
+    "validate.d.ts",
+    "variants.js",
+    "variants.d.ts",
+    "presets.js",
+    "presets.d.ts",
     "index.d.ts",
     "README.md",
+    "PERFORMANCE.md",
     "LICENSE"
   ],
   "scripts": {
@@ -78,7 +115,12 @@
     "tailwindcss-v4",
     "vite",
     "design-system",
-    "utility-first"
+    "utility-first",
+    "css-in-js",
+    "variants",
+    "themes",
+    "presets",
+    "component-library"
   ],
   "license": "MIT"
 }

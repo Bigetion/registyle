@@ -2,8 +2,10 @@ import { resolve } from 'node:path';
 import { dirname, resolve as resolvePath } from 'node:path';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { createRegistry } from './core-runtime.js';
+import { optimizeCSS, getOptimizationStats } from './optimize.js';
 
 const BREAKPOINTS = new Set(['sm', 'md', 'lg', 'xl', '2xl']);
+const CONTAINER_SIZES = new Set(['@sm', '@md', '@lg', '@xl', '@2xl']);
 const HTML_TAGS = new Set('a abbr address article aside audio b blockquote body br button canvas caption cite code col colgroup data datalist dd del details dfn dialog div dl dt em embed fieldset figcaption figure footer form h1 h2 h3 h4 h5 h6 head header hr html i iframe img input ins kbd label legend li link main map mark menu meta meter nav noscript object ol optgroup option output p picture pre progress q rp rt ruby s samp script section select small source span strong style sub summary sup table tbody td template textarea tfoot th thead time title tr track u ul var video wbr'.split(' '));
 const PSEUDO_VARIANTS = new Set([
 	'hover', 'focus', 'active', 'disabled', 'visited', 'checked', 'required',
@@ -49,8 +51,8 @@ function stripUtilities(value) {
 	for (const [key, nested] of Object.entries(value)) {
 		if (key === 'tw' || key === '_') continue;
 		if (typeof nested === 'string') {
-			if (isCssDeclarationKey(key)) result[key] = nested;
-		} else if (typeof nested === 'number' || nested === null) {
+			if (isCssDeclarationKey(key) || key === 'layer' || key === 'important') result[key] = nested;
+		} else if (typeof nested === 'number' || typeof nested === 'boolean' || nested === null) {
 			result[key] = nested;
 		} else {
 			result[key] = stripUtilities(nested);
@@ -102,7 +104,7 @@ function orderedClassEntries(classes) {
 }
 
 function utilityVariant(key) {
-	if (BREAKPOINTS.has(key) || PSEUDO_VARIANTS.has(key)) return key;
+	if (BREAKPOINTS.has(key) || CONTAINER_SIZES.has(key) || PSEUDO_VARIANTS.has(key)) return key;
 	const pseudo = key.match(/^&:(:{0,1}[a-z-]+)$/i);
 	if (!pseudo) return null;
 	const name = pseudo[1].replace(/^:+/, '');
@@ -110,34 +112,39 @@ function utilityVariant(key) {
 	return aliases[name] || name;
 }
 
-function collectUtilities(selector, config, tokenSelectors, variants = []) {
+function collectUtilities(selector, config, tokenSelectors, variants = [], options = {}) {
 	if (typeof config === 'string') {
 		for (const utility of splitClassList(config)) addUtility(utility, selector, tokenSelectors, variants);
 		return;
 	}
 	if (!config || typeof config !== 'object' || Array.isArray(config)) return;
 
+	const layer = options.layer || config.layer;
+	const important = options.important || config.important;
+
 	for (const key of ['tw', '_']) {
 		if (typeof config[key] !== 'string') continue;
-		for (const utility of splitClassList(config[key])) addUtility(utility, selector, tokenSelectors, variants);
+		for (const utility of splitClassList(config[key])) addUtility(utility, selector, tokenSelectors, variants, { layer, important });
 	}
 
 	for (const [key, value] of Object.entries(config)) {
-		if (key === 'tw' || key === '_' || !value) continue;
+		if (key === 'tw' || key === '_' || key === 'layer' || key === 'important' || !value) continue;
 		const variant = utilityVariant(key);
 		if (!variant) continue;
 		if (typeof value === 'string') {
-			for (const utility of splitClassList(value)) addUtility(utility, selector, tokenSelectors, [...variants, variant]);
+			for (const utility of splitClassList(value)) addUtility(utility, selector, tokenSelectors, [...variants, variant], { layer, important });
 		} else if (typeof value === 'object') {
-			collectUtilities(selector, value, tokenSelectors, [...variants, variant]);
+			collectUtilities(selector, value, tokenSelectors, [...variants, variant], { layer, important });
 		}
 	}
 }
 
-function addUtility(utility, selector, tokenSelectors, variants) {
+function addUtility(utility, selector, tokenSelectors, variants, options = {}) {
 	const token = [...variants, utility].filter(Boolean).join(':');
-	const selectors = tokenSelectors.get(token) || new Set();
-	selectors.add(selector);
+	const selectors = tokenSelectors.get(token) || new Map();
+	
+	// Store selector with its layer/important options
+	selectors.set(selector, options);
 	tokenSelectors.set(token, selectors);
 }
 
@@ -173,22 +180,28 @@ function collectRegistrationUtilities(classes = {}, groups = {}, classEntries = 
 	for (const [name] of classEntries) {
 		const selector = semanticSelector(name);
 		const config = resolveClass(name);
+		const layer = config.layer;
+		const important = config.important;
+		const options = { layer, important };
+		
 		if (config.base || config.modifiers) {
-			const directStyles = Object.fromEntries(Object.entries(config).filter(([key]) => key !== 'base' && key !== 'modifiers'));
+			const directStyles = Object.fromEntries(Object.entries(config).filter(([key]) => key !== 'base' && key !== 'modifiers' && key !== 'layer' && key !== 'important'));
 			const base = mergeConfigs(config.base || {}, directStyles);
-			if (Object.keys(base).length) collectUtilities(selector, base, tokenSelectors);
+			if (Object.keys(base).length) collectUtilities(selector, base, tokenSelectors, [], options);
 			for (const [modifier, styles] of Object.entries(config.modifiers || {})) {
-				collectUtilities(`.${name}-${modifier}`, styles, tokenSelectors);
+				collectUtilities(`.${name}-${modifier}`, styles, tokenSelectors, [], options);
 			}
 		} else {
-			collectUtilities(selector, config, tokenSelectors);
+			collectUtilities(selector, config, tokenSelectors, [], options);
 		}
 	}
 
 	for (const [baseName, components] of Object.entries(groups)) {
 		for (const [key, config] of Object.entries(components || {})) {
 			const selector = key === 'root' || key === baseName ? `.${baseName}` : `.${baseName}-${key}`;
-			collectUtilities(selector, config, tokenSelectors);
+			const layer = config?.layer;
+			const important = config?.important;
+			collectUtilities(selector, config, tokenSelectors, [], { layer, important });
 		}
 	}
 
@@ -197,6 +210,8 @@ function collectRegistrationUtilities(classes = {}, groups = {}, classEntries = 
 
 function retargetSelectors(root, tokenSelectors, selectorParser) {
 	const uncompiled = new Set(tokenSelectors.keys());
+	const layerRules = new Map(); // Group rules by layer
+	
 	root.walkRules((rule) => {
 		let selectors;
 		try {
@@ -206,6 +221,9 @@ function retargetSelectors(root, tokenSelectors, selectorParser) {
 		}
 
 		const replacements = [];
+		let ruleLayer = null;
+		let ruleImportant = false;
+		
 		selectors.each((selector) => {
 			let utilityNode;
 			selector.walkClasses((node) => {
@@ -217,7 +235,9 @@ function retargetSelectors(root, tokenSelectors, selectorParser) {
 			}
 
 			uncompiled.delete(utilityNode.value);
-			for (const target of tokenSelectors.get(utilityNode.value)) {
+			const targets = tokenSelectors.get(utilityNode.value);
+			
+			for (const [target, options] of targets) {
 				const replacement = selector.clone();
 				let targetNodes;
 				try {
@@ -225,19 +245,47 @@ function retargetSelectors(root, tokenSelectors, selectorParser) {
 				} catch {
 					continue;
 				}
-			let replacementNode;
+				let replacementNode;
 				replacement.walkClasses((node) => {
 					if (!replacementNode && node.value === utilityNode.value) replacementNode = node;
 				});
 				replacementNode?.replaceWith(...targetNodes);
 				replacements.push(replacement);
+				
+				// Track layer and important from first target
+				if (ruleLayer === null && options.layer) ruleLayer = options.layer;
+				if (!ruleImportant && options.important) ruleImportant = true;
 			}
 		});
 
 		selectors.removeAll();
 		for (const selector of replacements) selectors.append(selector);
 		rule.selector = selectors.toString();
+		
+		// Add !important if needed
+		if (ruleImportant) {
+			rule.walkDecls((decl) => {
+				if (!decl.important) decl.important = true;
+			});
+		}
+		
+		// Store rule by layer
+		if (ruleLayer) {
+			if (!layerRules.has(ruleLayer)) {
+				layerRules.set(ruleLayer, []);
+			}
+			layerRules.get(ruleLayer).push(rule.clone());
+			rule.remove(); // Remove from root, will be added to layer
+		}
 	});
+	
+	// Add layered rules back
+	for (const [layer, rules] of layerRules) {
+		const layerAtRule = root.append({ name: 'layer', params: layer });
+		for (const rule of rules) {
+			layerAtRule.append(rule);
+		}
+	}
 
 	if (uncompiled.size) {
 		throw new Error(`registyle compile: Tailwind did not generate CSS for: ${[...uncompiled].join(', ')}`);
@@ -251,7 +299,7 @@ function escapeCssString(value) {
 /**
  * Compile semantic registrations with the official Tailwind CSS v4 compiler.
  * @param {{ classes?: Record<string, object|string>, groups?: Record<string, Record<string, object|string>> }} manifest
- * @param {{ inputCss?: string, baseDir?: string }} options
+ * @param {{ inputCss?: string, baseDir?: string, minify?: boolean, optimize?: boolean, debug?: boolean }} options
  * @returns {Promise<string>} Compiled CSS ready to import from the application.
  */
 export async function compile(manifest = {}, options = {}) {
@@ -292,7 +340,29 @@ export async function compile(manifest = {}, options = {}) {
 	const result = await postcss([tailwind()]).process(input, { from, map: false });
 	const root = postcss.parse(result.css);
 	retargetSelectors(root, tokenSelectors, selectorParser);
-	return [rawCss, root.toString()].filter(Boolean).join('\n');
+	
+	let finalCss = [rawCss, root.toString()].filter(Boolean).join('\n');
+	
+	// Apply optimization if enabled (default: true for production)
+	const shouldOptimize = options.optimize !== false && (options.minify !== false || options.optimize === true);
+	
+	if (shouldOptimize) {
+		const originalSize = finalCss.length;
+		finalCss = optimizeCSS(finalCss, {
+			minify: options.minify !== false,
+			deduplicate: options.deduplicate !== false,
+		});
+		
+		if (options.debug) {
+			const stats = getOptimizationStats(
+				[rawCss, root.toString()].filter(Boolean).join('\n'),
+				finalCss
+			);
+			console.log('[registyle] Optimization stats:', stats);
+		}
+	}
+	
+	return finalCss;
 }
 
 /** Compile a manifest and write its generated CSS to a file. */

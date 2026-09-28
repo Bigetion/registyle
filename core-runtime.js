@@ -24,6 +24,7 @@ const GROUP_PEER = {
 };
 
 const BREAKPOINTS = { sm: '640px', md: '768px', lg: '1024px', xl: '1280px', '2xl': '1536px' };
+const CONTAINER_SIZES = { '@sm': '(min-width: 384px)', '@md': '(min-width: 448px)', '@lg': '(min-width: 640px)', '@xl': '(min-width: 768px)', '@2xl': '(min-width: 896px)' };
 const HTML_TAGS = new Set('a abbr address article aside audio b blockquote body br button canvas caption cite code col colgroup data datalist dd del details dfn dialog div dl dt em embed fieldset figcaption figure footer form h1 h2 h3 h4 h5 h6 head header hr html i iframe img input ins kbd label legend li link main map mark menu meta meter nav noscript object ol optgroup option output p picture pre progress q rp rt ruby s samp script section select small source span strong style sub summary sup table tbody td template textarea tfoot th thead time title tr track u ul var video wbr'.split(' '));
 const CSS_PROPERTY = /^(-webkit-|-moz-|-ms-|-o-)?[a-z]+(-[a-z]+)*$/;
 function toPropertyName(property) {
@@ -64,10 +65,11 @@ function resolveExtend(config, rawConfigs, resolving = new Set()) {
 	return merge(result, config);
 }
 
-function toDeclarations(config) {
+function toDeclarations(config, important = false) {
+	const suffix = important ? ' !important' : '';
 	return Object.entries(config)
-		.filter(([key, value]) => key !== 'tw' && key !== '_' && key !== 'extend' && isStyleProperty(key) && (typeof value === 'string' || typeof value === 'number'))
-		.map(([key, value]) => `${toPropertyName(key)}: ${value};`)
+		.filter(([key, value]) => key !== 'tw' && key !== '_' && key !== 'extend' && key !== 'layer' && key !== 'important' && isStyleProperty(key) && (typeof value === 'string' || typeof value === 'number'))
+		.map(([key, value]) => `${toPropertyName(key)}: ${value}${suffix};`)
 		.join(' ');
 }
 
@@ -81,32 +83,48 @@ function assertNoUtilities(config) {
 	}
 }
 
-function buildCss(selector, config) {
+function buildCss(selector, config, options = {}) {
 	if (!config || typeof config !== 'object' || Array.isArray(config)) return '';
 	assertNoUtilities(config);
-	const declarations = toDeclarations(config);
+	
+	const layer = options.layer || config.layer;
+	const important = options.important || config.important;
+	
+	const declarations = toDeclarations(config, important);
 	let css = declarations ? `${selector} { ${declarations} }` : '';
 
 	for (const [key, value] of Object.entries(config)) {
-		if (isStyleProperty(key) || key === 'extend' || !value || typeof value !== 'object') continue;
+		if (isStyleProperty(key) || key === 'extend' || key === 'layer' || key === 'important' || !value || typeof value !== 'object') continue;
 		const nested = buildCss;
 		if (STATES[key]) {
-			const rule = STATES[key].startsWith('@media') ? nested(selector, value) : nested(STATES[key].replace('&', selector), value);
+			const rule = STATES[key].startsWith('@media') ? nested(selector, value, options) : nested(STATES[key].replace('&', selector), value, options);
 			css += STATES[key].startsWith('@media') && rule ? `${STATES[key]} { ${rule} }` : rule;
 		} else if (GROUP_PEER[key]) {
-			css += nested(GROUP_PEER[key].replace('&', selector), value);
+			css += nested(GROUP_PEER[key].replace('&', selector), value, options);
 		} else if (BREAKPOINTS[key]) {
-			const rule = nested(selector, value);
+			const rule = nested(selector, value, options);
 			if (rule) css += `@media (min-width: ${BREAKPOINTS[key]}) { ${rule} }`;
+		} else if (CONTAINER_SIZES[key]) {
+			const rule = nested(selector, value, options);
+			if (rule) css += `@container ${CONTAINER_SIZES[key]} { ${rule} }`;
+		} else if (key.startsWith('@container')) {
+			const rule = nested(selector, value, options);
+			if (rule) css += `${key} { ${rule} }`;
 		} else if (key.startsWith('@')) {
-			const rule = nested(selector, value);
+			const rule = nested(selector, value, options);
 			if (rule) css += `${key} { ${rule} }`;
 		} else if (key.startsWith('&')) {
-			css += nested(key.replaceAll('&', selector), value);
+			css += nested(key.replaceAll('&', selector), value, options);
 		} else if (key.startsWith(':') || key.startsWith('[') || key.startsWith('.')) {
-			css += nested(`${selector}${key}`, value);
+			css += nested(`${selector}${key}`, value, options);
 		}
 	}
+	
+	// Wrap in layer if specified
+	if (layer && css) {
+		css = `@layer ${layer} { ${css} }`;
+	}
+	
 	return css;
 }
 
@@ -166,15 +184,20 @@ export function createRegistry({ injectStyles = true } = {}) {
 			inject(`registration:${name}`, buildKeyframes(name, resolved));
 			return;
 		}
+		
+		const layer = resolved.layer;
+		const important = resolved.important;
+		const options = { layer, important };
+		
 		const selector = isRawSelector(name) ? name : `.${name}`;
 		let css = '';
 		if ('base' in resolved || 'modifiers' in resolved) {
-			const directStyles = Object.fromEntries(Object.entries(resolved).filter(([key]) => key !== 'base' && key !== 'modifiers' && key !== 'extend'));
+			const directStyles = Object.fromEntries(Object.entries(resolved).filter(([key]) => key !== 'base' && key !== 'modifiers' && key !== 'extend' && key !== 'layer' && key !== 'important'));
 			const base = merge(resolved.base || {}, directStyles);
-			if (Object.keys(base).length) css += buildCss(selector, base);
-			for (const [modifier, styles] of Object.entries(resolved.modifiers || {})) css += buildCss(`.${name}-${modifier}`, styles);
+			if (Object.keys(base).length) css += buildCss(selector, base, options);
+			for (const [modifier, styles] of Object.entries(resolved.modifiers || {})) css += buildCss(`.${name}-${modifier}`, styles, options);
 		} else {
-			css = buildCss(selector, resolved);
+			css = buildCss(selector, resolved, options);
 		}
 		inject(`registration:${name}`, css.trim());
 	}
@@ -185,7 +208,9 @@ export function createRegistry({ injectStyles = true } = {}) {
 		const css = Object.entries(components).map(([key, config]) => {
 			const selector = key === 'root' || key === baseName ? `.${baseName}` : `.${baseName}-${key}`;
 			if (typeof config === 'string') throw new Error('registyle: Tailwind utilities must be compiled at build time with `registyle/compile`.');
-			return buildCss(selector, config);
+			const layer = config?.layer;
+			const important = config?.important;
+			return buildCss(selector, config, { layer, important });
 		}).filter(Boolean).join('\n');
 		inject(`group:${baseName}`, css);
 	};

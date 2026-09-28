@@ -8,6 +8,14 @@ export interface RegistyleManifest {
 export interface CompileOptions {
 	inputCss?: string;
 	baseDir?: string;
+	/** Enable CSS minification (default: true) */
+	minify?: boolean;
+	/** Enable CSS optimization including minification and deduplication (default: true) */
+	optimize?: boolean;
+	/** Enable CSS deduplication (default: true) */
+	deduplicate?: boolean;
+	/** Enable debug logging (default: false) */
+	debug?: boolean;
 }
 
 export declare function compile(manifest?: RegistyleManifest, options?: CompileOptions): Promise<string>;
