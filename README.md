@@ -2,7 +2,7 @@
 
 A semantic CSS registration library with an optional Tailwind CSS v4 build adapter. The runtime entry stays small; the official Tailwind compiler is used only when generating CSS.
 
-**Version 2.0** - Production-ready with theme system, variants, presets, validation, and performance optimizations.
+**Version 1.1** - Production-ready with theme system, variants, presets, validation, and performance optimizations.
 
 ## Features
 
