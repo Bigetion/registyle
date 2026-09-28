@@ -1,0 +1,71 @@
+{
+  "name": "registyle",
+  "version": "1.0.0",
+  "description": "Semantic CSS registration with an optional Tailwind CSS v4 Vite build adapter",
+  "type": "module",
+  "main": "./core-entry.js",
+  "module": "./core-entry.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./core-entry.js",
+      "default": "./core-entry.js"
+    },
+    "./compile": {
+      "types": "./compile.d.ts",
+      "import": "./compile.js"
+    },
+    "./collector": {
+      "types": "./collector.d.ts",
+      "import": "./collector.js"
+    },
+    "./vite": {
+      "types": "./vite.d.ts",
+      "import": "./vite.js"
+    }
+  },
+  "files": [
+    "core-entry.js",
+    "core-runtime.js",
+    "compile.js",
+    "compile.d.ts",
+    "collector.js",
+    "collector.d.ts",
+    "vite.js",
+    "vite.d.ts",
+    "index.d.ts",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test && npm run test:types",
+    "test:types": "tsc --noEmit --strict --skipLibCheck --module NodeNext --moduleResolution NodeNext --target ESNext type-tests/consumer.ts"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "postcss": "^8.5.28",
+    "postcss-selector-parser": "^7.1.1",
+    "vite": "^6.4.3",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "postcss": "^8.5.28",
+    "postcss-selector-parser": "^7.1.1",
+    "vite": "^6.4.3"
+  },
+  "peerDependenciesMeta": {
+    "@tailwindcss/postcss": { "optional": true },
+    "postcss": { "optional": true },
+    "postcss-selector-parser": { "optional": true },
+    "vite": { "optional": true }
+  },
+  "keywords": [
+    "css",
+    "css-in-js",
+    "register",
+    "runtime"
+  ],
+  "license": "MIT"
+}
