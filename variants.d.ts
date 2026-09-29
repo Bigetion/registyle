@@ -39,7 +39,7 @@ export interface VariantComponent<V extends Record<string, Record<string, any>>>
 	/** Compose variant classes based on props */
 	compose(props?: Partial<{
 		[K in keyof V]: keyof V[K];
-	}>): string[];
+	}>, componentName?: string): string[];
 	
 	/** Convert to registration format */
 	toRegistration(name: string): Record<string, any>;

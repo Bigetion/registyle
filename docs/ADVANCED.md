@@ -262,7 +262,7 @@ export function Button({
     size, 
     rounded, 
     fullWidth 
-  });
+  }, 'button');
   
   return (
     <button className={cx('button', ...variantClasses, className)} {...props}>
@@ -365,8 +365,8 @@ const preset = createPreset({
   name: 'themed-preset',
   theme: myTheme.tokens,
   classes: {
-    button: (theme) => ({
-      backgroundColor: theme.colors.primary[500],
+    button: (tokens) => ({
+      backgroundColor: tokens.color('primary', 500),
       // Use theme tokens in preset
     }),
   },
@@ -725,7 +725,7 @@ jobs:
 
 ## Next Steps
 
-- Review [PERFORMANCE.md](./PERFORMANCE.md) for optimization strategies
+- Review the README's Optimization API section for optimizer options and defaults
 - Check [MIGRATION.md](./MIGRATION.md) if upgrading from v1
 - Explore [examples/](./examples/) for real-world patterns
 - Read [CHANGELOG.md](./CHANGELOG.md) for latest features

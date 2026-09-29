@@ -1,6 +1,6 @@
 {
   "name": "registyle",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Semantic CSS registration with an optional Tailwind CSS v4 Vite build adapter",
   "homepage": "https://github.com/Bigetion/registyle#readme",
   "bugs": {
@@ -66,6 +66,9 @@
     "collector.d.ts",
     "vite.js",
     "vite.d.ts",
+    "docs/ADVANCED.md",
+    "docs/CHANGELOG.md",
+    "docs/MIGRATION.md",
     "cache.js",
     "cache.d.ts",
     "optimize.js",
@@ -80,9 +83,11 @@
     "presets.d.ts",
     "index.d.ts",
     "README.md",
-    "PERFORMANCE.md",
     "LICENSE"
   ],
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "test": "node --test && npm run test:types",
     "test:types": "tsc --noEmit --strict --skipLibCheck --module NodeNext --moduleResolution NodeNext --target ESNext type-tests/consumer.ts",

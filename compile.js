@@ -343,14 +343,13 @@ export async function compile(manifest = {}, options = {}) {
 	
 	let finalCss = [rawCss, root.toString()].filter(Boolean).join('\n');
 	
-	// Apply optimization if enabled (default: true for production)
-	const shouldOptimize = options.optimize !== false && (options.minify !== false || options.optimize === true);
+	// Apply optimization only when explicitly requested.
+	const shouldOptimize = options.optimize === true || options.minify === true || options.deduplicate === true;
 	
 	if (shouldOptimize) {
-		const originalSize = finalCss.length;
 		finalCss = optimizeCSS(finalCss, {
-			minify: options.minify !== false,
-			deduplicate: options.deduplicate !== false,
+			minify: options.minify ?? options.optimize === true,
+			deduplicate: options.deduplicate ?? options.optimize === true,
 		});
 		
 		if (options.debug) {

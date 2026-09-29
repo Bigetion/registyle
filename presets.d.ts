@@ -57,9 +57,21 @@ export function mergePresets(...presets: Preset[]): {
  * Apply preset to a manifest
  */
 export function applyPreset(
-	manifest: { classes?: Record<string, any>; groups?: Record<string, any> },
+	manifest: {
+		classes?: Record<string, any>;
+		groups?: Record<string, any>;
+		theme?: Record<string, any>;
+		variants?: Record<string, any>;
+		[key: string]: any;
+	},
 	preset: Preset
-): { classes: Record<string, any>; groups: Record<string, any> };
+): {
+	classes: Record<string, any>;
+	groups: Record<string, any>;
+	theme?: Record<string, any>;
+	variants?: Record<string, any>;
+	[key: string]: any;
+};
 
 /**
  * Shadcn UI inspired preset

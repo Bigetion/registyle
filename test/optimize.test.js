@@ -33,11 +33,20 @@ test('minifyCSS removes comments', () => {
 	assert.ok(!output.includes('comment'));
 });
 
+test('minifyCSS preserves quoted values and data URLs', () => {
+	const input = '.icon::before { content: "a : b; c"; background-image: url("data:image/svg+xml;utf8,<svg viewBox=\"0 0 1 1\"></svg>"); }';
+	const output = minifyCSS(input);
+
+	assert.match(output, /content:"a : b; c"/);
+	assert.match(output, /data:image\/svg\+xml;utf8/);
+	assert.match(output, /viewBox=\\?"0 0 1 1/);
+});
+
 test('deduplicateCSS merges identical selectors', () => {
 	const input = `
 		.button { padding: 10px; }
-		.card { margin: 20px; }
 		.button { background: blue; }
+		.card { margin: 20px; }
 	`;
 	
 	const output = deduplicateCSS(input);
@@ -47,7 +56,7 @@ test('deduplicateCSS merges identical selectors', () => {
 	assert.ok(output.includes('background: blue'));
 });
 
-test('deduplicateCSS overrides earlier declarations', () => {
+test('deduplicateCSS preserves declaration order when merging adjacent rules', () => {
 	const input = `
 		.button { padding: 10px; color: red; }
 		.button { color: blue; }
@@ -55,8 +64,17 @@ test('deduplicateCSS overrides earlier declarations', () => {
 	
 	const output = deduplicateCSS(input);
 	assert.ok(output.includes('color: blue'));
-	assert.ok(!output.includes('color: red'));
+	assert.ok(output.includes('color: red'));
+	assert.ok(output.indexOf('color: red') < output.indexOf('color: blue'));
 	assert.ok(output.includes('padding: 10px'));
+});
+
+test('deduplicateCSS does not move rules across other selectors', () => {
+	const input = '.button { color: red; }.card { color: green; }.button { color: blue; }';
+	const output = deduplicateCSS(input);
+
+	assert.equal((output.match(/\.button\s*\{/g) || []).length, 2);
+	assert.ok(output.indexOf('.card') < output.lastIndexOf('.button'));
 });
 
 test('deduplicateCSS handles @media rules', () => {
@@ -133,6 +151,16 @@ test('deduplicateCSS preserves keyframes', () => {
 	assert.ok(output.includes('@keyframes'));
 	assert.ok(output.includes('opacity: 0'));
 	assert.ok(output.includes('animation: fade'));
+	assert.doesNotMatch(output, /@keyframes fade\s*\{\s*@keyframes fade/);
+});
+
+test('deduplicateCSS preserves nested layer and media structure', () => {
+	const input = '@layer components { .button { color: red; } @media (min-width: 40rem) { .button { color: blue; } } }';
+	const output = deduplicateCSS(input);
+
+	assert.equal((output.match(/@layer components/g) || []).length, 1);
+	assert.match(output, /@layer components\s*\{[^]*@media\s*\(min-width: 40rem\)/);
+	assert.match(output, /color: blue/);
 });
 
 test('optimizeCSS handles empty input', () => {

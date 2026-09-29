@@ -8,11 +8,11 @@ export interface RegistyleManifest {
 export interface CompileOptions {
 	inputCss?: string;
 	baseDir?: string;
-	/** Enable CSS minification (default: true) */
+	/** Enable CSS minification (default: false; opt-in) */
 	minify?: boolean;
-	/** Enable CSS optimization including minification and deduplication (default: true) */
+	/** Enable CSS optimization including minification and deduplication (default: false; opt-in) */
 	optimize?: boolean;
-	/** Enable CSS deduplication (default: true) */
+	/** Enable CSS deduplication (default: false; opt-in) */
 	deduplicate?: boolean;
 	/** Enable debug logging (default: false) */
 	debug?: boolean;

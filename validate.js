@@ -135,19 +135,6 @@ export function validateConfig(name, config, options = {}) {
 		return { errors, warnings, valid: false };
 	}
 	
-	// Check for circular extends
-	const visited = new Set();
-	function checkCircular(configToCheck, path = []) {
-		if (typeof configToCheck?.extend === 'string') {
-			if (visited.has(configToCheck.extend)) {
-				errors.push(`Circular extend detected: ${path.join(' -> ')} -> ${configToCheck.extend}`);
-				return;
-			}
-			visited.add(configToCheck.extend);
-		}
-	}
-	checkCircular(config, [name]);
-	
 	// Validate keys
 	function validateKeys(obj, path = '') {
 		for (const [key, value] of Object.entries(obj)) {
@@ -257,6 +244,31 @@ export function validateManifest(manifest, options = {}) {
 			allErrors.push(...result.errors.map(e => `classes.${e}`));
 			allWarnings.push(...result.warnings.map(w => `classes.${w}`));
 		}
+
+		const state = new Map();
+		const path = [];
+		function visitClass(name) {
+			if (state.get(name) === 'complete') return;
+			if (state.get(name) === 'visiting') {
+				const cycleStart = path.indexOf(name);
+				allErrors.push(`classes.Circular extend detected: ${[...path.slice(cycleStart), name].join(' -> ')}`);
+				return;
+			}
+
+			state.set(name, 'visiting');
+			path.push(name);
+			const config = manifest.classes[name];
+			const parents = Array.isArray(config?.extend)
+				? config.extend
+				: typeof config?.extend === 'string' ? [config.extend] : [];
+			for (const parent of parents) {
+				if (typeof parent === 'string' && Object.hasOwn(manifest.classes, parent)) visitClass(parent);
+			}
+			path.pop();
+			state.set(name, 'complete');
+		}
+
+		for (const name of Object.keys(manifest.classes)) visitClass(name);
 	}
 	
 	// Validate groups

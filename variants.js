@@ -13,33 +13,40 @@ export function createVariants(config) {
 		compoundVariants = [],
 		defaultVariants = {},
 	} = config;
+	const getCompoundName = (conditions) => Object.entries(conditions)
+		.map(([key, value]) => `${key}-${value}`)
+		.join('-');
+	const qualifyClass = (componentName, suffix) => componentName ? `${componentName}-${suffix}` : suffix;
 
 	/**
 	 * Generate variant classes and compose them
 	 */
-	function compose(props = {}) {
+	function compose(props = {}, componentName) {
 		const activeProps = { ...defaultVariants, ...props };
 		const classes = [];
 
-		// Collect variant classes
-		for (const [variantKey, variantValue] of Object.entries(activeProps)) {
-			if (variantValue !== undefined && variantValue !== null && variantValue !== false) {
-				const variantClass = `${variantKey}-${variantValue}`;
-				classes.push(variantClass);
-			}
+		for (const variantKey of Object.keys(variants)) {
+			const variantValue = activeProps[variantKey];
+			if (variantValue === undefined || variantValue === null) continue;
+			const optionName = String(variantValue);
+			if (!Object.hasOwn(variants[variantKey], optionName)) continue;
+			classes.push(qualifyClass(componentName, `${variantKey}-${optionName}`));
 		}
 
 		// Check compound variants
 		for (const compound of compoundVariants) {
-			const { class: compoundClass, className, ...conditions } = compound;
+			const { class: compoundClass, className, styles, ...conditions } = compound;
 			const matches = Object.entries(conditions).every(
 				([key, value]) => activeProps[key] === value
 			);
 			
-			if (matches) {
-				const cls = compoundClass || className;
-				if (cls) classes.push(cls);
+			if (!matches) continue;
+			const modifierName = getCompoundName(conditions);
+			if (modifierName && styles && typeof styles === 'object' && !Array.isArray(styles)) {
+				classes.push(qualifyClass(componentName, modifierName));
 			}
+			const customClass = compoundClass || className;
+			if (customClass) classes.push(customClass);
 		}
 
 		return classes;
@@ -64,15 +71,10 @@ export function createVariants(config) {
 
 		// Generate compound variant modifiers
 		compoundVariants.forEach((compound, index) => {
-			const { class: compoundClass, className, ...conditions } = compound;
-			const cls = compoundClass || className;
-			
-			if (cls && typeof compound.styles === 'object') {
-				// Generate a compound modifier name from conditions
-				const conditionName = Object.entries(conditions)
-					.map(([k, v]) => `${k}-${v}`)
-					.join('-');
-				registration.modifiers[conditionName] = compound.styles;
+			const { class: compoundClass, className, styles, ...conditions } = compound;
+			const modifierName = getCompoundName(conditions);
+			if (modifierName && styles && typeof styles === 'object' && !Array.isArray(styles)) {
+				registration.modifiers[modifierName] = styles;
 			}
 		});
 
@@ -98,14 +100,10 @@ export function createVariants(config) {
 
 		// Compound variant classes
 		compoundVariants.forEach((compound) => {
-			const { styles, ...conditions } = compound;
-			if (styles) {
-				const conditionName = Object.entries(conditions)
-					.filter(([k]) => k !== 'class' && k !== 'className')
-					.map(([k, v]) => `${k}-${v}`)
-					.join('-');
-				const className = `${name}-${conditionName}`;
-				classes[className] = styles;
+			const { styles, class: compoundClass, className, ...conditions } = compound;
+			const modifierName = getCompoundName(conditions);
+			if (modifierName && styles && typeof styles === 'object' && !Array.isArray(styles)) {
+				classes[`${name}-${modifierName}`] = styles;
 			}
 		});
 

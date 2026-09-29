@@ -2,7 +2,17 @@
 
 All notable changes to registyle will be documented in this file.
 
-## [2.0.0] - 2024
+## [1.1.1] - 2026-09-29
+
+### Fixed
+
+- Preserve Tailwind-generated CSS by default; optimization is now explicitly opt-in.
+- Use PostCSS AST operations for minification and adjacent-rule deduplication so strings, keyframes, layers, and cascade order are preserved.
+- Align composed variant class names with generated manifests, including compound and boolean variants.
+- Deep-merge applied presets and resolve theme-backed class factories against merged tokens.
+- Detect circular `extend` chains during manifest validation.
+
+## [1.1.0] - 2026-09-28
 
 ### 🎉 Major Features
 
@@ -65,7 +75,7 @@ const button = createVariants({
 });
 
 // Use in components
-const classes = button.compose({ size: 'sm', variant: 'primary' });
+const classes = button.compose({ size: 'sm', variant: 'primary' }, 'button');
 ```
 
 #### Preset System
@@ -112,7 +122,7 @@ register('card', {
 #### Compilation Caching
 - **LRU Cache**: Intelligent caching with automatic invalidation
 - **File Tracking**: Monitors modification times
-- **50-80% Faster**: Rebuilds with unchanged manifests
+- **Faster Rebuilds**: Reuse cached manifests when the configured inputs have not changed
 - **Configurable**: Adjust cache size and behavior
 
 ```js
@@ -126,7 +136,7 @@ registyle({
 #### CSS Optimization
 - **Minification**: Removes whitespace and comments
 - **Deduplication**: Merges identical selectors
-- **20-40% Smaller**: Bundle size reduction
+- **CSS Size Reduction**: Minification and deduplication can be enabled for production builds
 - **Zero Dependencies**: Pure JavaScript optimization
 
 ```js
@@ -158,26 +168,14 @@ registyle({
 })
 ```
 
-### 📦 Breaking Changes
+### Compatibility
 
-#### API Changes
-- Minimum Node.js version: 18+ (was 16+)
-- `register()` no longer accepts raw Tailwind strings at runtime
-  - Use `tw` key in config object instead
-  - Migration: `register('button', 'flex p-4')` → `register('button', { tw: 'flex p-4' })`
-
-#### Config Changes
-- `extend` now requires explicit array for multiple parents
-  - Migration: `extend: 'base1 base2'` → `extend: ['base1', 'base2']`
-
-#### Export Changes
-- New module structure with explicit subpaths
-- Old: `import { compile } from 'registyle'`
-- New: `import { compile } from 'registyle/compile'`
+- Existing 1.0.0 registration and compile APIs remain available.
+- Tailwind utility compilation, themes, variants, presets, validation, and cache/optimization helpers are additive subpaths/features.
 
 ### 📚 Documentation
 
-- **PERFORMANCE.md**: Performance optimization guide
+- Performance guidance is included in the README and advanced guide.
 - **Examples**: Added variants, themes, and presets examples
 - **TypeScript**: Improved type definitions with better inference
 - **API Reference**: Complete API documentation

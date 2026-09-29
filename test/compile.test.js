@@ -36,6 +36,25 @@ test('compiles the component demo button registration into semantic utility rule
 	assert.match(css, /\.btn-primary:hover[^{}]*\{[^}]*background-color:/);
 });
 
+test('preserves 1.0-compatible output by default and safely optimizes only when enabled', async () => {
+	const manifest = {
+		classes: {
+			'action-button': {
+				tw: 'inline-flex',
+				before: { content: '"a : b; c"' },
+			},
+		},
+	};
+	const css = await compile(manifest);
+	const unoptimizedCss = await compile(manifest, { optimize: false });
+	const optimizedCss = await compile(manifest, { optimize: true });
+
+	assert.equal(css, unoptimizedCss);
+	assert.match(css, /content:\s*"a : b; c"/);
+	assert.match(optimizedCss, /content:"a : b; c"/);
+	assert.match(optimizedCss, /\.action-button\s*\{[^}]*display:inline-flex/);
+});
+
 test('compiles groups, modifiers, and extended class utilities', async () => {
 	const css = await compile({
 		classes: {

@@ -5,6 +5,29 @@
 import { createTheme } from './theme.js';
 import { createVariants, variantPresets } from './variants.js';
 
+function isRecord(value) {
+	return value !== null && typeof value === 'object' && !Array.isArray(value);
+}
+
+function mergeRecords(base = {}, override = {}) {
+	const result = isRecord(base) ? { ...base } : {};
+	if (!isRecord(override)) return result;
+
+	for (const [key, value] of Object.entries(override)) {
+		result[key] = isRecord(value) && isRecord(result[key])
+			? mergeRecords(result[key], value)
+			: isRecord(value) ? mergeRecords({}, value) : value;
+	}
+	return result;
+}
+
+function resolveThemeFactories(value, theme) {
+	if (typeof value === 'function') return resolveThemeFactories(value(theme), theme);
+	if (Array.isArray(value)) return value.map((item) => resolveThemeFactories(item, theme));
+	if (!isRecord(value)) return value;
+	return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, resolveThemeFactories(item, theme)]));
+}
+
 /**
  * Create a preset from configuration
  */
@@ -32,25 +55,10 @@ export function mergePresets(...presets) {
 	};
 
 	for (const preset of presets) {
-		// Merge classes
-		if (preset.classes) {
-			Object.assign(merged.classes, preset.classes);
-		}
-
-		// Merge groups
-		if (preset.groups) {
-			Object.assign(merged.groups, preset.groups);
-		}
-
-		// Merge variants
-		if (preset.variants) {
-			Object.assign(merged.variants, preset.variants);
-		}
-
-		// Merge theme
-		if (preset.theme) {
-			merged.theme = { ...merged.theme, ...preset.theme };
-		}
+		merged.classes = mergeRecords(merged.classes, preset.classes);
+		merged.groups = mergeRecords(merged.groups, preset.groups);
+		merged.variants = mergeRecords(merged.variants, preset.variants);
+		merged.theme = mergeRecords(merged.theme, preset.theme);
 	}
 
 	return merged;
@@ -60,16 +68,27 @@ export function mergePresets(...presets) {
  * Apply preset to a manifest
  */
 export function applyPreset(manifest, preset) {
-	return {
-		classes: {
-			...preset.classes,
-			...manifest.classes,
-		},
-		groups: {
-			...preset.groups,
-			...manifest.groups,
-		},
+	const themeTokens = mergeRecords(preset.theme, manifest.theme);
+	const theme = createTheme(themeTokens);
+	const result = {
+		...manifest,
+		classes: mergeRecords(
+			resolveThemeFactories(preset.classes, theme),
+			resolveThemeFactories(manifest.classes, theme),
+		),
+		groups: mergeRecords(
+			resolveThemeFactories(preset.groups, theme),
+			resolveThemeFactories(manifest.groups, theme),
+		),
 	};
+
+	for (const key of ['theme', 'variants']) {
+		if (Object.hasOwn(preset, key) || Object.hasOwn(manifest, key)) {
+			result[key] = key === 'theme' ? themeTokens : mergeRecords(preset[key], manifest[key]);
+		}
+	}
+
+	return result;
 }
 
 /**

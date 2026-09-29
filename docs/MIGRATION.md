@@ -1,73 +1,14 @@
 # Migration Guide
 
-Guide for migrating to Registyle v2.0 from v1.0 and from other CSS-in-JS solutions.
+Guide for existing Registyle 1.0.0 projects moving to 1.1.1.
 
-## Migrating from Registyle v1.0 to v2.0
+## Migrating from 1.0.0
 
-### Breaking Changes
+No required API migration is intended: existing `register()`, `compile()`, collector, and Vite plugin APIs remain available. The theme, validation, variants, presets, cache, and optimizer modules are additive subpaths; adopt them only where useful.
 
-#### 1. Runtime Tailwind Strings No Longer Supported
+CSS optimization is now opt-in to preserve 1.0.0 output by default. To enable minification and safe adjacent-rule deduplication explicitly, pass `optimize: true` to `compile()`, `compileToFile()`, or the Vite plugin.
 
-**Before (v1.0):**
-```js
-register('button', 'flex items-center px-4 py-2 bg-blue-500');
-```
-
-**After (v2.0):**
-```js
-register('button', {
-  tw: 'flex items-center px-4 py-2 bg-blue-500',
-});
-
-// Or use CSS properties
-register('button', {
-  display: 'flex',
-  alignItems: 'center',
-  padding: '0.5rem 1rem',
-  backgroundColor: '#3b82f6',
-});
-```
-
-**Why?** Separates utility compilation from CSS declarations for better optimization.
-
-#### 2. Multiple Extends Require Array
-
-**Before (v1.0):**
-```js
-register('icon-button', {
-  extend: 'button icon', // Space-separated
-});
-```
-
-**After (v2.0):**
-```js
-register('icon-button', {
-  extend: ['button', 'icon'], // Array
-});
-```
-
-#### 3. New Module Structure
-
-**Before (v1.0):**
-```js
-import { register, compile } from 'registyle';
-```
-
-**After (v2.0):**
-```js
-import { register } from 'registyle';
-import { compile } from 'registyle/compile';
-import { createTheme } from 'registyle/theme';
-import { createVariants } from 'registyle/variants';
-```
-
-**Migration Script:**
-```bash
-# Find and replace imports
-find . -name "*.js" -o -name "*.ts" | xargs sed -i "s/from 'registyle'/from 'registyle\/compile'/g"
-```
-
-### New Features You Should Adopt
+### New Features You May Adopt
 
 #### Use Theme System
 
@@ -187,44 +128,21 @@ const manifest = applyPreset(
 
 **Benefits:** Faster development, consistent design, production-ready components.
 
-### Vite Plugin Configuration
+### Optional Vite Features
 
-**Before (v1.0):**
+Existing Vite configuration continues to work. You can opt into cache diagnostics and CSS optimization as needed:
+
 ```js
 registyle({
   entry: 'src/styles/index.js',
   outFile: '.registyle/style.css',
-})
-```
-
-**After (v2.0):**
-```js
-registyle({
-  entry: 'src/styles/index.js',
-  outFile: '.registyle/style.css',
-  // New options
   cache: true,
-  minify: true,
-  deduplicate: true,
+  optimize: true,
   debug: false,
 })
 ```
 
-### Performance Optimizations
-
-v2.0 includes automatic optimizations, but you can configure them:
-
-```js
-// Build config
-registyle({
-  cache: true,        // Enable caching (50-80% faster rebuilds)
-  cacheSize: 50,      // Cache up to 50 compilations
-  minify: true,       // Minify CSS output
-  deduplicate: true,  // Remove duplicate rules
-  optimize: true,     // Enable all optimizations
-  debug: false,       // Disable debug logs in production
-})
-```
+CSS optimization is disabled by default for compatibility. Enable `optimize: true` to minify and safely deduplicate adjacent rules, or enable `minify` / `deduplicate` individually.
 
 ## Migrating from Other Solutions
 
@@ -408,26 +326,19 @@ register('button', {
 
 ## Checklist
 
-Use this checklist to ensure a smooth migration:
+Use this checklist when upgrading from 1.0.0:
 
-- [ ] Update package.json to `registyle@^2.0.0`
-- [ ] Update imports to use new module paths
-- [ ] Convert runtime Tailwind strings to `tw` config
-- [ ] Convert space-separated extends to arrays
-- [ ] Add validation to your build process
-- [ ] Enable caching and optimization
-- [ ] Consider adopting theme system
-- [ ] Consider adopting variant composition
-- [ ] Consider using presets for faster development
-- [ ] Update TypeScript types (if using TS)
-- [ ] Test all components thoroughly
-- [ ] Update documentation/comments
-- [ ] Review CHANGELOG.md for detailed changes
+- [ ] Update to `registyle@^1.1.1`
+- [ ] Keep existing registration and Vite configuration unless adopting new features
+- [ ] Adopt theme, variants, presets, and validation only where useful
+- [ ] Enable CSS optimization explicitly only after checking generated output
+- [ ] Run `npm test` and your application build
+- [ ] Review CHANGELOG.md for release details
 
 ## Getting Help
 
 - **Documentation**: [README.md](./README.md)
-- **Performance**: [PERFORMANCE.md](./PERFORMANCE.md)
+- **Optimization API**: [README.md](./README.md#optimization-api)
 - **Issues**: [GitHub Issues](https://github.com/Bigetion/registyle/issues)
 - **Examples**: [examples/](./examples/)
 
@@ -435,18 +346,15 @@ Use this checklist to ensure a smooth migration:
 
 ### Do I need to migrate everything at once?
 
-No! v2.0 is mostly backward compatible. You can:
-1. Update core imports
-2. Gradually adopt new features
-3. Keep existing registrations as-is
+No. Existing 1.0.0 APIs remain available; the 1.1 feature modules are additive.
 
 ### Will my CSS output change?
 
-CSS output should be nearly identical, just more optimized (smaller size, deduplicated rules).
+By default, 1.1.1 preserves the 1.0.0 CSS output. If you explicitly enable optimization, inspect the result with your own fixtures before shipping it.
 
-### Can I mix v1 and v2 patterns?
+### Can I adopt the new modules gradually?
 
-Yes, but it's not recommended long-term. The new patterns provide better type safety and DX.
+Yes. Theme, validation, variants, presets, cache, and optimization are separate optional subpaths.
 
 ### How do I migrate a large codebase?
 
@@ -458,7 +366,4 @@ Yes, but it's not recommended long-term. The new patterns provide better type sa
 
 ### Performance impact?
 
-v2.0 is **faster** than v1.0:
-- 50-80% faster rebuilds (caching)
-- 20-40% smaller CSS (optimization)
-- Better dev experience (validation, debug mode)
+There are no universal performance numbers: build time and CSS size depend on the manifest and project. Caching and CSS optimization are optional; measure them in your own build before enabling them.

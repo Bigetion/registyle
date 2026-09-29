@@ -2,7 +2,7 @@
 
 A semantic CSS registration library with an optional Tailwind CSS v4 build adapter. The runtime entry stays small; the official Tailwind compiler is used only when generating CSS.
 
-**Version 1.1** - Production-ready with theme system, variants, presets, validation, and performance optimizations.
+**Version 1.1.1** - Tailwind CSS v4 integration with optional themes, variants, presets, validation, caching, and CSS optimization.
 
 ## Features
 
@@ -14,7 +14,7 @@ A semantic CSS registration library with an optional Tailwind CSS v4 build adapt
 - ✅ **Variants Composition** - CVA-inspired variant API
 - ✅ **Preset System** - Shadcn, Material, Bootstrap, Minimal presets
 - ✅ **Validation** - Schema validation with helpful errors
-- ⚡ **Performance** - 50-80% faster builds, 20-40% smaller CSS
+- ⚡ **Performance Tools** - Optional build caching and opt-in CSS optimization
 - 🎯 **CSS Layers** - Control specificity with `@layer`
 - 📱 **Container Queries** - Modern responsive patterns
 - 🛠️ **Dev Tools** - Debug mode, cache stats, optimization metrics
@@ -299,9 +299,8 @@ export default defineConfig({
   plugins: [registyle({
     entry: 'src/registyles/index.js',
     outFile: '.registyle/style.css',
-    // Optional optimization settings
-    minify: true,        // Minify CSS output (default: true)
-    deduplicate: true,   // Remove duplicate rules (default: true)
+    // Optional CSS optimization; disabled by default to preserve Tailwind output
+    optimize: true,      // Enable minification and safe adjacent-rule deduplication
     cache: true,         // Enable compilation caching (default: true)
     cacheSize: 50,       // Max cached compilations (default: 50)
     debug: false,        // Log compilation stats (default: false)
@@ -311,8 +310,8 @@ export default defineConfig({
 
 **Performance Features:**
 
-- **Automatic Caching**: Compilation results are cached based on manifest content. Subsequent builds with unchanged manifests skip recompilation, improving build times by 50-80%.
-- **CSS Optimization**: Generated CSS is automatically minified and deduplicated, reducing bundle size by 20-40%.
+- **Build Caching**: The Vite adapter can reuse unchanged manifests; actual benefit depends on project size and build setup.
+- **CSS Optimization**: Opt in with `optimize: true`, or enable `minify` / `deduplicate` individually. Optimization is disabled by default to preserve generated CSS semantics.
 - **Incremental Compilation**: Only changed files trigger recompilation in watch mode.
 - **Debug Mode**: Enable `debug: true` to see compilation times and cache statistics.
 

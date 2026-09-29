@@ -1,180 +1,76 @@
-/**
- * CSS optimization utilities for registyle
- * Provides minification and deduplication without external dependencies
- */
+import { createRequire } from 'node:module';
+
+const require = createRequire(import.meta.url);
+
+function parseCss(css) {
+	try {
+		return require('postcss').parse(css);
+	} catch (error) {
+		if (error.code === 'MODULE_NOT_FOUND') {
+			throw new Error('registyle/optimize requires postcss. Install postcss as a development dependency.', { cause: error });
+		}
+		throw error;
+	}
+}
 
 /**
- * Simple CSS minifier - removes unnecessary whitespace and comments
+ * Minify CSS formatting without rewriting declaration values or nested rules.
  */
 export function minifyCSS(css) {
-	return css
-		// Remove comments
-		.replace(/\/\*[\s\S]*?\*\//g, '')
-		// Remove whitespace around special characters
-		.replace(/\s*([{}:;,>+~])\s*/g, '$1')
-		// Remove whitespace between } and @media/@keyframes
-		.replace(/}\s*@/g, '}@')
-		// Collapse multiple spaces
-		.replace(/\s+/g, ' ')
-		// Remove leading/trailing whitespace
-		.trim();
-}
+	const root = parseCss(css);
+	root.walkComments((comment) => {
+		if (!comment.text.trimStart().startsWith('!')) comment.remove();
+	});
 
-/**
- * Parse CSS into rules for deduplication analysis
- */
-function parseRules(css) {
-	const rules = [];
-	let depth = 0;
-	let currentRule = '';
-	let inAtRule = false;
-	let atRulePrefix = '';
-
-	for (let i = 0; i < css.length; i++) {
-		const char = css[i];
-		currentRule += char;
-
-		if (char === '@' && depth === 0) {
-			inAtRule = true;
-		}
-
-		if (char === '{') {
-			depth++;
-			if (depth === 1 && inAtRule) {
-				atRulePrefix = currentRule.slice(0, -1).trim();
-			}
-		} else if (char === '}') {
-			depth--;
-			if (depth === 0) {
-				rules.push({
-					content: currentRule.trim(),
-					atRule: atRulePrefix,
-				});
-				currentRule = '';
-				inAtRule = false;
-				atRulePrefix = '';
+	function compact(container) {
+		container.raws.before = '';
+		container.raws.after = '';
+		for (const node of container.nodes || []) {
+			node.raws.before = '';
+			if (node.type === 'decl') {
+				node.raws.between = ':';
+			} else if (node.type === 'rule') {
+				node.raws.between = '';
+				compact(node);
+			} else if (node.type === 'atrule' && node.nodes) {
+				node.raws.between = '';
+				if (!/keyframes$/i.test(node.name)) compact(node);
 			}
 		}
 	}
 
-	return rules;
+	compact(root);
+	return root.toString().trim();
 }
 
 /**
- * Extract selector and declarations from a rule
- */
-function parseRule(ruleContent) {
-	const match = ruleContent.match(/^(.*?)\s*{\s*(.*?)\s*}$/s);
-	if (!match) return null;
-
-	const [, selector, declarations] = match;
-	return {
-		selector: selector.trim(),
-		declarations: declarations.trim(),
-	};
-}
-
-/**
- * Deduplicate CSS rules - merge identical selectors and remove duplicate declarations
+ * Merge adjacent rules with the same selector inside the same CSS container.
+ * At-rules, including keyframes, retain their original structure.
  */
 export function deduplicateCSS(css) {
-	const rules = parseRules(css);
-	const selectorMap = new Map();
+	const root = parseCss(css);
 
-	for (const { content, atRule } of rules) {
-		const parsed = parseRule(content);
-		if (!parsed) continue;
-
-		const { selector, declarations } = parsed;
-		const key = atRule ? `${atRule}::${selector}` : selector;
-
-		if (selectorMap.has(key)) {
-			// Merge declarations, later ones override earlier ones
-			const existing = selectorMap.get(key);
-			const merged = mergeDeclarations(existing.declarations, declarations);
-			selectorMap.set(key, {
-				selector,
-				declarations: merged,
-				atRule,
-			});
-		} else {
-			selectorMap.set(key, {
-				selector,
-				declarations,
-				atRule,
-			});
-		}
-	}
-
-	// Rebuild CSS
-	const atRuleGroups = new Map();
-	const plainRules = [];
-
-	for (const { selector, declarations, atRule } of selectorMap.values()) {
-		const rule = `${selector} { ${declarations} }`;
-
-		if (atRule) {
-			if (!atRuleGroups.has(atRule)) {
-				atRuleGroups.set(atRule, []);
+	function mergeAdjacentRules(container) {
+		if (!container.nodes) return;
+		for (const node of container.nodes) {
+			if (node.type === 'rule') mergeAdjacentRules(node);
+			else if (node.type === 'atrule' && node.nodes && !/keyframes$/i.test(node.name)) {
+				mergeAdjacentRules(node);
 			}
-			atRuleGroups.get(atRule).push(rule);
-		} else {
-			plainRules.push(rule);
+		}
+
+		for (let index = 1; index < container.nodes.length; index++) {
+			const previous = container.nodes[index - 1];
+			const current = container.nodes[index];
+			if (previous.type !== 'rule' || current.type !== 'rule' || previous.selector !== current.selector) continue;
+			for (const child of current.nodes) previous.append(child.clone());
+			current.remove();
+			index--;
 		}
 	}
 
-	// Combine all rules
-	let result = plainRules.join('\n');
-
-	for (const [atRule, rules] of atRuleGroups) {
-		result += `\n${atRule} {\n${rules.join('\n')}\n}`;
-	}
-
-	return result.trim();
-}
-
-/**
- * Merge CSS declarations, with later declarations overriding earlier ones
- */
-function mergeDeclarations(existing, incoming) {
-	const declMap = new Map();
-
-	// Parse existing declarations
-	parseDeclarations(existing).forEach(({ property, value }) => {
-		declMap.set(property, value);
-	});
-
-	// Parse incoming declarations (override existing)
-	parseDeclarations(incoming).forEach(({ property, value }) => {
-		declMap.set(property, value);
-	});
-
-	// Rebuild declaration string
-	return Array.from(declMap.entries())
-		.map(([property, value]) => `${property}: ${value}`)
-		.join('; ');
-}
-
-/**
- * Parse declaration block into property-value pairs
- */
-function parseDeclarations(declarations) {
-	if (!declarations.trim()) return [];
-
-	return declarations
-		.split(';')
-		.map((decl) => decl.trim())
-		.filter(Boolean)
-		.map((decl) => {
-			const colonIndex = decl.indexOf(':');
-			if (colonIndex === -1) return null;
-
-			return {
-				property: decl.slice(0, colonIndex).trim(),
-				value: decl.slice(colonIndex + 1).trim(),
-			};
-		})
-		.filter(Boolean);
+	mergeAdjacentRules(root);
+	return root.toString().trim();
 }
 
 /**

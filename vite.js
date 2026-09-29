@@ -63,13 +63,13 @@ export function registyle(options = {}) {
 				}
 			}
 			
-			// Compile with optimization enabled
+			// Pass through optimization options; compilation preserves CSS by default.
 			await compileToFile(manifest, outputPath, { 
 				baseDir: root, 
 				inputCss,
-				minify: options.minify !== false,
-				optimize: options.optimize !== false,
-				deduplicate: options.deduplicate !== false,
+				minify: options.minify,
+				optimize: options.optimize,
+				deduplicate: options.deduplicate,
 				debug,
 			});
 			
