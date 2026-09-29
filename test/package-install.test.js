@@ -47,12 +47,16 @@ test('packed tarball installs in a clean consumer and exposes public entry point
 
 		const installedPackage = JSON.parse(await readFile(join(consumerDirectory, 'node_modules', 'registyle', 'package.json'), 'utf8'));
 		assert.equal(installedPackage.version, JSON.parse(await readFile(join(packageRoot, 'package.json'), 'utf8')).version);
+		for (const subpath of ['./cache', './optimize', './presets', './validate']) {
+			assert.equal(Object.hasOwn(installedPackage.exports, subpath), false, `${subpath} should not be exported`);
+		}
 
 		const smokeCode = [
 			"import { register, cx } from 'registyle';",
 			"import { getManifest, register as collect } from 'registyle/collector';",
 			"import { compile } from 'registyle/compile';",
 			"import { registyle } from 'registyle/vite';",
+			"if ('cn' in await import('registyle')) throw new Error('removed cn alias remains exported');",
 			"register('consumer-button', { color: 'red' });",
 			"if (!register.extractCSS().includes('.consumer-button')) throw new Error('runtime entry failed');",
 			"if (cx('consumer-button') !== 'consumer-button') throw new Error('cx entry failed');",

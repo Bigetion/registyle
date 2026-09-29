@@ -2,15 +2,15 @@
 
 Deep dive into registyle's advanced features and patterns.
 
+The modules in this guide are optional subpath APIs. The core workflow is semantic CSS registration, with Tailwind compilation and the Vite adapter available when needed.
+
 ## Table of Contents
 
 - [Theme System](#theme-system)
 - [Variants Composition](#variants-composition)
-- [Preset System](#preset-system)
 - [CSS Layers & Specificity](#css-layers--specificity)
 - [Container Queries](#container-queries)
-- [Validation & Error Handling](#validation--error-handling)
-- [Performance Optimization](#performance-optimization)
+- [Build Options](#build-options)
 - [Production Patterns](#production-patterns)
 
 ## Theme System
@@ -275,14 +275,16 @@ export function Button({
 ### Merging Variants
 
 ```js
-import { mergeVariants, variantPresets } from 'registyle/variants';
+import { mergeVariants } from 'registyle/variants';
 
 const customButton = mergeVariants(
   {
     base: { fontFamily: 'Inter' },
     variants: {
-      size: variantPresets.size,
-      variant: variantPresets.variant,
+      size: {
+        sm: { padding: '0.375rem 0.75rem' },
+        md: { padding: '0.5rem 1rem' },
+      },
     },
   },
   {
@@ -294,83 +296,6 @@ const customButton = mergeVariants(
     },
   }
 );
-```
-
-## Preset System
-
-### Creating Custom Presets
-
-```js
-import { createPreset } from 'registyle/presets';
-
-export const myCompanyPreset = createPreset({
-  name: 'my-company',
-  description: 'Company design system',
-  theme: {
-    colors: {
-      primary: '#your-brand-color',
-      // ...
-    },
-  },
-  classes: {
-    button: {
-      base: { /* company button styles */ },
-      modifiers: { /* variants */ },
-    },
-    input: { /* company input styles */ },
-    // ... all components
-  },
-  groups: {
-    card: {
-      root: { /* card root */ },
-      header: { /* card header */ },
-      content: { /* card content */ },
-    },
-  },
-});
-```
-
-### Extending Presets
-
-```js
-import { shadcnPreset, mergePresets } from 'registyle/presets';
-
-const customPreset = mergePresets(
-  shadcnPreset,
-  {
-    classes: {
-      // Override button from shadcn
-      button: {
-        base: {
-          ...shadcnPreset.classes.button.base,
-          fontFamily: 'Custom Font',
-        },
-      },
-      // Add new component
-      tooltip: { /* tooltip styles */ },
-    },
-  }
-);
-```
-
-### Preset with Theme
-
-```js
-import { createPreset } from 'registyle/presets';
-import { createTheme } from 'registyle/theme';
-
-const myTheme = createTheme({ /* ... */ });
-
-const preset = createPreset({
-  name: 'themed-preset',
-  theme: myTheme.tokens,
-  classes: {
-    button: (tokens) => ({
-      backgroundColor: tokens.color('primary', 500),
-      // Use theme tokens in preset
-    }),
-  },
-});
 ```
 
 ## CSS Layers & Specificity
@@ -494,104 +419,19 @@ register('responsive-card', {
 });
 ```
 
-## Validation & Error Handling
+## Build Options
 
-### Strict Mode
+### CSS Optimization
 
-```js
-import { validateManifest, ValidationError } from 'registyle/validate';
-
-try {
-  const result = validateManifest(manifest, {
-    strict: true, // Throw on errors
-    warnUnknownProperties: true,
-    warnConflicts: true,
-  });
-} catch (error) {
-  if (error instanceof ValidationError) {
-    console.error('Validation failed:', error.message);
-    console.error('Context:', error.context);
-  }
-}
-```
-
-### Custom Reporter
+Optimization is opt-in. Pass options to the compiler or Vite adapter when you want minified or deduplicated output:
 
 ```js
-import { createReporter } from 'registyle/validate';
+import { compile } from 'registyle/compile';
 
-const reporter = createReporter({
-  onError: (message, result) => {
-    // Send to error tracking
-    Sentry.captureMessage(message, {
-      level: 'error',
-      extra: result,
-    });
-  },
-  onWarning: (message, result) => {
-    // Log warnings
-    console.warn('[Registyle Warning]', message);
-  },
-  throwOnError: process.env.NODE_ENV === 'production',
-});
-
-reporter.validate(manifest);
-```
-
-### Conflict Detection
-
-```js
-import { detectConflicts } from 'registyle/validate';
-
-const conflicts = detectConflicts({
-  padding: '1rem',
-  tw: 'p-4', // Conflicts with padding
-});
-
-if (conflicts.length > 0) {
-  console.warn('Property conflicts detected:', conflicts);
-}
-```
-
-## Performance Optimization
-
-### Cache Configuration
-
-```js
-// Development: aggressive caching
-registyle({
-  cache: true,
-  cacheSize: 100, // Large cache
-  debug: true,
-});
-
-// Production: optimized output
-registyle({
-  cache: true,
-  cacheSize: 10, // Smaller cache
+const css = await compile(manifest, {
   minify: true,
   deduplicate: true,
-  optimize: true,
-  debug: false,
 });
-```
-
-### Manual Optimization
-
-```js
-import { optimizeCSS, minifyCSS, deduplicateCSS } from 'registyle/optimize';
-
-// Full optimization
-const optimized = optimizeCSS(css);
-
-// Selective optimization
-const minified = minifyCSS(css);
-const deduplicated = deduplicateCSS(css);
-
-// Get stats
-import { getOptimizationStats } from 'registyle/optimize';
-const stats = getOptimizationStats(original, optimized);
-console.log(`Saved ${stats.percent} (${stats.savings} bytes)`);
 ```
 
 ### Bundle Splitting
@@ -619,7 +459,6 @@ await compileToFile(extendedManifest, './styles/extended.css');
 src/
   design-system/
     theme.js          # Theme configuration
-    presets.js        # Custom presets
     variants.js       # Variant definitions
     components/
       button.js       # Button registrations
@@ -645,38 +484,9 @@ export default manifest;
 ### Incremental Adoption
 
 ```js
-// Start with preset
-import { shadcnPreset } from 'registyle/presets';
+import { register } from 'registyle';
 
-// Override specific components
-const manifest = {
-  ...shadcnPreset,
-  classes: {
-    ...shadcnPreset.classes,
-    button: myCustomButton, // Override
-    'custom-widget': myWidget, // Add new
-  },
-};
-```
-
-### Testing Styles
-
-```js
-import { validateConfig } from 'registyle/validate';
-import { describe, it, expect } from 'vitest';
-
-describe('Button Registration', () => {
-  it('should be valid', () => {
-    const result = validateConfig('button', buttonConfig);
-    expect(result.valid).toBe(true);
-    expect(result.errors).toHaveLength(0);
-  });
-  
-  it('should not have conflicts', () => {
-    const conflicts = detectConflicts(buttonConfig);
-    expect(conflicts).toHaveLength(0);
-  });
-});
+register('button', { padding: '0.5rem 1rem' });
 ```
 
 ### CI/CD Integration
@@ -694,38 +504,32 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
       - run: npm ci
-      - run: npm run styles:validate
-      - run: npm run styles:build
-      - run: npm run styles:test
+      - run: npm test
+      - run: npm run build
 ```
 
 ```json
 // package.json
 {
   "scripts": {
-    "styles:validate": "node scripts/validate-styles.js",
-    "styles:build": "node scripts/build-styles.js",
-    "styles:test": "vitest run"
+    "build": "vite build",
+    "test": "node --test"
   }
 }
 ```
 
 ## Best Practices
 
-1. **Use Theme for Consistency**: Centralize all design tokens
-2. **Leverage Variants**: Better than manual modifier management
-3. **Enable Validation**: Catch errors early in development
-4. **Optimize for Production**: Enable all optimizations
-5. **Layer Your Styles**: Use CSS layers for predictable specificity
-6. **Document Presets**: Make reusable configs for team
-7. **Test Configurations**: Validate registrations in CI
-8. **Monitor Bundle Size**: Track CSS output size over time
-9. **Use Type Safety**: TypeScript provides better DX
-10. **Follow Naming Conventions**: Consistent class names across team
+1. **Use Theme for Consistency**: Centralize design tokens when a shared theme helps.
+2. **Use Variants for Composition**: Keep variant configuration close to the component.
+3. **Layer Styles Deliberately**: Use CSS layers for predictable specificity.
+4. **Test Compiled Output**: Cover the generated CSS that your application relies on.
+5. **Measure Build Changes**: Check CSS output before enabling minification or deduplication.
+6. **Follow Naming Conventions**: Keep semantic class names consistent across the project.
 
 ## Next Steps
 
-- Review the README's Optimization API section for optimizer options and defaults
+- Review the README for runtime and Tailwind build workflows
 - Check [MIGRATION.md](./MIGRATION.md) if upgrading from v1
 - Explore [examples/](./examples/) for real-world patterns
 - Read [CHANGELOG.md](./CHANGELOG.md) for latest features

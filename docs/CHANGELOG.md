@@ -2,6 +2,16 @@
 
 All notable changes to registyle will be documented in this file.
 
+## [2.0.0] - 2026-09-30
+
+### Breaking Changes
+
+- Remove the `cache`, `presets`, and `validate` subpaths.
+- Remove the public `optimize` subpath; compilation optimization remains available through compile options.
+- Remove `cn`; use `cx` for conditional class names.
+- Remove `defineVariants`, `createVariantPreset`, `variantPresets`, `createButton`, and `applyVariants`. Keep variant definitions in application code and use `createVariants`, `compound`, and `mergeVariants`.
+- Remove the Vite `cache` and `cacheSize` options; Vite recompiles registrations when watched files change.
+
 ## [1.1.1] - 2026-09-29
 
 ### Fixed

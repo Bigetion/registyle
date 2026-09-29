@@ -1,8 +1,30 @@
 # Migration Guide
 
-Guide for existing Registyle 1.0.0 projects moving to 1.1.1.
+## Migrating to 2.0.0
 
-## Migrating from 1.0.0
+Registyle 2.0 keeps the runtime registration, collector, Tailwind compiler, Vite adapter, theme, and core variants APIs. It removes secondary APIs that duplicated these workflows or added design-specific behavior.
+
+### Removed APIs
+
+- Replace `cn` with `cx`.
+- Replace `registyle/cache`, `registyle/presets`, and `registyle/validate` with application-owned helpers where needed. These modules are no longer included.
+- Replace direct `registyle/optimize` calls with `minify`, `deduplicate`, or `optimize` options on `compile()`, `compileToFile()`, or the Vite plugin.
+- Replace `defineVariants`, `createVariantPreset`, `variantPresets`, `createButton`, and `applyVariants` with plain variant configuration passed to `createVariants()`.
+- Remove the Vite `cache` and `cacheSize` options. Watched registration changes are recompiled directly.
+
+### Upgrade
+
+```sh
+npm install registyle@^2
+```
+
+Theme helpers and the `createVariants`, `compound`, and `mergeVariants` APIs remain available. Check the [2.0.0 changelog](./CHANGELOG.md#200---2026-09-30) for the full list of removals.
+
+## Historical: Migrating from 1.0.0 to 1.1.1
+
+The following sections document the old 1.x upgrade path. Their additive APIs are not available in 2.0.0.
+
+### Migrating from 1.0.0
 
 No required API migration is intended: existing `register()`, `compile()`, collector, and Vite plugin APIs remain available. The theme, validation, variants, presets, cache, and optimizer modules are additive subpaths; adopt them only where useful.
 

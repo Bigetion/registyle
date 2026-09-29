@@ -24,5 +24,4 @@ export interface ClassNamesFunction {
 
 export declare const register: RegisterFunction;
 export declare const cx: ClassNamesFunction;
-export declare const cn: ClassNamesFunction;
 export default register;

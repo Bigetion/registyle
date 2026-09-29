@@ -1,1 +1,1 @@
-export { register, cx, cn, default } from './core-runtime.js';
+export { register, cx, default } from './core-runtime.js';

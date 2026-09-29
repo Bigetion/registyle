@@ -3,7 +3,6 @@ import { resolve, relative, dirname, sep } from 'node:path';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
 import { compile } from './compile.js';
-import { createManifestCache } from './cache.js';
 
 const VIRTUAL_STYLESHEET_ID = 'virtual:registyle.css';
 const RESOLVED_STYLESHEET_ID = `\0${VIRTUAL_STYLESHEET_ID}`;
@@ -16,7 +15,6 @@ export function registyle(options = {}) {
 	const entry = options.entry || 'src/registyles/index.js';
 	const outFile = options.outFile;
 	const inputCss = options.inputCss || '@reference "tailwindcss"; @import "tailwindcss/utilities.css" source(none);';
-	const enableCache = options.cache !== false;
 	const debug = options.debug || false;
 	
 	let root = process.cwd();
@@ -25,8 +23,6 @@ export function registyle(options = {}) {
 	let watchPath;
 	let compiledCss = null;
 	
-	// Create cache instance
-	const cache = enableCache ? createManifestCache({ maxSize: options.cacheSize || 50 }) : null;
 	let compilationCount = 0;
 
 	async function compileStyles() {
@@ -54,20 +50,6 @@ export function registyle(options = {}) {
 				throw new TypeError(`registyle/vite: ${entry} must export a manifest as default`);
 			}
 			
-			// Check cache
-			const cacheKey = cache?.generateKey(manifest);
-			
-			if (cache && cacheKey && compiledCss !== null && cache.has(cacheKey)) {
-				const hasChanged = await cache.hasFilesChanged([entryPath]);
-				
-				if (!hasChanged) {
-					if (debug) {
-						console.log(`[registyle] Using cached compilation (${Date.now() - startTime}ms)`);
-					}
-					return manifest;
-				}
-			}
-			
 			// Pass through optimization options; compilation preserves CSS by default.
 			compiledCss = await compile(manifest, {
 				baseDir: root, 
@@ -82,18 +64,9 @@ export function registyle(options = {}) {
 				await writeFile(outputPath, compiledCss);
 			}
 			
-			// Store in cache
-			if (cache && cacheKey) {
-				cache.set(cacheKey, manifest);
-			}
-			
 			if (debug) {
 				const duration = Date.now() - startTime;
-				const cacheStats = cache?.getStats();
 				console.log(`[registyle] Compiled in ${duration}ms (compilation #${compilationCount})`);
-				if (cacheStats) {
-					console.log(`[registyle] Cache stats:`, cacheStats);
-				}
 			}
 			
 			return manifest;

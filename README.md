@@ -2,22 +2,15 @@
 
 A semantic CSS registration library with an optional Tailwind CSS v4 build adapter. The runtime entry stays small; the official Tailwind compiler is used only when generating CSS.
 
-**Version 1.1.1** - Tailwind CSS v4 integration with optional themes, variants, presets, validation, caching, and CSS optimization.
+**Version 2.0.0**
 
 ## Features
 
-- ✅ **Semantic Component Styling** - Name your classes, not atomic utilities
-- ✅ **Tailwind v4 Integration** - Optional utilities with official compiler
-- ✅ **Zero Runtime** - CSS generated at build time
-- ✅ **Type-Safe** - Full TypeScript support with inference
-- ✅ **Theme System** - Centralized design tokens with helpers
-- ✅ **Variants Composition** - CVA-inspired variant API
-- ✅ **Preset System** - Shadcn, Material, Bootstrap, Minimal presets
-- ✅ **Validation** - Schema validation with helpful errors
-- ⚡ **Performance Tools** - Optional build caching and opt-in CSS optimization
-- 🎯 **CSS Layers** - Control specificity with `@layer`
-- 📱 **Container Queries** - Modern responsive patterns
-- 🛠️ **Dev Tools** - Debug mode, cache stats, optimization metrics
+- Semantic class registration with a small browser runtime
+- CSS extraction for server-side and build-time workflows
+- Optional Tailwind CSS v4 compilation from an explicit manifest
+- Optional Vite adapter with a virtual stylesheet
+- TypeScript declarations for the public APIs
 
 ## Install
 
@@ -32,108 +25,18 @@ npm install registyle
 ```js
 import { register } from 'registyle';
 
-// Pure CSS approach
 register('button', {
   display: 'inline-flex',
+  alignItems: 'center',
   padding: '0.5rem 1rem',
   backgroundColor: '#3b82f6',
   color: '#ffffff',
   borderRadius: '0.375rem',
-  hover: {
-    backgroundColor: '#2563eb',
-  },
-});
-
-// With Tailwind utilities
-register('button', {
-  tw: 'inline-flex px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600',
-});
-
-// Hybrid approach
-register('button', {
-  tw: 'inline-flex items-center gap-2',
-  padding: '0.5rem 1rem', // Custom values
-  backgroundColor: '#3b82f6',
+  hover: { backgroundColor: '#2563eb' },
 });
 ```
 
-### 2. With Variants
-
-```js
-import { createVariants } from 'registyle/variants';
-
-const button = createVariants({
-  base: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontWeight: '500',
-  },
-  variants: {
-    variant: {
-      primary: { backgroundColor: '#3b82f6', color: '#ffffff' },
-      secondary: { backgroundColor: '#6b7280', color: '#ffffff' },
-      outline: { border: '1px solid #d1d5db', backgroundColor: 'transparent' },
-    },
-    size: {
-      sm: { padding: '0.375rem 0.75rem', fontSize: '0.875rem' },
-      md: { padding: '0.5rem 1rem', fontSize: '1rem' },
-      lg: { padding: '0.625rem 1.25rem', fontSize: '1.125rem' },
-    },
-  },
-  defaultVariants: {
-    variant: 'primary',
-    size: 'md',
-  },
-});
-
-// Generate classes
-const manifest = button.toManifest('button');
-```
-
-### 3. With Theme
-
-```js
-import { createTheme, withTheme } from 'registyle/theme';
-
-const theme = createTheme({
-  colors: {
-    primary: { 500: '#3b82f6', 600: '#2563eb' },
-    gray: { 100: '#f3f4f6', 200: '#e5e7eb' },
-  },
-  spacing: {
-    2: '0.5rem',
-    4: '1rem',
-    6: '1.5rem',
-  },
-});
-
-const themed = withTheme(theme);
-
-const [name, config] = themed.register('button', (t) => ({
-  backgroundColor: t.color('primary', 500),
-  padding: `${t.space(2)} ${t.space(4)}`,
-  hover: {
-    backgroundColor: t.color('primary', 600),
-  },
-}));
-```
-
-### 4. With Presets
-
-```js
-import { shadcnPreset, applyPreset } from 'registyle/presets';
-
-// Use shadcn preset for instant beautiful components
-const manifest = applyPreset({
-  classes: {
-    // Your custom classes
-  },
-}, shadcnPreset);
-
-// Or start from scratch with Material, Bootstrap, or Minimal presets
-import { materialPreset, bootstrapPreset, minimalPreset } from 'registyle/presets';
-```
+`register()` accepts CSS style objects. Tailwind utilities use the build-time manifest API below; they are not accepted by the browser runtime.
 
 ## Usage
 
@@ -219,9 +122,8 @@ register.all({
   },
 });
 
-import { cx, cn } from 'registyle';
+import { cx } from 'registyle';
 cx('button', isActive && 'button-active', { 'button-disabled': isDisabled });
-cn('button', ['button-primary', isLarge && 'button-large']);
 ```
 
 - `register.group(baseName, components)` generates a root class and prefixed component classes from CSS style objects.
@@ -229,62 +131,11 @@ cn('button', ['button-primary', isLarge && 'button-large']);
 - Re-registering the same class or group replaces its previous CSS; class and group registrations have independent ownership.
 - `register.extractCSS()` returns all registered CSS as a string.
 - `register.reset()` clears the registry; useful for tests and isolated SSR renders.
-- `cx()` / `cn()` combine conditional strings, arrays, and object maps; `cx.with()` binds base classes.
+- `cx()` combines conditional strings, arrays, and object maps; `cx.with()` binds base classes.
 - `compile(manifest, options)` returns CSS compiled by Tailwind v4.
 - `compileToFile(manifest, outputPath, options)` writes the compiled CSS during the build.
 
 Use the exact same manifest for utility generation and class-name usage. Runtime-only consumers do not need any Tailwind packages; the optional compile subpath requires the three development packages listed above.
-
-### Optimization API
-
-For advanced use cases, you can access optimization utilities directly:
-
-```js
-import { optimizeCSS, minifyCSS, deduplicateCSS, getOptimizationStats } from 'registyle/optimize';
-
-// Optimize CSS (minify + deduplicate)
-const optimized = optimizeCSS(css, {
-  minify: true,
-  deduplicate: true,
-});
-
-// Get optimization statistics
-const stats = getOptimizationStats(originalCSS, optimizedCSS);
-console.log(stats);
-// → { originalSize: 1024, optimizedSize: 768, savings: 256, percent: '25.00%' }
-
-// Use individual optimization functions
-const minified = minifyCSS(css);
-const deduplicated = deduplicateCSS(css);
-```
-
-### Caching API
-
-For custom build tools, you can use the caching system:
-
-```js
-import { createManifestCache } from 'registyle/cache';
-
-const cache = createManifestCache({ maxSize: 50 });
-
-// Generate cache key from manifest
-const cacheKey = cache.generateKey(manifest);
-
-// Check if files have changed
-const hasChanged = await cache.hasFilesChanged(['./src/styles.js']);
-
-if (!hasChanged && cache.has(cacheKey)) {
-  console.log('Using cached compilation');
-  return cache.get(cacheKey);
-}
-
-// Store compiled result
-cache.set(cacheKey, compiledCSS);
-
-// Get cache statistics
-console.log(cache.getStats());
-// → { size: 12, maxSize: 50, fileTracked: 5 }
-```
 
 ### Vite Plugin
 
@@ -300,14 +151,7 @@ export default defineConfig({
 });
 ```
 
-The defaults use `src/registyles/index.js` as the manifest entry, watch the `src/registyles` directory, and compile Tailwind v4 utilities. Override these settings only when your project uses a different layout. Optional settings such as `optimize`, `cache`, `cacheSize`, and `debug` can be passed to `registyle({...})` when needed.
-
-**Performance Features:**
-
-- **Build Caching**: The Vite adapter can reuse unchanged manifests; actual benefit depends on project size and build setup.
-- **CSS Optimization**: Opt in with `optimize: true`, or enable `minify` / `deduplicate` individually. Optimization is disabled by default to preserve generated CSS semantics.
-- **Incremental Compilation**: Only changed files trigger recompilation in watch mode.
-- **Debug Mode**: Enable `debug: true` to see compilation times and cache statistics.
+The defaults use `src/registyles/index.js` as the manifest entry and watch the `src/registyles` directory. Override `entry` or `watch` when your project uses a different layout. `outFile` optionally writes a disk copy; otherwise the stylesheet is served through the virtual module. Optimization and debug options are available for builds that need them.
 
 Register reusable styles in modules and collect them from the configured entry:
 
@@ -348,24 +192,18 @@ When migrating from the previous file-based Vite setup, replace the `.registyle/
 
 ## Documentation
 
-- **[API Reference](#api)** — Complete API documentation
-- **[Vite Plugin](#vite-plugin)** — Vite integration guide
-- **[Examples](./examples/)** — Example projects
+- [Advanced guide](./docs/ADVANCED.md) — themes, variants, CSS layers, container queries, and build options
+- [Migration guide](./docs/MIGRATION.md) — breaking changes when moving to v2
+- [Changelog](./docs/CHANGELOG.md) — release history
+- [Examples](./examples/) — example projects
 
 ## When to Use Registyle
 
-**Perfect for:**
-- Design systems and component libraries
-- Projects wanting semantic class names over atomic utilities
-- Teams needing centralized styling with design tokens
-- Apps requiring both custom CSS and Tailwind utilities
-- Production apps with strict performance requirements
+Registyle is aimed at projects that want semantic class names and explicit CSS registration, with Tailwind v4 compilation as an optional build step. It does not scan application source files for class names; register styles in a manifest or use the runtime API directly.
 
 ## Contributing
 
-Contributions are welcome! Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
-
-Found a bug? Have a feature request? [Open an issue](https://github.com/Bigetion/registyle/issues/new).
+Contributions are welcome. Report bugs and feature requests through [GitHub Issues](https://github.com/Bigetion/registyle/issues/new).
 
 ## License
 

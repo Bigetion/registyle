@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { cn, cx, register } from '../core-entry.js';
+import { cx, register } from '../core-entry.js';
 
 test.beforeEach(() => register.reset());
 
@@ -106,9 +106,8 @@ test('rejects invalid registrations and reset clears CSS', () => {
 	assert.equal(register.extractCSS(), '');
 });
 
-test('cx and cn combine conditional values and support bound classes', () => {
+test('cx combines conditional values and supports bound classes', () => {
 	assert.equal(cx('btn', false, ['btn-primary', { 'is-large': true }]), 'btn btn-primary is-large');
-	assert.equal(cn('btn', { disabled: 0, active: true }), 'btn active');
 	assert.equal(cx.with('base')('extra'), 'base extra');
 });
 

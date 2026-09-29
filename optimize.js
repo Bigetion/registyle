@@ -7,7 +7,7 @@ function parseCss(css) {
 		return require('postcss').parse(css);
 	} catch (error) {
 		if (error.code === 'MODULE_NOT_FOUND') {
-			throw new Error('registyle/optimize requires postcss. Install postcss as a development dependency.', { cause: error });
+			throw new Error('CSS optimization requires postcss. Install postcss as a development dependency.', { cause: error });
 		}
 		throw error;
 	}

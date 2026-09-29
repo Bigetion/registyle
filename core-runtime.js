@@ -247,7 +247,6 @@ function cx(...values) {
 }
 
 cx.with = (...base) => (...values) => cx(...base, ...values);
-const cn = cx;
 
-export { register, cx, cn };
+export { register, cx };
 export default register;

@@ -3,8 +3,7 @@ import 'virtual:registyle.css';
 import { getManifest, register as collect } from 'registyle/collector';
 import { compile, type RegistyleManifest } from 'registyle/compile';
 import { registyle, type RegistyleViteOptions } from 'registyle/vite';
-import { createVariants } from 'registyle/variants';
-import { applyPreset, createPreset } from 'registyle/presets';
+import { compound, createVariants, mergeVariants } from 'registyle/variants';
 import type { Plugin } from 'vite';
 
 const button: Registration = {
@@ -23,17 +22,19 @@ const compiledCss: Promise<string> = compile(manifest, { baseDir: '.' });
 const variantClasses: string[] = createVariants({
 	variants: { size: { sm: { padding: '4px' } } },
 }).compose({ size: 'sm' }, 'button');
-const appliedPreset = applyPreset(
-	{ classes: { button: { color: 'black' } }, theme: { colors: { brand: 'blue' } } },
-	createPreset({ name: 'consumer', classes: { button: { padding: '4px' } }, theme: { spacing: { 1: '4px' } } }),
+const mergedVariants = mergeVariants(
+	{ base: { display: 'inline-flex' } },
+	{ compoundVariants: [compound({ size: 'sm' }, { padding: '4px' })] },
 );
-const presetTheme: Record<string, unknown> | undefined = appliedPreset.theme;
 
 const options: RegistyleViteOptions = { entry: 'src/registyles/index.ts', outFile: '.registyle/style.css' };
+// @ts-expect-error removed in v2
+const obsoleteOptions: RegistyleViteOptions = { cache: true };
 const plugin: Plugin = registyle(options);
 
 void className;
 void compiledCss;
 void variantClasses;
-void presetTheme;
+void mergedVariants;
+void obsoleteOptions;
 void plugin;

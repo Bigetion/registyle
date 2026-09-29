@@ -70,7 +70,7 @@ export function createVariants(config) {
 		}
 
 		// Generate compound variant modifiers
-		compoundVariants.forEach((compound, index) => {
+		compoundVariants.forEach((compound) => {
 			const { class: compoundClass, className, styles, ...conditions } = compound;
 			const modifierName = getCompoundName(conditions);
 			if (modifierName && styles && typeof styles === 'object' && !Array.isArray(styles)) {
@@ -126,13 +126,6 @@ export function compound(conditions, styles) {
 }
 
 /**
- * Type-safe variant props builder
- */
-export function defineVariants(config) {
-	return config;
-}
-
-/**
  * Merge multiple variant configs
  */
 export function mergeVariants(...configs) {
@@ -173,165 +166,8 @@ export function mergeVariants(...configs) {
 	return merged;
 }
 
-/**
- * Create a variants preset for reuse
- */
-export function createVariantPreset(variants) {
-	return { variants };
-}
-
-/**
- * Common variant presets
- */
-export const variantPresets = {
-	// Size variants
-	size: {
-		xs: { padding: '0.25rem 0.5rem', fontSize: '0.75rem', lineHeight: '1rem' },
-		sm: { padding: '0.375rem 0.75rem', fontSize: '0.875rem', lineHeight: '1.25rem' },
-		md: { padding: '0.5rem 1rem', fontSize: '1rem', lineHeight: '1.5rem' },
-		lg: { padding: '0.625rem 1.25rem', fontSize: '1.125rem', lineHeight: '1.75rem' },
-		xl: { padding: '0.75rem 1.5rem', fontSize: '1.25rem', lineHeight: '1.75rem' },
-	},
-
-	// Color variants
-	variant: {
-		primary: {
-			backgroundColor: '#3b82f6',
-			color: '#ffffff',
-			'&:hover': { backgroundColor: '#2563eb' },
-		},
-		secondary: {
-			backgroundColor: '#6b7280',
-			color: '#ffffff',
-			'&:hover': { backgroundColor: '#4b5563' },
-		},
-		outline: {
-			backgroundColor: 'transparent',
-			border: '1px solid #d1d5db',
-			color: '#374151',
-			'&:hover': { backgroundColor: '#f3f4f6' },
-		},
-		ghost: {
-			backgroundColor: 'transparent',
-			color: '#374151',
-			'&:hover': { backgroundColor: '#f3f4f6' },
-		},
-		danger: {
-			backgroundColor: '#ef4444',
-			color: '#ffffff',
-			'&:hover': { backgroundColor: '#dc2626' },
-		},
-		success: {
-			backgroundColor: '#22c55e',
-			color: '#ffffff',
-			'&:hover': { backgroundColor: '#16a34a' },
-		},
-	},
-
-	// State variants
-	state: {
-		default: {},
-		disabled: {
-			opacity: '0.5',
-			cursor: 'not-allowed',
-			pointerEvents: 'none',
-		},
-		loading: {
-			opacity: '0.7',
-			cursor: 'wait',
-		},
-	},
-
-	// Rounding variants
-	rounded: {
-		none: { borderRadius: '0' },
-		sm: { borderRadius: '0.125rem' },
-		md: { borderRadius: '0.375rem' },
-		lg: { borderRadius: '0.5rem' },
-		xl: { borderRadius: '0.75rem' },
-		full: { borderRadius: '9999px' },
-	},
-
-	// Shadow variants
-	shadow: {
-		none: { boxShadow: 'none' },
-		sm: { boxShadow: '0 1px 2px 0 rgb(0 0 0 / 0.05)' },
-		md: { boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' },
-		lg: { boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' },
-		xl: { boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)' },
-	},
-};
-
-/**
- * Create a button component with variants
- */
-export function createButton(customConfig = {}) {
-	return createVariants({
-		base: {
-			display: 'inline-flex',
-			alignItems: 'center',
-			justifyContent: 'center',
-			fontWeight: '500',
-			transition: 'all 150ms',
-			cursor: 'pointer',
-			border: '0',
-			'&:focus': {
-				outline: '2px solid #3b82f6',
-				outlineOffset: '2px',
-			},
-			...customConfig.base,
-		},
-		variants: {
-			size: variantPresets.size,
-			variant: variantPresets.variant,
-			rounded: variantPresets.rounded,
-			...customConfig.variants,
-		},
-		compoundVariants: [
-			// Size + variant combinations
-			{
-				size: 'xs',
-				variant: 'outline',
-				styles: { borderWidth: '1px' },
-			},
-			{
-				size: 'sm',
-				variant: 'outline',
-				styles: { borderWidth: '1px' },
-			},
-			...(customConfig.compoundVariants || []),
-		],
-		defaultVariants: {
-			size: 'md',
-			variant: 'primary',
-			rounded: 'md',
-			...customConfig.defaultVariants,
-		},
-	});
-}
-
-/**
- * Apply variants to a base class using cx helper
- */
-export function applyVariants(baseClass, variantClasses, props = {}) {
-	const classes = [baseClass];
-	
-	for (const [key, value] of Object.entries(props)) {
-		if (value && variantClasses[key]?.[value]) {
-			classes.push(`${baseClass}-${key}-${value}`);
-		}
-	}
-	
-	return classes.filter(Boolean).join(' ');
-}
-
 export default {
 	createVariants,
 	compound,
-	defineVariants,
 	mergeVariants,
-	createVariantPreset,
-	variantPresets,
-	createButton,
-	applyVariants,
 };
