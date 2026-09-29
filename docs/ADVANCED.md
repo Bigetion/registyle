@@ -302,9 +302,15 @@ const customButton = mergeVariants(
 
 ### Layer Strategy
 
+Declare global layer order in the application stylesheet:
+
+```css
+@layer base, components, utilities;
+```
+
+Assign registrations to layers:
+
 ```js
-// Define layer order first
-register('@layer base, components, utilities');
 
 // Base layer (lowest specificity)
 register('reset', {
