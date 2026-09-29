@@ -7,7 +7,7 @@ npm install
 npm run dev
 ```
 
-The Vite plugin in `vite.config.js` loads the manifest from `src/registyles/index.js`, compiles registered Tailwind utilities with Tailwind CSS v4, and writes semantic CSS to `.registyle/style.css`. Registration source lives in `src/registyles`; changes there trigger recompilation during development. The hidden `.registyle/` directory is generated and ignored by Git. Production output can be checked with `npm run build`.
+The Vite plugin in `vite.config.js` uses Registyle's defaults: it loads the manifest from `src/registyles/index.js`, watches `src/registyles`, and compiles registered Tailwind utilities with Tailwind CSS v4. The app imports `virtual:registyle.css`; Vite serves the generated CSS from memory during development and emits a CSS asset for production. Production output can be checked with `npm run build`.
 
 ## Button Workflow
 

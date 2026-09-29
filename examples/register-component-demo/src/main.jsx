@@ -1,7 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
-import '../.registyle/style.css';
+import 'virtual:registyle.css';
 
 // Fade in after styles injected
 requestAnimationFrame(() => {

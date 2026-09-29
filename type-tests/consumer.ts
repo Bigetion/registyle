@@ -1,4 +1,5 @@
 import { cx, register, type Registration } from 'registyle';
+import 'virtual:registyle.css';
 import { getManifest, register as collect } from 'registyle/collector';
 import { compile, type RegistyleManifest } from 'registyle/compile';
 import { registyle, type RegistyleViteOptions } from 'registyle/vite';

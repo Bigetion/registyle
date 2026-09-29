@@ -288,7 +288,7 @@ console.log(cache.getStats());
 
 ### Vite Plugin
 
-For Vite projects, the plugin handles manifest loading, CSS generation, and watch-mode rebuilds:
+For Vite projects, the plugin compiles registrations into a virtual stylesheet. Vite serves it from memory during development and emits a CSS asset during production builds:
 
 ```js
 // vite.config.js
@@ -296,17 +296,11 @@ import { defineConfig } from 'vite';
 import { registyle } from 'registyle/vite';
 
 export default defineConfig({
-  plugins: [registyle({
-    entry: 'src/registyles/index.js',
-    outFile: '.registyle/style.css',
-    // Optional CSS optimization; disabled by default to preserve Tailwind output
-    optimize: true,      // Enable minification and safe adjacent-rule deduplication
-    cache: true,         // Enable compilation caching (default: true)
-    cacheSize: 50,       // Max cached compilations (default: 50)
-    debug: false,        // Log compilation stats (default: false)
-  })],
+  plugins: [registyle()],
 });
 ```
+
+The defaults use `src/registyles/index.js` as the manifest entry, watch the `src/registyles` directory, and compile Tailwind v4 utilities. Override these settings only when your project uses a different layout. Optional settings such as `optimize`, `cache`, `cacheSize`, and `debug` can be passed to `registyle({...})` when needed.
 
 **Performance Features:**
 
@@ -346,9 +340,11 @@ export function Button({ variant = 'primary', className, ...props }) {
 }
 ```
 
-Import the generated stylesheet from the app entry, for example `import '../.registyle/style.css';`.
+Import the virtual stylesheet once from the app entry: `import 'virtual:registyle.css';`.
 
-`entry` is the JS/TS module that imports registration modules and default-exports the collected manifest. `outFile` is the generated CSS artifact imported by the app; by default it lives in `.registyle/`, outside `src`, and should be ignored by Git. The plugin executes that entry, compiles its registrations, and watches the entry directory by default; set `watch` to a wider path when registrations live across directories. It does not scan unrelated source files for class strings. See [the component demo](examples/register-component-demo) for a complete setup.
+When migrating from the previous file-based Vite setup, replace the `.registyle/style.css` import with the virtual import above. To keep importing a generated file, set `outFile: '.registyle/style.css'` in the plugin options.
+
+`entry` is the JS/TS module that imports registration modules and default-exports the collected manifest. The plugin executes that entry and watches its directory by default; set `watch` to a wider path when registrations live across directories. Set `outFile` only when a separate on-disk CSS copy is needed. The plugin does not scan unrelated source files for class strings. See [the component demo](examples/register-component-demo) for a complete setup.
 
 ## Documentation
 

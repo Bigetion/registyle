@@ -1,8 +1,12 @@
 import { createRequire } from 'node:module';
 import { resolve, relative, dirname, sep } from 'node:path';
+import { mkdir, writeFile } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
-import { compileToFile } from './compile.js';
+import { compile } from './compile.js';
 import { createManifestCache } from './cache.js';
+
+const VIRTUAL_STYLESHEET_ID = 'virtual:registyle.css';
+const RESOLVED_STYLESHEET_ID = `\0${VIRTUAL_STYLESHEET_ID}`;
 
 function asViteModuleId(root, file) {
 	return `/${relative(root, file).split(sep).join('/')}`;
@@ -10,7 +14,7 @@ function asViteModuleId(root, file) {
 
 export function registyle(options = {}) {
 	const entry = options.entry || 'src/registyles/index.js';
-	const outFile = options.outFile || '.registyle/style.css';
+	const outFile = options.outFile;
 	const inputCss = options.inputCss || '@reference "tailwindcss"; @import "tailwindcss/utilities.css" source(none);';
 	const enableCache = options.cache !== false;
 	const debug = options.debug || false;
@@ -19,6 +23,7 @@ export function registyle(options = {}) {
 	let outputPath;
 	let entryPath;
 	let watchPath;
+	let compiledCss = null;
 	
 	// Create cache instance
 	const cache = enableCache ? createManifestCache({ maxSize: options.cacheSize || 50 }) : null;
@@ -52,7 +57,7 @@ export function registyle(options = {}) {
 			// Check cache
 			const cacheKey = cache?.generateKey(manifest);
 			
-			if (cache && cacheKey && cache.has(cacheKey)) {
+			if (cache && cacheKey && compiledCss !== null && cache.has(cacheKey)) {
 				const hasChanged = await cache.hasFilesChanged([entryPath]);
 				
 				if (!hasChanged) {
@@ -64,7 +69,7 @@ export function registyle(options = {}) {
 			}
 			
 			// Pass through optimization options; compilation preserves CSS by default.
-			await compileToFile(manifest, outputPath, { 
+			compiledCss = await compile(manifest, {
 				baseDir: root, 
 				inputCss,
 				minify: options.minify,
@@ -72,6 +77,10 @@ export function registyle(options = {}) {
 				deduplicate: options.deduplicate,
 				debug,
 			});
+			if (outputPath) {
+				await mkdir(dirname(outputPath), { recursive: true });
+				await writeFile(outputPath, compiledCss);
+			}
 			
 			// Store in cache
 			if (cache && cacheKey) {
@@ -96,10 +105,16 @@ export function registyle(options = {}) {
 	return {
 		name: 'registyle:vite',
 		enforce: 'pre',
+		resolveId(id) {
+			if (id === VIRTUAL_STYLESHEET_ID) return RESOLVED_STYLESHEET_ID;
+		},
+		load(id) {
+			if (id === RESOLVED_STYLESHEET_ID) return compiledCss ?? '';
+		},
 		configResolved(config) {
 			root = config.root;
 			entryPath = resolve(root, entry);
-			outputPath = resolve(root, outFile);
+			outputPath = outFile ? resolve(root, outFile) : null;
 			watchPath = resolve(root, options.watch || dirname(entry));
 		},
 		async buildStart() {
@@ -120,6 +135,8 @@ export function registyle(options = {}) {
 				compiling = true;
 				try {
 					await compileStyles();
+					const stylesheetModule = server.moduleGraph.getModuleById(RESOLVED_STYLESHEET_ID);
+					if (stylesheetModule) server.moduleGraph.invalidateModule(stylesheetModule);
 					server.ws.send({ type: 'full-reload' });
 				} catch (error) {
 					server.config.logger.error(error instanceof Error ? error.message : String(error));
