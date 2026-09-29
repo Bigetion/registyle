@@ -12,7 +12,10 @@ export function Accordion({ items, className }) {
         return (
           <div key={i} className="accordion-item">
             <button
+              id={`accordion-trigger-${i}`}
               className="accordion-trigger"
+              aria-expanded={isOpen}
+              aria-controls={`accordion-panel-${i}`}
               onClick={() => setOpen(isOpen ? null : i)}
             >
               <span>{item.title}</span>
@@ -22,7 +25,14 @@ export function Accordion({ items, className }) {
               />
             </button>
             {isOpen && (
-              <div className="accordion-content">{item.content}</div>
+              <div
+                id={`accordion-panel-${i}`}
+                className="accordion-content"
+                role="region"
+                aria-labelledby={`accordion-trigger-${i}`}
+              >
+                {item.content}
+              </div>
             )}
           </div>
         );

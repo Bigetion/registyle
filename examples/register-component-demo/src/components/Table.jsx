@@ -1,13 +1,13 @@
 import React from 'react';
 
-export function Table({ columns, rows, emptyText = 'No data' }) {
+export function Table({ columns, rows, emptyText = 'No data', label = 'Data table' }) {
   return (
-    <div className="table">
+    <div className="table" role="region" aria-label={label} tabIndex={0}>
       <table className="table-table">
         <thead className="table-thead">
           <tr>
             {columns.map((col, i) => (
-              <th key={i} className="table-th" style={col.width ? { width: col.width } : undefined}>
+              <th key={i} className="table-th" scope="col" style={col.width ? { width: col.width } : undefined}>
                 {col.header}
               </th>
             ))}

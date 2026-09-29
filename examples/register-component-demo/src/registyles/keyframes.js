@@ -2,6 +2,7 @@ import { register } from 'registyle/collector';
 
 register('@keyframes spin',      { from: { transform: 'rotate(0deg)' }, to: { transform: 'rotate(360deg)' } });
 register('@keyframes fadeIn',    { from: { opacity: '0', transform: 'translateY(6px)' }, to: { opacity: '1', transform: 'translateY(0)' } });
+register('@keyframes tooltipIn', { from: { opacity: '0' }, to: { opacity: '1' } });
 register('@keyframes slideDown', { from: { opacity: '0', transform: 'scaleY(0.95)', 'transform-origin': 'top' }, to: { opacity: '1', transform: 'scaleY(1)', 'transform-origin': 'top' } });
 register('@keyframes pulse',     { '0%, 100%': { opacity: '1' }, '50%': { opacity: '0.4' } });
 register('@keyframes shimmer',   { from: { 'background-position': '-200% 0' }, to: { 'background-position': '200% 0' } });

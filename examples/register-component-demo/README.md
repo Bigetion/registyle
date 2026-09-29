@@ -9,6 +9,8 @@ npm run dev
 
 The Vite plugin in `vite.config.js` uses Registyle's defaults: it loads the manifest from `src/registyles/index.js`, watches `src/registyles`, and compiles registered Tailwind utilities with Tailwind CSS v4. The app imports `virtual:registyle.css`; Vite serves the generated CSS from memory during development and emits a CSS asset for production. Production output can be checked with `npm run build`.
 
+Each demo component has a matching style module in `src/registyles` (for example, `table.js` and `accordion.js`). `index.js` imports those modules; shared form label, hint, and addon styles live in `form-fields.js`.
+
 ## Button Workflow
 
 The button demonstrates the full authoring path:

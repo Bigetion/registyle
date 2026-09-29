@@ -30,7 +30,8 @@ import {
   CreditCard, UserCircle, AlertCircle, Loader2, Bone, BarChart2,
   LayoutTemplate, ChevronDown, ToggleLeft, CheckSquare, Hash,
   ListFilter, Navigation, ArrowLeftRight, MessageCircle, MessageSquare,
-  Bell, Table2, LayoutDashboard,
+  Bell, Table2, LayoutDashboard, Trash2, Share2, MoreHorizontal,
+  Search, UserPlus,
 } from 'lucide-react';
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -630,10 +631,10 @@ function TooltipDemo() {
         <div className="demo-section-title">On icon</div>
         <div className="demo-row">
           <Tooltip content="Delete item" placement="top">
-            <IconButton icon={<span>🗑</span>} variant="ghost" size="md" />
+            <IconButton icon={<Trash2 size={16} />} aria-label="Delete item" variant="ghost" size="md" />
           </Tooltip>
           <Tooltip content="Share with team" placement="top">
-            <IconButton icon={<span>↗</span>} variant="ghost" size="md" />
+            <IconButton icon={<Share2 size={16} />} aria-label="Share with team" variant="ghost" size="md" />
           </Tooltip>
         </div>
       </div>
@@ -710,31 +711,90 @@ function ToastDemo({ onToast }) {
   );
 }
 
-function TableDemo() {
-  const columns = [
-    { key: 'name',   header: 'Name',   render: r => (
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-        <Avatar initials={r.name[0]+r.name[1]} size="sm" />
-        <span style={{ fontWeight: 500 }}>{r.name}</span>
-      </div>
-    )},
-    { key: 'role',   header: 'Role' },
-    { key: 'status', header: 'Status', render: r => (
-      <Badge variant={r.status === 'Active' ? 'success' : r.status === 'Pending' ? 'warning' : 'default'}>
-        {r.status}
-      </Badge>
-    )},
-    { key: 'joined', header: 'Joined' },
-    { key: 'action', header: '', render: () => <Button size="xs" variant="ghost">Edit</Button> },
-  ];
+function TableDemo({ onToast }) {
+  const [search, setSearch] = useState('');
+  const [status, setStatus] = useState('all');
   const rows = [
-    { name: 'Alice Johnson',  role: 'Designer',         status: 'Active',   joined: 'Jan 2024' },
+    { name: 'Alice Johnson',  role: 'Designer',        status: 'Active',   joined: 'Jan 2024' },
     { name: 'Bob Smith',      role: 'Engineer',         status: 'Active',   joined: 'Mar 2024' },
     { name: 'Carol Williams', role: 'Product Manager',  status: 'Pending',  joined: 'Jun 2024' },
     { name: 'Dave Brown',     role: 'Engineer',         status: 'Inactive', joined: 'Aug 2024' },
     { name: 'Eve Davis',      role: 'Designer',         status: 'Active',   joined: 'Sep 2024' },
   ];
-  return <Table columns={columns} rows={rows} />;
+  const filteredRows = rows.filter(row => {
+    const matchesSearch = `${row.name} ${row.role}`.toLowerCase().includes(search.trim().toLowerCase());
+    return matchesSearch && (status === 'all' || row.status.toLowerCase() === status);
+  });
+  const columns = [
+    { key: 'name',   header: 'Name',   width: '30%', render: r => (
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+        <Avatar initials={r.name[0]+r.name[1]} size="sm" />
+        <span style={{ fontWeight: 500 }}>{r.name}</span>
+      </div>
+    )},
+    { key: 'role',   header: 'Role', width: '22%' },
+    { key: 'status', header: 'Status', width: '16%', render: r => (
+      <Badge variant={r.status === 'Active' ? 'success' : r.status === 'Pending' ? 'warning' : 'default'}>
+        {r.status}
+      </Badge>
+    )},
+    { key: 'joined', header: 'Joined', width: '18%' },
+    { key: 'action', header: 'Actions', width: '14%', render: r => (
+      <IconButton
+        icon={<MoreHorizontal size={16} />}
+        aria-label={`Actions for ${r.name}`}
+        variant="ghost"
+        size="sm"
+        onClick={() => onToast?.({ variant: 'info', title: r.name, desc: `Member actions for ${r.role.toLowerCase()}.` })}
+      />
+    )},
+  ];
+  return (
+    <>
+      <div className="table-demo-toolbar">
+        <div>
+          <h2 className="table-demo-title">Team members</h2>
+          <p className="table-demo-copy">Manage your workspace people and access.</p>
+        </div>
+        <Button
+          size="sm"
+          leftIcon={<UserPlus size={15} />}
+          onClick={() => onToast?.({ variant: 'success', title: 'Invite member', desc: 'Your workspace invite is ready to send.' })}
+        >
+          Invite member
+        </Button>
+      </div>
+      <div className="table-demo-controls">
+        <div className="table-demo-search">
+          <Input
+            aria-label="Search members"
+            leftIcon={<Search size={15} />}
+            placeholder="Search by name or role"
+            value={search}
+            onChange={event => setSearch(event.target.value)}
+          />
+        </div>
+        <div className="table-demo-filter">
+          <Select
+            options={[
+              { value: 'all', label: 'All statuses' },
+              { value: 'active', label: 'Active' },
+              { value: 'pending', label: 'Pending' },
+              { value: 'inactive', label: 'Inactive' },
+            ]}
+            value={status}
+            onChange={setStatus}
+            placeholder="Filter status"
+          />
+        </div>
+      </div>
+      <Table columns={columns} rows={filteredRows} emptyText="No members match those filters." label="Team members" />
+      <div className="table-demo-footer" aria-live="polite">
+        <span>Showing {filteredRows.length} of {rows.length} members</span>
+        <span>Directory updated just now</span>
+      </div>
+    </>
+  );
 }
 
 function StatCardDemo() {
@@ -795,47 +855,66 @@ export default function App() {
 
   const demo = DEMO_MAP[active];
   const DemoComponent = demo?.component;
+  const activeGroup = NAV.find(group => group.items.some(item => item.id === active))?.group || 'Components';
+  const componentNumber = String(Object.keys(DEMO_MAP).indexOf(active) + 1).padStart(2, '0');
 
   return (
     <div className="app-shell">
       {/* Sidebar */}
       <aside className="sidebar">
         <div className="sidebar-logo">
-          <span style={{ color: 'var(--c-brand)' }}>◆</span> register()
+          <span className="brand-mark">r</span> registyle
         </div>
-        {NAV.map(group => (
-          <div key={group.group}>
-            <span className="sidebar-group-label">{group.group}</span>
-            {group.items.map(item => {
-              const Icon = item.icon;
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => setActive(item.id)}
-                  className={active === item.id ? 'sidebar-item-active' : 'sidebar-item'}
-                >
-                  <Icon size={15} />
-                  {item.label}
-                </button>
-              );
-            })}
-          </div>
-        ))}
+        <nav className="sidebar-nav" aria-label="Component examples">
+          {NAV.map(group => (
+            <div className="sidebar-group" key={group.group}>
+              <span className="sidebar-group-label">{group.group}</span>
+              {group.items.map(item => {
+                const Icon = item.icon;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => setActive(item.id)}
+                    className={active === item.id ? 'sidebar-item-active' : 'sidebar-item'}
+                    aria-current={active === item.id ? 'page' : undefined}
+                  >
+                    <Icon size={15} />
+                    {item.label}
+                  </button>
+                );
+              })}
+            </div>
+          ))}
+        </nav>
       </aside>
 
       {/* Content */}
       <main className="main-content">
         {demo && (
-          <>
-            <div className="demo-header">
-              <h1 className="demo-title">{demo.title}</h1>
-              <p className="demo-desc">{demo.desc}</p>
+          <div className="content-frame">
+            <div className="demo-topline">
+              <span className="demo-location">Registyle / Component library</span>
+              <span className="demo-count">{Object.keys(DEMO_MAP).length} components</span>
             </div>
-            {active === 'toast'
-              ? <ToastDemo onToast={add} />
-              : DemoComponent && <DemoComponent />
-            }
-          </>
+            <header className="demo-header">
+              <div className="demo-heading-copy">
+                <span className="demo-eyebrow">{activeGroup} / {componentNumber}</span>
+                <h1 className="demo-title">{demo.title}</h1>
+                <p className="demo-desc">{demo.desc}</p>
+              </div>
+              <div className="demo-index" aria-hidden="true">
+                <span>{componentNumber}</span><span>/ {Object.keys(DEMO_MAP).length}</span>
+              </div>
+            </header>
+            <div className="demo-stage">
+              {active === 'toast'
+                ? <ToastDemo onToast={add} />
+                : active === 'table'
+                  ? <TableDemo onToast={add} />
+                : DemoComponent && <DemoComponent />
+              }
+            </div>
+          </div>
         )}
       </main>
 
