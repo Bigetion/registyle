@@ -14,31 +14,29 @@ register('task-list', { tw: 'm-0 list-none overflow-hidden rounded-[12px] border
 
 register.group('task', {
   row: {
-    tw: 'flex items-center gap-3 border-b border-[#edf0ee] px-4 py-3 max-sm:gap-2 max-sm:px-3',
-    'min-height': '68px',
-    '&:last-child': { 'border-bottom': '0' },
-    '&:hover': { 'background-color': '#fcfdfc' },
+    tw: 'flex min-h-[68px] items-center gap-3 border-b border-[#edf0ee] px-4 py-3 max-sm:gap-2 max-sm:px-3 last:[border-bottom:0] hover:bg-[#fcfdfc]',
   },
   check: {
     tw: 'grid size-[19px] shrink-0 place-items-center rounded-full border-[1.5px] border-[#cbd7d0] bg-white text-white transition-colors hover:border-[#57917a] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#57917a]',
   },
   details: { tw: 'flex min-w-0 flex-1 flex-col gap-1' },
   title: { tw: 'overflow-hidden text-ellipsis whitespace-nowrap text-[12px] font-medium text-[#354a40]' },
-  'title-completed': { color: '#a2aca6', 'text-decoration-line': 'line-through' },
+  'title-completed': { tw: 'text-[#a2aca6] line-through' },
   meta: { tw: 'flex items-center gap-3' },
-  'priority-tag': { tw: 'inline-flex items-center gap-1.5 text-[10px] capitalize text-[#87938c]' },
-  'due-label': { tw: 'inline-flex items-center gap-1 text-[10px] text-[#929e97]' },
-  'delete-button': { tw: 'grid size-8 shrink-0 place-items-center rounded-[7px] text-[#b4beb8] opacity-0 transition-colors hover:bg-[#fff0ed] hover:text-[#bb6655] hover:opacity-100 focus:opacity-100 max-sm:opacity-100' },
 });
 
-register('task-row-completed', { 'background-color': '#fbfcfb' });
-register('task-check-checked', { 'border-color': '#5b9b78', 'background-color': '#5b9b78' });
+register('priority-tag', { tw: 'inline-flex items-center gap-1.5 text-[10px] capitalize text-[#87938c]' });
+register('due-label', { tw: 'inline-flex items-center gap-1 text-[10px] text-[#929e97]' });
+register('delete-button', { tw: 'grid size-8 shrink-0 place-items-center rounded-[7px] text-[#b4beb8] opacity-0 transition-colors hover:bg-[#fff0ed] hover:text-[#bb6655] hover:opacity-100 focus:opacity-100 max-sm:opacity-100' });
+
+register('task-row-completed', { tw: 'bg-[#fbfcfb]' });
+register('task-check-checked', { tw: 'border-[#5b9b78] bg-[#5b9b78]' });
 register('priority-dot', {
-  base: { tw: 'size-2 rounded-full', 'background-color': '#7f9c8d' },
+  base: { tw: 'size-2 rounded-full bg-[#7f9c8d]' },
   modifiers: {
-    low: { 'background-color': '#77a589' },
-    medium: { 'background-color': '#c4954c' },
-    high: { 'background-color': '#cf735f' },
+    low: { tw: 'bg-[#77a589]' },
+    medium: { tw: 'bg-[#c4954c]' },
+    high: { tw: 'bg-[#cf735f]' },
   },
 });
 

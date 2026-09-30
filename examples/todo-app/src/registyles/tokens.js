@@ -7,9 +7,7 @@ register(':root', {
 });
 
 register('body', {
-  margin: 0, minWidth: '320px', backgroundColor: 'var(--canvas)', color: 'var(--ink)',
-  fontFamily: "'DM Sans', sans-serif", fontSize: '14px', lineHeight: 1.5,
-  '-webkit-font-smoothing': 'antialiased',
+  tw: 'm-0 min-w-[320px] bg-[var(--canvas)] text-[var(--ink)] [font-family:DM_Sans,sans-serif] text-sm leading-[1.5] antialiased',
 });
 
 register('sr-only', { tw: 'sr-only' });
