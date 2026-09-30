@@ -1,391 +1,94 @@
 # Migration Guide
 
-## Migrating to 2.0.0
+This guide covers upgrades from Registyle 1.x to 2.0.0. For installation and workflow choices, start with the [README](../README.md); for current public signatures, see the [API reference](./API.md).
 
-Registyle 2.0 keeps the runtime registration, collector, Tailwind compiler, Vite adapter, theme, and core variants APIs. It removes secondary APIs that duplicated these workflows or added design-specific behavior.
-
-### Removed APIs
-
-- Replace `cn` with `cx`.
-- Replace `registyle/cache`, `registyle/presets`, and `registyle/validate` with application-owned helpers where needed. These modules are no longer included.
-- Replace direct `registyle/optimize` calls with `minify`, `deduplicate`, or `optimize` options on `compile()`, `compileToFile()`, or the Vite plugin.
-- Replace `defineVariants`, `createVariantPreset`, `variantPresets`, `createButton`, and `applyVariants` with plain variant configuration passed to `createVariants()`.
-- Remove the Vite `cache` and `cacheSize` options. Watched registration changes are recompiled directly.
-
-### Upgrade
+## Upgrade
 
 ```sh
 npm install registyle@^2
 ```
 
-Theme helpers and the `createVariants`, `compound`, and `mergeVariants` APIs remain available. Check the [2.0.0 changelog](./CHANGELOG.md#200---2026-09-30) for the full list of removals.
+Registyle 2.0 keeps runtime CSS registration, the collector, Tailwind compiler, Vite adapter, theme helpers, and the `createVariants`, `compound`, and `mergeVariants` APIs. The breaking changes are listed below and in the [2.0.0 changelog](./CHANGELOG.md#200---2026-09-30).
 
-## Historical: Migrating from 1.0.0 to 1.1.1
+## Breaking Changes
 
-The following sections document the old 1.x upgrade path. Their additive APIs are not available in 2.0.0.
+### Rename `cn` to `cx`
 
-### Migrating from 1.0.0
+```diff
+- import { cn } from 'registyle';
++ import { cx } from 'registyle';
+```
 
-No required API migration is intended: existing `register()`, `compile()`, collector, and Vite plugin APIs remain available. The theme, validation, variants, presets, cache, and optimizer modules are additive subpaths; adopt them only where useful.
+`cx()` still combines strings, arrays, and conditional object maps.
 
-CSS optimization is now opt-in to preserve 1.0.0 output by default. To enable minification and safe adjacent-rule deduplication explicitly, pass `optimize: true` to `compile()`, `compileToFile()`, or the Vite plugin.
+### Removed subpaths
 
-### New Features You May Adopt
+The `registyle/cache`, `registyle/presets`, `registyle/validate`, and `registyle/optimize` subpaths are no longer published. Keep application-specific helpers in your app. CSS optimization is available through compiler and Vite options:
 
-#### Use Theme System
-
-**Before:**
 ```js
-register('button', {
-  backgroundColor: '#3b82f6',
-  padding: '1rem',
+await compileToFile(manifest, './styles.css', {
+  minify: true,
+  deduplicate: true,
 });
 ```
 
-**After:**
+Unknown Tailwind utilities fail compilation with the registration and token in the error message; there is no separate validation API in v2.
+
+### Simplify variant helpers
+
+The helpers `defineVariants`, `createVariantPreset`, `variantPresets`, `createButton`, and `applyVariants` were removed. Define variants with `createVariants()` and use `compound()` for compound cases:
+
 ```js
-import { createTheme, withTheme } from 'registyle/theme';
-
-const theme = createTheme({
-  colors: { primary: { 500: '#3b82f6' } },
-  spacing: { 4: '1rem' },
-});
-
-const themed = withTheme(theme);
-
-const [name, config] = themed.register('button', (t) => ({
-  backgroundColor: t.color('primary', 500),
-  padding: t.space(4),
-}));
-```
-
-**Benefits:** Centralized tokens, easier rebranding, type-safe access.
-
-#### Use Variants Instead of Modifiers
-
-**Before:**
-```js
-register('button', {
-  base: { display: 'flex' },
-  modifiers: {
-    primary: { backgroundColor: '#3b82f6' },
-    secondary: { backgroundColor: '#6b7280' },
-    small: { padding: '0.25rem 0.5rem' },
-    large: { padding: '0.75rem 1.5rem' },
-  },
-});
-```
-
-**After:**
-```js
-import { createVariants } from 'registyle/variants';
+import { compound, createVariants } from 'registyle/variants';
 
 const button = createVariants({
-  base: { display: 'flex' },
-  variants: {
-    variant: {
-      primary: { backgroundColor: '#3b82f6' },
-      secondary: { backgroundColor: '#6b7280' },
-    },
-    size: {
-      small: { padding: '0.25rem 0.5rem' },
-      large: { padding: '0.75rem 1.5rem' },
-    },
-  },
-  defaultVariants: {
-    variant: 'primary',
-    size: 'large',
-  },
-});
-
-// Generate manifest
-const manifest = button.toManifest('button');
-```
-
-**Benefits:** Better organization, compound variants, type-safe props.
-
-#### Enable Validation
-
-**Before:**
-```js
-// No validation
-await compileToFile(manifest, './styles.css');
-```
-
-**After:**
-```js
-import { validateManifest } from 'registyle/validate';
-
-const validation = validateManifest(manifest, {
-  strict: false,
-  warnConflicts: true,
-});
-
-if (validation.valid) {
-  await compileToFile(manifest, './styles.css');
-}
-```
-
-**Benefits:** Catch errors early, helpful warnings, better DX.
-
-#### Use Presets
-
-**Before:**
-```js
-// Define every component from scratch
-register('button', { /* ... */ });
-register('input', { /* ... */ });
-register('card', { /* ... */ });
-```
-
-**After:**
-```js
-import { shadcnPreset, applyPreset } from 'registyle/presets';
-
-const manifest = applyPreset(
-  { classes: { /* custom classes */ } },
-  shadcnPreset
-);
-```
-
-**Benefits:** Faster development, consistent design, production-ready components.
-
-### Optional Vite Features
-
-Existing Vite configuration continues to work. You can opt into cache diagnostics and CSS optimization as needed:
-
-```js
-registyle({
-  entry: 'src/styles/index.js',
-  outFile: '.registyle/style.css',
-  cache: true,
-  optimize: true,
-  debug: false,
-})
-```
-
-CSS optimization is disabled by default for compatibility. Enable `optimize: true` to minify and safely deduplicate adjacent rules, or enable `minify` / `deduplicate` individually.
-
-## Migrating from Other Solutions
-
-### From CVA (Class Variance Authority)
-
-**CVA:**
-```ts
-import { cva } from 'class-variance-authority';
-
-const button = cva(['button'], {
+  base: { tw: 'inline-flex items-center rounded-md' },
   variants: {
     intent: {
-      primary: ['bg-blue-500', 'text-white'],
-      secondary: ['bg-gray-500', 'text-white'],
+      primary: { tw: 'bg-blue-600 text-white' },
+      secondary: { tw: 'bg-gray-100 text-gray-900' },
     },
     size: {
-      small: ['text-sm', 'py-1', 'px-2'],
-      medium: ['text-base', 'py-2', 'px-4'],
+      sm: { tw: 'px-3 py-1.5 text-sm' },
+      md: { tw: 'px-4 py-2' },
     },
   },
-  defaultVariants: {
-    intent: 'primary',
-    size: 'medium',
-  },
-});
-```
-
-**Registyle:**
-```js
-import { createVariants } from 'registyle/variants';
-
-const button = createVariants({
-  base: { /* base styles */ },
-  variants: {
-    intent: {
-      primary: {
-        tw: 'bg-blue-500 text-white',
-        // Or CSS properties
-        backgroundColor: '#3b82f6',
-        color: '#ffffff',
-      },
-      secondary: {
-        tw: 'bg-gray-500 text-white',
-      },
-    },
-    size: {
-      small: { tw: 'text-sm py-1 px-2' },
-      medium: { tw: 'text-base py-2 px-4' },
-    },
-  },
-  defaultVariants: {
-    intent: 'primary',
-    size: 'medium',
-  },
-});
-```
-
-**Key Differences:**
-- Registyle compiles to CSS, CVA generates class strings
-- Registyle supports CSS properties alongside Tailwind
-- Registyle has build-time optimization
-
-### From Styled Components / Emotion
-
-**Styled Components:**
-```js
-import styled from 'styled-components';
-
-const Button = styled.button`
-  padding: ${props => props.size === 'small' ? '0.25rem 0.5rem' : '0.5rem 1rem'};
-  background-color: ${props => props.variant === 'primary' ? '#3b82f6' : '#6b7280'};
-  
-  &:hover {
-    opacity: 0.9;
-  }
-`;
-```
-
-**Registyle:**
-```js
-import { createVariants } from 'registyle/variants';
-
-const button = createVariants({
-  base: {
-    hover: { opacity: '0.9' },
-  },
-  variants: {
-    size: {
-      small: { padding: '0.25rem 0.5rem' },
-      medium: { padding: '0.5rem 1rem' },
-    },
-    variant: {
-      primary: { backgroundColor: '#3b82f6' },
-      secondary: { backgroundColor: '#6b7280' },
-    },
-  },
+  compoundVariants: [
+    compound({ intent: 'primary', size: 'sm' }, { tw: 'shadow-sm' }),
+  ],
+  defaultVariants: { intent: 'primary', size: 'md' },
 });
 
-// Generate CSS at build time
-const manifest = button.toManifest('button');
+const classes = button.compose({ intent: 'secondary' }, 'button');
 ```
 
-**Benefits of Registyle:**
-- Zero runtime overhead
-- Better performance (no style injection)
-- Smaller bundle size
-- Optional Tailwind integration
+### Remove Vite cache options
 
-### From Panda CSS
+The `cache` and `cacheSize` plugin options are gone. Registyle recompiles when watched registrations change. Configure `entry` and `watch` for your project layout; `outFile` remains optional.
 
-**Panda CSS:**
-```tsx
-import { css } from '../styled-system/css';
+## Vite Stylesheet Migration
 
-const button = css({
-  padding: '4',
-  bg: 'blue.500',
-  _hover: { bg: 'blue.600' },
-});
+If your v1 app imported a generated `.registyle/style.css`, the v2 Vite plugin uses a virtual stylesheet by default:
+
+```diff
+- import './.registyle/style.css';
++ import 'virtual:registyle.css';
 ```
 
-**Registyle:**
-```js
-import { register } from 'registyle';
-import { createTheme } from 'registyle/theme';
+The default manifest entry is `src/registyles/index.js`, which imports registration modules and default-exports `getManifest()`. To keep a physical CSS file, configure `outFile` and continue importing that file instead. See the Vite section in the [README](../README.md#vite-plugin).
 
-const theme = createTheme({
-  spacing: { 4: '1rem' },
-  colors: { blue: { 500: '#3b82f6', 600: '#2563eb' } },
-});
+## Verify the Upgrade
 
-register('button', {
-  padding: theme.space(4),
-  backgroundColor: theme.color('blue', 500),
-  hover: { backgroundColor: theme.color('blue', 600) },
-});
+Run package tests from the Registyle repository:
+
+```sh
+npm test
 ```
 
-**Similarities:**
-- Both are build-time CSS solutions
-- Both support type-safe design tokens
-- Both have zero runtime
+Then run the production build from your consuming application directory:
 
-**Registyle Advantages:**
-- Tailwind v4 integration
-- Preset system for quick starts
-- Variant composition
-- No code generation required
-
-### From Vanilla Extract
-
-**Vanilla Extract:**
-```ts
-import { style } from '@vanilla-extract/css';
-
-export const button = style({
-  padding: '0.5rem 1rem',
-  backgroundColor: 'blue',
-  ':hover': {
-    backgroundColor: 'darkblue',
-  },
-});
+```sh
+npm run build
 ```
 
-**Registyle:**
-```js
-import { register } from 'registyle';
-
-register('button', {
-  padding: '0.5rem 1rem',
-  backgroundColor: 'blue',
-  hover: { backgroundColor: 'darkblue' },
-});
-```
-
-**Key Differences:**
-- Registyle uses semantic class names (`.button`)
-- Vanilla Extract generates atomic classes
-- Registyle has optional Tailwind integration
-- Registyle has runtime API for prototyping
-
-## Checklist
-
-Use this checklist when upgrading from 1.0.0:
-
-- [ ] Update to `registyle@^1.1.1`
-- [ ] Keep existing registration and Vite configuration unless adopting new features
-- [ ] Adopt theme, variants, presets, and validation only where useful
-- [ ] Enable CSS optimization explicitly only after checking generated output
-- [ ] Run `npm test` and your application build
-- [ ] Review CHANGELOG.md for release details
-
-## Getting Help
-
-- **Documentation**: [README.md](./README.md)
-- **Optimization API**: [README.md](./README.md#optimization-api)
-- **Issues**: [GitHub Issues](https://github.com/Bigetion/registyle/issues)
-- **Examples**: [examples/](./examples/)
-
-## FAQ
-
-### Do I need to migrate everything at once?
-
-No. Existing 1.0.0 APIs remain available; the 1.1 feature modules are additive.
-
-### Will my CSS output change?
-
-By default, 1.1.1 preserves the 1.0.0 CSS output. If you explicitly enable optimization, inspect the result with your own fixtures before shipping it.
-
-### Can I adopt the new modules gradually?
-
-Yes. Theme, validation, variants, presets, cache, and optimization are separate optional subpaths.
-
-### How do I migrate a large codebase?
-
-1. Start with non-critical components
-2. Use validation to catch issues early
-3. Migrate incrementally
-4. Keep both versions working during transition
-5. Full cutover once confident
-
-### Performance impact?
-
-There are no universal performance numbers: build time and CSS size depend on the manifest and project. Caching and CSS optimization are optional; measure them in your own build before enabling them.
+Also verify that your app imports the stylesheet exactly once and that every `tw` registration is compiled through `registyle/compile` or the Vite plugin. `register()` in the browser accepts CSS declarations only; it does not compile Tailwind utilities.

@@ -1,19 +1,17 @@
 # registyle
 
-A semantic styling library centered on compiling Tailwind CSS v4 utilities into named component classes, with a small runtime for plain CSS registrations.
+A semantic styling library that compiles Tailwind CSS v4 utilities into named component classes, with a separate CSS-only runtime for plain declarations.
 
 **Version 2.0.0**
 
 ## Features
 
-- Tailwind CSS v4 utilities compiled onto semantic class names from an explicit manifest
-- Small browser runtime for plain CSS when a build-time Tailwind workflow is not needed
-- CSS extraction for server-side and build-time workflows
-- Optional Vite adapter with a virtual stylesheet
-- Optional design tokens and theme helpers through `registyle/theme`
-- Optional variant composition, including compound variants, through `registyle/variants`
-- CSS cascade layers, responsive rules, and container queries
-- TypeScript declarations for the public APIs
+- Compile Tailwind utilities onto semantic selectors such as `.action-button` and `.action-button-primary`
+- Register component slots with `register.group()`
+- Use utility arrays and grouped prefixes such as `max-sm:(w-full flex-col)`
+- Compose conditional class names with `cx()` or generate variant registrations with `registyle/variants`
+- Choose a Vite plugin, a manual compiler step, or the CSS-only runtime
+- Extract runtime CSS for server-side rendering
 
 ## Install
 
@@ -21,39 +19,125 @@ A semantic styling library centered on compiling Tailwind CSS v4 utilities into 
 npm install registyle
 ```
 
-## Quick Start
+## How It Works
 
-### Tailwind CSS v4
+For a React app, the Vite plugin is the shortest path:
 
-```js
-import { compileToFile } from 'registyle/compile';
-
-const manifest = {
-  classes: {
-    'action-button': {
-      tw: [
-        'inline-flex items-center rounded-md',
-        'bg-blue-600 px-4 py-2 font-medium text-white',
-      ],
-      hover: { tw: ['bg-blue-700'] },
-    },
-  },
-};
-
-await compileToFile(manifest, './src/registyle.css');
+```text
+registration files -> Vite collects styles -> Tailwind v4 compiles utilities -> virtual CSS -> semantic classes in JSX
 ```
 
-Install the Tailwind compiler dependencies with `npm install -D @tailwindcss/postcss postcss postcss-selector-parser`, then import the generated stylesheet once in your app. Use the semantic class in markup: `<button class="action-button">Save</button>`. The `tw` utilities are compiled at build time and are not accepted by the browser runtime.
+You write `register()` calls in JavaScript modules. The plugin collects them from `src/registyles/index.js` and exposes compiled CSS as `virtual:registyle.css`. You do not create a manifest by hand. Registyle compiles only registered utilities; it does not scan JSX or HTML for class names, and its stylesheet does not include Tailwind Preflight.
 
-## Tailwind v4 Build
+For apps without Vite, use `compileToFile()` in a build script. If you do not need Tailwind, use the CSS-only runtime API instead.
 
-Install the official compiler packages as development dependencies:
+## Quick Start: React + Vite
+
+Create a React app if you do not already have one:
 
 ```sh
+npm create vite@latest my-app -- --template react
+cd my-app
+npm install
+npm install registyle
 npm install -D @tailwindcss/postcss postcss postcss-selector-parser
 ```
 
-Keep registrations in a manifest and compile it during the app build:
+Vite's React template already includes Vite and `@vitejs/plugin-react`. Add the Registyle plugin to `vite.config.js`:
+
+```js
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import { registyle } from 'registyle/vite';
+
+export default defineConfig({
+  plugins: [react(), registyle()],
+});
+```
+
+Create `src/registyles/button.js` and register a component style:
+
+```js
+import { register } from 'registyle/collector';
+
+register('action-button', {
+  base: {
+    tw: [
+      'inline-flex items-center rounded-md',
+      'px-4 py-2 font-medium',
+    ],
+  },
+  modifiers: {
+    primary: { tw: 'bg-blue-600 text-white hover:bg-blue-700' },
+    secondary: { tw: 'bg-gray-100 text-gray-900' },
+  },
+});
+```
+
+Create `src/registyles/index.js` to collect the styles. The Vite plugin uses this entry by default:
+
+```js
+import { getManifest } from 'registyle/collector';
+import './button.js';
+
+export default getManifest();
+```
+
+Import the virtual stylesheet once in `src/main.jsx`:
+
+```js
+import 'virtual:registyle.css';
+```
+
+Then use the semantic class in your React component:
+
+```jsx
+import { cx } from 'registyle';
+
+export function Button({ variant = 'primary', className, ...props }) {
+  return (
+    <button
+      className={cx('action-button', `action-button-${variant}`, className)}
+      {...props}
+    />
+  );
+}
+```
+
+Run the app as usual:
+
+```sh
+npm run dev
+```
+
+The CSS flow is handled by Vite: it watches `src/registyles`, recompiles when a registration changes, and emits CSS during `npm run build`. The component demo in [`examples/register-component-demo`](./examples/register-component-demo/README.md) shows the complete setup.
+
+## Writing Utilities
+
+A `tw` value can be a string or an array of strings. Use a string for a short set of utilities and an array to keep longer sets readable:
+
+```js
+register('action-button', {
+  tw: [
+    'inline-flex items-center rounded-md',
+    'bg-blue-600 px-4 py-2 font-medium text-white',
+    'hover:(bg-blue-700 text-white)',
+  ],
+});
+```
+
+Grouped prefixes expand at compile time:
+
+```text
+max-sm:(w-full flex-col) -> max-sm:w-full max-sm:flex-col
+border-(2 red-500)       -> border-2 border-red-500
+```
+
+Native Tailwind v4 single-value shorthand such as `bg-(--brand)` is passed through unchanged. Use Tailwind v4 slash notation for color alpha, for example `bg-red-500/50`.
+
+## Other Build Setups
+
+For bundlers without a Registyle plugin, compile a manifest in a Node build script and import the generated CSS through your app's normal CSS pipeline:
 
 ```js
 // scripts/build-styles.mjs
@@ -62,137 +146,55 @@ import { compileToFile } from 'registyle/compile';
 const manifest = {
   classes: {
     'action-button': {
-      tw: 'inline-flex items-center rounded-lg bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700',
-    },
-    'icon-button': { extend: 'action-button', tw: 'h-10 w-10 p-0' },
-  },
-  groups: {
-    card: {
-      root: { tw: 'rounded-xl border bg-white shadow-sm' },
-      title: { tw: 'text-xl font-bold' },
+      tw: 'inline-flex rounded-md bg-blue-600 px-4 py-2 text-white',
     },
   },
 };
 
-await compileToFile(manifest, '.registyle/style.css', {
-  inputCss: '@reference "tailwindcss"; @import "tailwindcss/utilities.css";',
-});
+await compileToFile(manifest, 'src/registyle.css');
 ```
 
-Keep utility-driven styling in `tw`. If your project needs a CSS declaration that is not represented by its Tailwind theme or plugins, add only that declaration as a style-object property beside `tw`; avoid duplicating properties already covered by utilities. Import `.registyle/style.css` from the app stylesheet or entry point. Generated utility rules target the registered semantic classes; Tailwind's preflight is not included. Unknown utilities fail the build. For a custom theme or CSS-first plugins, point `@reference` at the app's Tailwind stylesheet and keep the utilities import in `inputCss`.
-
-Registyle also supports compile-time prefix groups to reduce repeated utility prefixes. `max-sm:(items-stretch flex-col)` expands to `max-sm:items-stretch max-sm:flex-col`, and `border-(2 red-500)` expands to `border-2 border-red-500`. Native one-item Tailwind v4 shorthands such as `bg-(--brand)` are passed through unchanged. For color opacity in Tailwind v4, use its native slash syntax, such as `bg-red-500/50`.
-
-For apps that do not use the Tailwind build workflow, `register()` is a separate CSS-only runtime API. It injects styles in the browser or exposes already-registered CSS through `register.extractCSS()` in Node.js; it does not scan files or compile `tw` utilities.
-
-## API
-
-`register(name, styles)` registers a class. Names beginning with `:`, `[`, or `*`, and standard HTML element names, are treated as raw selectors; use a non-tag name such as `action-button` when you want a class selector. CSS properties support camelCase (`backgroundColor`) and kebab-case (`'background-color'` in JavaScript); nested selectors use `&`, pseudo shorthands include `hover`, `focus`, `active`, `disabled`, `before`, and `after`, and responsive shorthands include `sm`, `md`, `lg`, `xl`, and `2xl`.
-
-Style objects also support CSS layers through `layer`, `!important` through `important`, and native media/container at-rules. Declare global CSS layer order in your application stylesheet.
+Run `node scripts/build-styles.mjs` before your framework's build command, then import `src/registyle.css` from your app entry. If you use a custom Tailwind theme or CSS-first plugins, pass an `inputCss` option that references your app stylesheet:
 
 ```js
-register('action-button', {
-  base: { padding: '8px 12px', border: 0 },
-  modifiers: {
-    primary: { color: 'white', backgroundColor: '#2563eb' },
-    compact: { padding: '4px 8px' },
-  },
+await compileToFile(manifest, 'src/registyle.css', {
+  inputCss: '@reference "./src/app.css"; @import "tailwindcss/utilities.css";',
+  baseDir: process.cwd(),
 });
-
-register('icon-button', { extend: 'action-button', width: '40px', height: '40px' });
-
-register.group('card', {
-  root: { border: '1px solid #ddd', borderRadius: '8px' },
-  title: { fontSize: '18px', fontWeight: 600 },
-});
-
-register.all({
-  ':root': { '--brand-color': '#2563eb' },
-  '@keyframes fade-in': {
-    from: { opacity: 0 },
-    to: { opacity: 1 },
-  },
-});
-
-import { cx } from 'registyle';
-cx('action-button', isActive && 'action-button-active', { 'action-button-disabled': isDisabled });
 ```
 
-- `register.group(baseName, components)` generates a root class and prefixed component classes from CSS style objects.
-- `register.all(map)` registers multiple selectors from an object map.
-- Re-registering the same class or group replaces its previous CSS; class and group registrations have independent ownership.
-- `register.extractCSS()` returns all registered CSS as a string.
-- `register.reset()` clears the registry; useful for tests and isolated SSR renders.
-- `cx()` combines conditional strings, arrays, and object maps; `cx.with()` binds base classes.
-- `compile(manifest, options)` returns CSS compiled by Tailwind v4.
-- `compileToFile(manifest, outputPath, options)` writes the compiled CSS during the build.
+See the [integration guide](./docs/INTEGRATIONS.md) for more build and server-rendering options.
 
-Use the exact same manifest for utility generation and class-name usage. Runtime-only consumers do not need any Tailwind packages; the optional compile subpath requires the three development packages listed above.
+## CSS-Only Runtime
 
-### Vite Plugin
-
-For Vite projects, the plugin compiles registrations into a virtual stylesheet. Vite serves it from memory during development and emits a CSS asset during production builds:
+For plain CSS declarations without Tailwind, import `register()` from the package root:
 
 ```js
-// vite.config.js
-import { defineConfig } from 'vite';
-import { registyle } from 'registyle/vite';
+import { register } from 'registyle';
 
-export default defineConfig({
-  plugins: [registyle()],
+register('notice', {
+  padding: '0.75rem 1rem',
+  color: '#1e3a8a',
+  backgroundColor: '#eff6ff',
 });
 ```
 
-The defaults use `src/registyles/index.js` as the manifest entry and watch the `src/registyles` directory. Override `entry` or `watch` when your project uses a different layout. `outFile` optionally writes a disk copy; otherwise the stylesheet is served through the virtual module. Optimization and debug options are available for builds that need them.
+In the browser, the runtime injects a style tag. In Node.js, call `register.extractCSS()` after importing registration modules to get the registered CSS for server-side extraction. The runtime API does not compile `tw` utilities.
 
-Register reusable styles in modules and collect them from the configured entry:
+## API and Guides
 
-```js
-// src/registyles/button.js
-import { register } from 'registyle/collector';
-
-register('action-button', {
-  base: { tw: 'inline-flex items-center rounded-md font-medium' },
-  modifiers: {
-    primary: { tw: 'bg-blue-600 text-white hover:bg-blue-700' },
-    secondary: { tw: 'bg-gray-100 text-gray-900' },
-  },
-});
-
-// src/registyles/index.js
-import { getManifest } from 'registyle/collector';
-import './button.js';
-
-export default getManifest();
-```
-
-Consume the semantic classes from a component; the utility choices stay in the registration:
-
-```jsx
-import { cx } from 'registyle';
-
-export function Button({ variant = 'primary', className, ...props }) {
-  return <button className={cx('action-button', `action-button-${variant}`, className)} {...props} />;
-}
-```
-
-Import the virtual stylesheet once from the app entry: `import 'virtual:registyle.css';`.
-
-When migrating from the previous file-based Vite setup, replace the `.registyle/style.css` import with the virtual import above. To keep importing a generated file, set `outFile: '.registyle/style.css'` in the plugin options.
-
-`entry` is the JS/TS module that imports registration modules and default-exports the collected manifest. The plugin executes that entry and watches its directory by default; set `watch` to a wider path when registrations live across directories. Set `outFile` only when a separate on-disk CSS copy is needed. The plugin does not scan unrelated source files for class strings. See [the component demo](examples/register-component-demo) for a complete setup.
-
-## Documentation
-
-- [Advanced guide](./docs/ADVANCED.md) — themes, variants, CSS layers, container queries, and build options
-- [Migration guide](./docs/MIGRATION.md) — breaking changes when moving to v2
+- [Documentation guide](./docs/README.md) — choose a workflow and find the right guide
+- [API reference](./docs/API.md) — runtime, collector, compiler, and Vite APIs
+- [Integrations](./docs/INTEGRATIONS.md) — Vite, other bundlers, and runtime CSS extraction
+- [Advanced guide](./docs/ADVANCED.md) — themes, variants, CSS layers, and container queries
+- [Troubleshooting](./docs/TROUBLESHOOTING.md) — common compiler, CSS, and Vite issues
+- [Migration guide](./docs/MIGRATION.md) — upgrade from v1 to v2
 - [Changelog](./docs/CHANGELOG.md) — release history
-- [Examples](./examples/) — example projects
+- [Examples](./examples/) — component library and todo app
 
 ## When to Use Registyle
 
-Registyle is aimed at projects that want Tailwind v4 utilities compiled onto semantic class names from an explicit manifest. Add plain CSS declarations only for needs not covered by the project's Tailwind setup. It does not scan application source files for class names.
+Registyle is for projects that want Tailwind v4 utilities compiled onto semantic class names from an explicit set of registrations. It is especially useful when component markup should stay independent of the utilities that style it. Choose the CSS-only runtime when you only need plain declarations.
 
 ## Contributing
 

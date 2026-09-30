@@ -511,18 +511,9 @@ jobs:
       - uses: actions/setup-node@v3
       - run: npm ci
       - run: npm test
-      - run: npm run build
 ```
 
-```json
-// package.json
-{
-  "scripts": {
-    "build": "vite build",
-    "test": "node --test"
-  }
-}
-```
+The package root's `npm test` script runs the test suite and type checks. Run the consuming application's own build command separately when validating a Vite integration.
 
 ## Best Practices
 
@@ -537,5 +528,5 @@ jobs:
 
 - Review the README for runtime and Tailwind build workflows
 - Check [MIGRATION.md](./MIGRATION.md) if upgrading from v1
-- Explore [examples/](./examples/) for real-world patterns
+- Explore [examples/](../examples/) for real-world patterns
 - Read [CHANGELOG.md](./CHANGELOG.md) for latest features
