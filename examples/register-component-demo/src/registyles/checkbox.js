@@ -2,18 +2,12 @@ import { register } from 'registyle/collector';
 
 register('checkbox', {
   base: {
-    tw: 'inline-flex items-center justify-center flex-shrink-0 border rounded transition-all cursor-pointer',
-    width: '18px',
-    height: '18px',
-    'border-color': 'var(--c-border)',
-    'background-color': 'var(--c-surface)',
-    'border-radius': 'var(--radius-sm)',
-    '&:focus-visible': { outline: '2px solid var(--c-brand)', 'outline-offset': '2px' },
+    tw: 'inline-flex items-center justify-center shrink-0 size-[18px] border rounded-[var(--radius-sm)] transition-all cursor-pointer border-[var(--c-border)] bg-[var(--c-surface)] focus-visible:(outline-2 outline-[var(--c-brand)] outline-offset-2)',
   },
   modifiers: {
-    checked: { 'background-color': 'var(--c-brand)', 'border-color': 'var(--c-brand)' },
-    indeterminate: { 'background-color': 'var(--c-brand)', 'border-color': 'var(--c-brand)' },
-    sm: { width: '14px', height: '14px' },
-    lg: { width: '22px', height: '22px' },
+    checked: { tw: 'aria-checked:(bg-[var(--c-brand)] border-[var(--c-brand)])' },
+    indeterminate: { tw: 'aria-[checked=mixed]:(bg-[var(--c-brand)] border-[var(--c-brand)])' },
+    sm: { tw: 'size-[14px]', important: true },
+    lg: { tw: 'size-[22px]' },
   },
 });

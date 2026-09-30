@@ -46,12 +46,7 @@ register.all({
     },
   },
   'body': {
-    tw: 'antialiased',
-    'font-family': "'DM Sans', sans-serif",
-    'font-size': '14px',
-    'line-height': '1.6',
-    color: 'var(--c-text)',
-    'background-color': 'var(--c-bg)',
+    tw: ['antialiased font-[DM_Sans,sans-serif] text-sm leading-[1.6]', 'text-[var(--c-text)] bg-[var(--c-bg)]'],
   },
   '::selection': { color: '#fff', 'background-color': 'var(--c-brand)' },
 });

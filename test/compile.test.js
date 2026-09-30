@@ -78,7 +78,10 @@ test('compiles the component demo button registration into semantic utility rule
 	assert.match(css, /\.btn[^{}]*\{[^}]*display:\s*inline-flex/);
 	assert.match(css, /\.btn-primary[^{}]*\{[^}]*background-color:/);
 	assert.match(css, /\.btn-md[^{}]*\{[^}]*padding-inline:/);
-	assert.match(css, /\.btn-primary:hover[^{}]*\{[^}]*background-color:/);
+	assert.match(css, /\.btn-primary:enabled:hover[^{}]*\{[^}]*background-color:/);
+	assert.match(css, /\.checkbox-checked\[aria-checked="true"\][^{]*\{[^}]*background-color:/);
+	assert.match(css, /\.checkbox-indeterminate\[aria-checked="mixed"\][^{]*\{[^}]*background-color:/);
+	assert.match(css, /\.checkbox-sm[^{}]*\{[^}]*width:\s*14px\s*!important/);
 });
 
 test('preserves 1.0-compatible output by default and safely optimizes only when enabled', async () => {

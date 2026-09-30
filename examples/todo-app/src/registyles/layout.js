@@ -9,8 +9,8 @@ register.group('brand', {
 });
 register('sidebar-caption', { tw: 'mb-3 pl-3 text-[10px] font-bold tracking-[.12em] text-[#a0aaa4]' });
 register('view-nav', { tw: 'flex flex-col gap-1' });
-register('view-link', { base: { tw: 'flex h-10 items-center gap-3 rounded-[9px] px-3 text-left text-[13px] font-medium text-[#68766f] transition-colors hover:bg-[#f0f4f1] hover:text-[#1d3029]' } });
-register('view-link-active', { tw: 'bg-[#e6f2ed] font-semibold text-[#1d6b59] hover:bg-[#e6f2ed] hover:text-[#1d6b59]' });
+register('view-link', { base: { tw: ['flex h-10 items-center gap-3 rounded-[9px] px-3 text-left text-[13px] font-medium text-[#68766f] transition-colors', 'hover:(bg-[#f0f4f1] text-[#1d3029])'] } });
+register('view-link-active', { tw: ['bg-[#e6f2ed] font-semibold text-[#1d6b59]', 'hover:(bg-[#e6f2ed] text-[#1d6b59])'] });
 register('view-count', { tw: 'ml-auto text-[11px] font-medium text-[#9aa69f]' });
 register('sidebar-note', { tw: 'mt-auto rounded-[12px] border border-[#e5ece7] bg-[#f3f7f4] px-4 py-4' });
 register('note-icon', { tw: 'mb-3 grid size-7 place-items-center rounded-[9px] bg-white text-[#277562] shadow-sm' });

@@ -2,17 +2,14 @@ import { register } from 'registyle/collector';
 
 register('skeleton', {
   base: {
-    'border-radius': 'var(--radius-md)',
-    background: 'linear-gradient(90deg, #edf1eb 25%, #dfe7dd 50%, #edf1eb 75%)',
-    'background-size': '200% 100%',
-    animation: 'shimmer 1.6s ease-in-out infinite',
+    tw: 'rounded-[var(--radius-md)] bg-[linear-gradient(90deg,_#edf1eb_25%,_#dfe7dd_50%,_#edf1eb_75%)] bg-[length:200%_100%] animate-[shimmer_1.6s_ease-in-out_infinite]',
   },
   modifiers: {
-    text: { height: '14px', 'margin-bottom': '8px' },
-    title: { height: '20px', 'margin-bottom': '12px' },
-    avatar: { width: '40px', height: '40px', 'border-radius': '9999px', 'flex-shrink': '0' },
-    btn: { height: '36px', width: '80px' },
-    card: { height: '120px', 'border-radius': 'var(--radius-xl)' },
-    circle: { 'border-radius': '9999px' },
+    text: { tw: 'h-[14px] mb-2' },
+    title: { tw: 'h-5 mb-3' },
+    avatar: { tw: 'size-10 rounded-full shrink-0' },
+    btn: { tw: 'h-9 w-20' },
+    card: { tw: 'h-[120px] rounded-[var(--radius-xl)]' },
+    circle: { tw: 'rounded-full' },
   },
 });
