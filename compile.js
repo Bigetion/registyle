@@ -22,11 +22,14 @@ const PSEUDO_VARIANTS = new Set([
 function splitClassList(value) {
 	const classes = [];
 	let current = '';
-	let depth = 0;
+	let bracketDepth = 0;
+	let groupDepth = 0;
 	for (const character of value) {
-		if (character === '[') depth++;
-		if (character === ']') depth--;
-		if (/\s/.test(character) && depth === 0) {
+		if (character === '[') bracketDepth++;
+		if (character === ']') bracketDepth--;
+		if (bracketDepth === 0 && character === '(') groupDepth++;
+		if (bracketDepth === 0 && character === ')') groupDepth--;
+		if (/\s/.test(character) && bracketDepth === 0 && groupDepth === 0) {
 			if (current) classes.push(current);
 			current = '';
 		} else {
@@ -34,7 +37,44 @@ function splitClassList(value) {
 		}
 	}
 	if (current) classes.push(current);
-	return classes;
+	return classes.flatMap(expandVariantGroups);
+}
+
+function expandVariantGroups(value) {
+	let bracketDepth = 0;
+	for (let index = 0; index < value.length - 1; index++) {
+		const character = value[index];
+		if (character === '[') bracketDepth++;
+		if (character === ']') bracketDepth--;
+		if (bracketDepth !== 0 || character !== '(' || ![':', '-'].includes(value[index - 1])) continue;
+
+		let groupDepth = 1;
+		let nestedBracketDepth = 0;
+		let closingIndex = -1;
+		for (let cursor = index + 1; cursor < value.length; cursor++) {
+			const nestedCharacter = value[cursor];
+			if (nestedCharacter === '[') nestedBracketDepth++;
+			if (nestedCharacter === ']') nestedBracketDepth--;
+			if (nestedBracketDepth !== 0) continue;
+			if (nestedCharacter === '(') groupDepth++;
+			if (nestedCharacter === ')' && --groupDepth === 0) {
+				closingIndex = cursor;
+				break;
+			}
+		}
+
+		if (closingIndex === -1) {
+			throw new SyntaxError(`registyle compile: unclosed variant group in "${value}"`);
+		}
+
+		const prefix = value.slice(0, index);
+		const contents = value.slice(index + 1, closingIndex);
+		const suffix = value.slice(closingIndex + 1);
+		const utilities = splitClassList(contents);
+		if (!prefix.endsWith(':') && utilities.length < 2) return [value];
+		return utilities.flatMap((utility) => expandVariantGroups(`${prefix}${utility}${suffix}`));
+	}
+	return [value];
 }
 
 function normalizeUtilityValue(value, context) {

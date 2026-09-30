@@ -81,6 +81,8 @@ await compileToFile(manifest, '.registyle/style.css', {
 
 Keep utility-driven styling in `tw`. If your project needs a CSS declaration that is not represented by its Tailwind theme or plugins, add only that declaration as a style-object property beside `tw`; avoid duplicating properties already covered by utilities. Import `.registyle/style.css` from the app stylesheet or entry point. Generated utility rules target the registered semantic classes; Tailwind's preflight is not included. Unknown utilities fail the build. For a custom theme or CSS-first plugins, point `@reference` at the app's Tailwind stylesheet and keep the utilities import in `inputCss`.
 
+Registyle also supports compile-time prefix groups to reduce repeated utility prefixes. `max-sm:(items-stretch flex-col)` expands to `max-sm:items-stretch max-sm:flex-col`, and `border-(2 red-500)` expands to `border-2 border-red-500`. Native one-item Tailwind v4 shorthands such as `bg-(--brand)` are passed through unchanged. For color opacity in Tailwind v4, use its native slash syntax, such as `bg-red-500/50`.
+
 For apps that do not use the Tailwind build workflow, `register()` is a separate CSS-only runtime API. It injects styles in the browser or exposes already-registered CSS through `register.extractCSS()` in Node.js; it does not scan files or compile `tw` utilities.
 
 ## API

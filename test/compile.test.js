@@ -26,6 +26,24 @@ test('compiles registered utilities with Tailwind v4 and semantic selectors', as
 	assert.doesNotMatch(css, /@layer base\s*\{/);
 });
 
+test('expands grouped variant and utility prefixes while preserving Tailwind shorthand', async () => {
+	const css = await compile({
+		classes: {
+			grouped: { tw: 'flex max-sm:(items-stretch flex-col) hover:(underline text-red-500) border-(2 red-500) bg-(--brand)' },
+		},
+	});
+
+	assert.match(css, /@media \(width < 40rem\)/);
+	assert.match(css, /\.grouped\s*\{[^}]*display:\s*flex/);
+	assert.match(css, /align-items:\s*stretch/);
+	assert.match(css, /flex-direction:\s*column/);
+	assert.match(css, /\.grouped:hover/);
+	assert.match(css, /text-decoration-line:\s*underline/);
+	assert.match(css, /border-width:\s*2px/);
+	assert.match(css, /border-color:\s*var\(--color-red-500(?:,|\))/);
+	assert.match(css, /background-color:\s*var\(--brand\)/);
+});
+
 test('compiles utility arrays across base, variants, and extends', async () => {
 	const css = await compile({
 		classes: {
