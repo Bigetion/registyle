@@ -4,6 +4,11 @@ All notable changes to registyle will be documented in this file.
 
 ## [2.0.0] - 2026-09-30
 
+### Added
+
+- Expand Tailwind utility arrays and grouped prefixes at compile time, including variant groups such as `max-sm:(items-stretch flex-col)` and utility groups such as `border-(2 red-500)`.
+- Preserve native Tailwind v4 parenthesis shorthands such as `bg-(--brand)` while supporting grouped utility authoring.
+
 ### Breaking Changes
 
 - Remove the `cache`, `presets`, and `validate` subpaths.
