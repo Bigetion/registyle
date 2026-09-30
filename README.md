@@ -31,7 +31,11 @@ import { compileToFile } from 'registyle/compile';
 const manifest = {
   classes: {
     'action-button': {
-      tw: 'inline-flex items-center rounded-md bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700',
+      tw: [
+        'inline-flex items-center rounded-md',
+        'bg-blue-600 px-4 py-2 font-medium text-white',
+      ],
+      hover: { tw: ['bg-blue-700'] },
     },
   },
 };

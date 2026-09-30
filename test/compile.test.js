@@ -26,6 +26,33 @@ test('compiles registered utilities with Tailwind v4 and semantic selectors', as
 	assert.doesNotMatch(css, /@layer base\s*\{/);
 });
 
+test('compiles utility arrays across base, variants, and extends', async () => {
+	const css = await compile({
+		classes: {
+			baseButton: {
+				tw: ['inline-flex', 'items-center'],
+				hover: { tw: ['bg-blue-600', 'text-white'] },
+			},
+			iconButton: { extend: 'baseButton', tw: ['gap-2', 'rounded-md'] },
+			legacyUtilities: { _: ['flex', 'gap-2'] },
+		},
+	});
+
+	assert.match(css, /\.iconButton\s*\{[^}]*display:\s*inline-flex/);
+	assert.match(css, /\.iconButton\s*\{[^}]*align-items:\s*center/);
+	assert.match(css, /\.iconButton:hover\s*\{[^}]*background-color:/);
+	assert.match(css, /\.iconButton:hover\s*\{[^}]*color:/);
+	assert.match(css, /\.iconButton(?:,[^{]+)?\s*\{[^}]*gap:/);
+	assert.match(css, /\.legacyUtilities\s*\{[^}]*display:\s*flex/);
+});
+
+test('reports the registration when a utility array contains a non-string', async () => {
+	await assert.rejects(
+		compile({ classes: { btn: { tw: ['flex', 42] } } }),
+		/"btn\.tw" must be a string or an array of strings/,
+	);
+});
+
 test('compiles the component demo button registration into semantic utility rules', async () => {
 	const { default: manifest } = await import('../examples/register-component-demo/src/registyles/index.js');
 	const css = await compile(manifest);
@@ -116,8 +143,15 @@ test('compile does not clear registrations in the runtime singleton', async () =
 
 test('fails the build when a utility is not known to Tailwind', async () => {
 	await assert.rejects(
-		compile({ classes: { btn: { tw: 'not-a-real-tailwind-utility' } } }),
-		/Tailwind did not generate CSS for/,
+		compile({ classes: { btn: { tw: ['not-a-real-tailwind-utility'] } } }),
+		/Tailwind did not generate CSS for: not-a-real-tailwind-utility \(\.btn\)/,
+	);
+});
+
+test('rejects utility arrays in the runtime registration API', () => {
+	assert.throws(
+		() => register('runtime-utility-array', { tw: ['flex'] }),
+		/Tailwind utilities must be compiled at build time/,
 	);
 });
 

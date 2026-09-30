@@ -7,7 +7,7 @@ import { compound, createVariants, mergeVariants } from 'registyle/variants';
 import type { Plugin } from 'vite';
 
 const button: Registration = {
-	base: { display: 'inline-flex', tw: 'items-center' },
+	base: { display: 'inline-flex', tw: ['items-center', 'gap-2'] },
 	modifiers: { primary: { color: 'white' } },
 	extend: ['control', 'focusable'],
 };

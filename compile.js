@@ -37,6 +37,12 @@ function splitClassList(value) {
 	return classes;
 }
 
+function normalizeUtilityValue(value, context) {
+	if (typeof value === 'string') return value;
+	if (Array.isArray(value) && value.every((part) => typeof part === 'string')) return value.join(' ');
+	throw new TypeError(`registyle compile: "${context}" must be a string or an array of strings`);
+}
+
 function isCssDeclarationKey(key) {
 	if (key.startsWith('--') || /[A-Z]/.test(key)) return true;
 	if (key.startsWith('&') || key.startsWith('.') || key.startsWith(':') || key.startsWith('@')) return false;
@@ -61,16 +67,20 @@ function stripUtilities(value) {
 	return result;
 }
 
-function mergeConfigs(base, next) {
+function mergeConfigs(base, next, context = '') {
 	const merged = { ...base };
 	for (const [key, value] of Object.entries(next || {})) {
 		if (key === 'tw' || key === '_') {
-			merged[key] = [merged[key], value].filter((part) => typeof part === 'string').join(' ');
+			const parts = [merged[key], value]
+				.filter((part) => part !== undefined && part !== null)
+				.map((part) => normalizeUtilityValue(part, context ? `${context}.${key}` : key))
+				.filter(Boolean);
+			merged[key] = parts.join(' ');
 		} else if (
 			value && typeof value === 'object' && !Array.isArray(value) &&
 			merged[key] && typeof merged[key] === 'object' && !Array.isArray(merged[key])
 		) {
-			merged[key] = mergeConfigs(merged[key], value);
+			merged[key] = mergeConfigs(merged[key], value, context ? `${context}.${key}` : key);
 		} else {
 			merged[key] = value;
 		}
@@ -123,8 +133,10 @@ function collectUtilities(selector, config, tokenSelectors, variants = [], optio
 	const important = options.important || config.important;
 
 	for (const key of ['tw', '_']) {
-		if (typeof config[key] !== 'string') continue;
-		for (const utility of splitClassList(config[key])) addUtility(utility, selector, tokenSelectors, variants, { layer, important });
+		if (config[key] === undefined || config[key] === null) continue;
+		for (const utility of splitClassList(normalizeUtilityValue(config[key], `${selector}.${key}`))) {
+			addUtility(utility, selector, tokenSelectors, variants, { layer, important });
+		}
 	}
 
 	for (const [key, value] of Object.entries(config)) {
@@ -171,7 +183,7 @@ function collectRegistrationUtilities(classes = {}, groups = {}, classEntries = 
 		for (const parent of parents) {
 			if (Object.hasOwn(classes, parent)) result = mergeConfigs(result, resolveClass(parent));
 		}
-		result = mergeConfigs(result, ownConfig);
+			result = mergeConfigs(result, ownConfig, name);
 		resolving.delete(name);
 		resolved.set(name, result);
 		return result;
@@ -288,7 +300,11 @@ function retargetSelectors(root, tokenSelectors, selectorParser) {
 	}
 
 	if (uncompiled.size) {
-		throw new Error(`registyle compile: Tailwind did not generate CSS for: ${[...uncompiled].join(', ')}`);
+		const details = [...uncompiled].map((token) => {
+			const selectors = [...(tokenSelectors.get(token)?.keys() || [])].join(', ');
+			return selectors ? `${token} (${selectors})` : token;
+		});
+		throw new Error(`registyle compile: Tailwind did not generate CSS for: ${details.join(', ')}`);
 	}
 }
 

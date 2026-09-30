@@ -75,7 +75,7 @@ function toDeclarations(config, important = false) {
 
 function assertNoUtilities(config) {
 	if (!config || typeof config !== 'object') return;
-	if (typeof config.tw === 'string' || typeof config._ === 'string') {
+	if (typeof config.tw === 'string' || Array.isArray(config.tw) || typeof config._ === 'string' || Array.isArray(config._)) {
 		throw new Error('registyle: Tailwind utilities must be compiled at build time with `registyle/compile`; register() accepts CSS declarations only.');
 	}
 	for (const value of Object.values(config)) {
