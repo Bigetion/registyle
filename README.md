@@ -197,6 +197,12 @@ In the browser, the runtime injects a style tag. In Node.js, call `register.extr
 
 Registyle is for projects that want Tailwind v4 utilities compiled onto semantic class names from an explicit set of registrations. It is especially useful when component markup should stay independent of the utilities that style it. Choose the CSS-only runtime when you only need plain declarations.
 
+## Support This Project
+
+If Registyle helps your project, consider buying me a coffee! Your support helps maintain and improve the library.
+
+<a href="https://buymeacoffee.com/bigetion" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" width="200" /></a>
+
 ## Contributing
 
 Contributions are welcome. Report bugs and feature requests through [GitHub Issues](https://github.com/Bigetion/registyle/issues/new).
