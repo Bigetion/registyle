@@ -2,6 +2,34 @@
 
 All notable changes to registyle will be documented in this file.
 
+## [2.0.2] - 2026-10-01
+
+### Fixed
+
+- **CodeSandbox Vite Import**: Use direct import instead of dynamic resolution for better CodeSandbox compatibility
+- Fix `createServer is not a function` error in browser-based IDEs
+- Add fallback mechanism for Vite module resolution
+
+## [2.0.1] - 2026-10-01
+
+### Added
+
+- **CodeSandbox/StackBlitz Support**: Auto-detect browser-based development environments and generate physical CSS file when virtual modules are not supported
+- Add `forceOutFile` option to explicitly force physical file output for any environment
+- Add comprehensive CodeSandbox integration guide (`docs/CODESANDBOX.md`)
+- Environment detection for `CODESANDBOX_SSE`, `SANDBOX_ID`, `CODESANDBOX`, and webcontainer shell
+
+### Fixed
+
+- Virtual module (`virtual:registyle.css`) resolution in online IDEs like CodeSandbox and StackBlitz
+- Auto-generate `src/registyle.generated.css` when virtual modules are unavailable
+
+### Documentation
+
+- Add quick reference guide for CodeSandbox setup
+- Update troubleshooting guide with virtual module issues
+- Add environment-specific recommendations for online IDEs
+
 ## [2.0.0] - 2026-09-30
 
 ### Added

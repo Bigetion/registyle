@@ -30,6 +30,22 @@ Check all of the following:
 
 The plugin does not scan JSX/HTML files for registrations; only modules reachable from the entry are compiled.
 
+### CodeSandbox and Online IDEs
+
+Virtual modules may not work in CodeSandbox, StackBlitz, or other browser-based IDEs. The plugin auto-detects these environments and writes a physical CSS file (`src/registyle.generated.css`) automatically.
+
+**Quick fix:** Change your import from:
+```js
+import 'virtual:registyle.css';
+```
+
+To:
+```js
+import './registyle.generated.css';
+```
+
+For more details, see the [CodeSandbox integration guide](./CODESANDBOX.md).
+
 ## A Utility or Variant Appears to Be Ignored
 
 Confirm that the class is present in a registration's `tw` value and that the registration is part of the manifest passed to the compiler. Registyle compiles utilities onto registered semantic selectors; it does not emit utility classes as standalone selectors.

@@ -16,6 +16,7 @@ export function registyle(options = {}) {
 	const outFile = options.outFile;
 	const inputCss = options.inputCss || '@reference "tailwindcss"; @import "tailwindcss/utilities.css" source(none);';
 	const debug = options.debug || false;
+	const forceOutFile = options.forceOutFile ?? false; // Force physical file for environments like CodeSandbox
 	
 	let root = process.cwd();
 	let outputPath;
@@ -24,14 +25,38 @@ export function registyle(options = {}) {
 	let compiledCss = null;
 	
 	let compilationCount = 0;
+	
+	// Auto-detect problematic environments
+	const isCodeSandbox = process.env.CODESANDBOX_SSE || process.env.SANDBOX_ID || process.env.CODESANDBOX;
+	const isStackBlitz = process.env.SHELL?.includes('webcontainer');
+	const needsPhysicalFile = forceOutFile || isCodeSandbox || isStackBlitz;
 
 	async function compileStyles() {
 		const startTime = Date.now();
 		compilationCount++;
 		
-		const requireFromProject = createRequire(resolve(root, 'package.json'));
-		const viteUrl = pathToFileURL(requireFromProject.resolve('vite')).href;
-		const { createServer } = await import(viteUrl);
+		// Try direct import first (works in most environments including CodeSandbox)
+		let viteModule;
+		try {
+			viteModule = await import('vite');
+		} catch (directImportError) {
+			// Fallback to dynamic resolution for special environments
+			try {
+				const requireFromProject = createRequire(resolve(root, 'package.json'));
+				const viteUrl = pathToFileURL(requireFromProject.resolve('vite')).href;
+				viteModule = await import(viteUrl);
+			} catch (fallbackError) {
+				throw new Error('registyle/vite: Failed to import Vite. Make sure vite is installed as a dependency.', { 
+					cause: fallbackError 
+				});
+			}
+		}
+		
+		const { createServer } = viteModule;
+		if (typeof createServer !== 'function') {
+			throw new TypeError('registyle/vite: createServer is not a function. Check your Vite installation.');
+		}
+		
 		const server = await createServer({
 			configFile: false,
 			root,
@@ -59,9 +84,16 @@ export function registyle(options = {}) {
 				deduplicate: options.deduplicate,
 				debug,
 			});
-			if (outputPath) {
-				await mkdir(dirname(outputPath), { recursive: true });
-				await writeFile(outputPath, compiledCss);
+			
+			// Write to disk if outFile is configured OR if we're in a problematic environment
+			const actualOutputPath = outputPath || (needsPhysicalFile ? resolve(root, 'src/registyle.generated.css') : null);
+			if (actualOutputPath) {
+				await mkdir(dirname(actualOutputPath), { recursive: true });
+				await writeFile(actualOutputPath, compiledCss);
+				if (debug || needsPhysicalFile) {
+					const envInfo = isCodeSandbox ? ' (CodeSandbox detected)' : isStackBlitz ? ' (StackBlitz detected)' : '';
+					console.log(`[registyle] CSS written to ${actualOutputPath}${envInfo}`);
+				}
 			}
 			
 			if (debug) {
@@ -87,8 +119,17 @@ export function registyle(options = {}) {
 		configResolved(config) {
 			root = config.root;
 			entryPath = resolve(root, entry);
-			outputPath = outFile ? resolve(root, outFile) : null;
 			watchPath = resolve(root, options.watch || dirname(entry));
+			
+			// Determine output path
+			if (outFile) {
+				outputPath = resolve(root, outFile);
+			} else if (needsPhysicalFile) {
+				outputPath = resolve(root, 'src/registyle.generated.css');
+				if (debug) {
+					console.log('[registyle] Environment requires physical CSS file, using:', outputPath);
+				}
+			}
 		},
 		async buildStart() {
 			await compileStyles();

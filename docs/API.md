@@ -146,9 +146,12 @@ Options:
 | `entry` | `src/registyles/index.js` | Module that imports registrations and exports `getManifest()` |
 | `watch` | `src/registyles` | Directory watched for registration changes |
 | `outFile` | unset | Optional disk copy; otherwise use `virtual:registyle.css` |
+| `forceOutFile` | `false` | Force physical file output for environments like CodeSandbox |
 | Compiler options | See above | `inputCss`, `baseDir`, `minify`, `deduplicate`, `optimize`, `debug` |
 
 Import `virtual:registyle.css` once from the app entry when `outFile` is not set. The plugin watches registration sources; it does not scan application markup for arbitrary class names.
+
+**Note for CodeSandbox/StackBlitz:** The plugin auto-detects browser-based IDEs and writes a physical file when needed. See the [CodeSandbox guide](./CODESANDBOX.md) for details.
 
 ## Class Composition
 

@@ -186,6 +186,7 @@ In the browser, the runtime injects a style tag. In Node.js, call `register.extr
 - [Documentation guide](./docs/README.md) — choose a workflow and find the right guide
 - [API reference](./docs/API.md) — runtime, collector, compiler, and Vite APIs
 - [Integrations](./docs/INTEGRATIONS.md) — Vite, other bundlers, and runtime CSS extraction
+- [CodeSandbox & Online IDEs](./docs/CODESANDBOX.md) — setup for browser-based development
 - [Advanced guide](./docs/ADVANCED.md) — themes, variants, CSS layers, and container queries
 - [Troubleshooting](./docs/TROUBLESHOOTING.md) — common compiler, CSS, and Vite issues
 - [Migration guide](./docs/MIGRATION.md) — upgrade from v1 to v2
