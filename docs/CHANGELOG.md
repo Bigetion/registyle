@@ -2,6 +2,17 @@
 
 All notable changes to registyle will be documented in this file.
 
+## [2.1.0] - 2026-10-02
+
+### Added
+
+- `CONTRIBUTING.md` — development setup, test instructions, project structure, PR guidelines, and commit conventions
+- Vue + Vite quick start in the integrations guide — full walkthrough from project creation to component usage
+- Next.js App Router quick start in the integrations guide — manual compiler step with build script, layout import, and dev workflow
+- Biome configuration (`biome.json`) for linting and formatting — includes `noDuplicateObjectKeys` as an error, unused variable and import warnings, and `noVar` rule
+- `lint` and `lint:fix` scripts in `package.json`
+- Separate `lint` job in CI workflow runs Biome on every push and pull request
+
 ## [2.0.3] - 2026-10-02
 
 ### Added
