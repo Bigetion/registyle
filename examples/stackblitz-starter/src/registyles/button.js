@@ -17,7 +17,7 @@ register('btn', {
     secondary: { tw: 'bg-gray-100 text-gray-800 hover:bg-gray-200 focus-visible:outline-gray-400' },
     danger:    { tw: 'bg-red-500 text-white hover:bg-red-600 focus-visible:outline-red-500' },
     ghost:     { tw: 'bg-transparent text-gray-700 hover:bg-gray-100' },
-    outline:   { tw: 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50' },
+    outline:   { tw: 'bg-white text-gray-700 hover:bg-gray-50', borderColor: '#d1d5db', borderStyle: 'solid' },
     // sizes
     sm:  { tw: 'px-3 py-1.5 text-sm' },
     md:  { tw: 'px-4 py-2 text-sm' },
