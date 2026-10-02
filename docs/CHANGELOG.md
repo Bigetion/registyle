@@ -12,6 +12,14 @@ All notable changes to registyle will be documented in this file.
 - Biome configuration (`biome.json`) for linting and formatting — includes `noDuplicateObjectKeys` as an error, unused variable and import warnings, and `noVar` rule
 - `lint` and `lint:fix` scripts in `package.json`
 - Separate `lint` job in CI workflow runs Biome on every push and pull request
+- End-to-end guide in `docs/ADVANCED.md` showing Variants + Theme + Collector in a single cohesive workflow, with a full React component example
+- `docs/CHANGELOG-v1.md` — v1.x release history moved to a separate file so the main changelog stays focused on v2
+
+### Changed
+
+- `themes.dark` in `registyle/theme` is now a complete dark mode token set: semantic surface tokens (`surface`, `surfaceRaised`, `surfaceOverlay`), border tokens (`border`, `borderSubtle`), text tokens (`textPrimary`, `textSecondary`, `textDisabled`, `textInverse`), full primary color scale, status tokens (`success`, `warning`, `error`, `info`) with subtle background variants, dark-optimized gray scale, and higher-opacity shadow values
+- `themes.minimal` border radius scale tightened to better reflect a minimal aesthetic
+- `docs/CHANGELOG.md` — v1.x entries replaced with a link to `CHANGELOG-v1.md`
 
 ## [2.0.3] - 2026-10-02
 
@@ -90,33 +98,4 @@ See the [migration guide](./MIGRATION.md) for step-by-step upgrade instructions.
 
 ---
 
-## [1.1.1] - 2024-12-15
-
-### Fixed
-
-- Preserve Tailwind-generated CSS by default; optimization is now explicitly opt-in.
-- Use PostCSS AST operations for minification and adjacent-rule deduplication so strings, keyframes, layers, and cascade order are preserved.
-- Align composed variant class names with generated manifests, including compound and boolean variants.
-- Deep-merge applied presets and resolve theme-backed class factories against merged tokens.
-- Detect circular `extend` chains during manifest validation.
-
-## [1.1.0] - 2024-11-30
-
-### Added
-
-- Theme system with design tokens and `withTheme()` provider.
-- Variant composition with `createVariants()` and compound variant support.
-- Preset system with built-in shadcn, Material, Bootstrap, and Minimal presets.
-- CSS layers and `!important` support.
-- Container query support.
-- LRU compilation cache with file tracking.
-- CSS optimization (minification + deduplication).
-- Debug mode with compilation stats.
-
-## [1.0.0] - Initial Release
-
-- Core registration API
-- Tailwind v4 integration
-- Vite plugin
-- Basic caching
-- TypeScript support
+For v1.x release history, see [CHANGELOG-v1.md](./CHANGELOG-v1.md).
