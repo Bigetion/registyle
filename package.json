@@ -1,6 +1,6 @@
 {
   "name": "registyle",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Write Tailwind utilities once. Use semantic class names everywhere.",
   "homepage": "https://github.com/Bigetion/registyle#readme",
   "bugs": {

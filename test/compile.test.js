@@ -187,6 +187,24 @@ test('writes compiled CSS to an output file', async () => {
 	}
 });
 
+test('base class rules appear before modifier rules in compiled output (cascade order)', async () => {
+	const css = await compile({
+		classes: {
+			btn: {
+				base: { tw: 'border-transparent bg-white' },
+				modifiers: {
+					outline: { tw: 'border-gray-300' },
+				},
+			},
+		},
+	});
+	const baseIndex = css.search(/\.btn\s*\{/);
+	const modifierIndex = css.search(/\.btn-outline\s*\{/);
+	assert.ok(baseIndex !== -1, '.btn rule must exist in compiled output');
+	assert.ok(modifierIndex !== -1, '.btn-outline rule must exist in compiled output');
+	assert.ok(baseIndex < modifierIndex, 'base .btn rule must appear before .btn-outline modifier rule in compiled CSS');
+});
+
 test('preserves root tokens, universal reset, and global CSS declarations', async () => {
 	const css = await compile({
 		classes: {

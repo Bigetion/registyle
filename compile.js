@@ -208,6 +208,7 @@ function semanticSelector(name) {
 
 function collectRegistrationUtilities(classes = {}, groups = {}, classEntries = orderedClassEntries(classes)) {
 	const tokenSelectors = new Map();
+	const modifierSelectors = new Set();
 	const resolved = new Map();
 	const resolving = new Set();
 
@@ -241,7 +242,9 @@ function collectRegistrationUtilities(classes = {}, groups = {}, classEntries = 
 			const base = mergeConfigs(config.base || {}, directStyles);
 			if (Object.keys(base).length) collectUtilities(selector, base, tokenSelectors, [], options);
 			for (const [modifier, styles] of Object.entries(config.modifiers || {})) {
-				collectUtilities(`.${name}-${modifier}`, styles, tokenSelectors, [], options);
+				const modifierSelector = `.${name}-${modifier}`;
+				modifierSelectors.add(modifierSelector);
+				collectUtilities(modifierSelector, styles, tokenSelectors, [], options);
 			}
 		} else {
 			collectUtilities(selector, config, tokenSelectors, [], options);
@@ -257,7 +260,20 @@ function collectRegistrationUtilities(classes = {}, groups = {}, classEntries = 
 		}
 	}
 
-	return tokenSelectors;
+	return { tokenSelectors, modifierSelectors };
+}
+
+function isModifierRule(rule, modifierSelectors) {
+	return rule.selector.split(',').map((s) => s.trim()).every((s) => modifierSelectors.has(s));
+}
+
+function reorderRulesBaseFirst(root, modifierSelectors) {
+	const nodes = [];
+	root.each((node) => nodes.push(node.clone()));
+	root.removeAll();
+	const base = nodes.filter((n) => n.type !== 'rule' || !isModifierRule(n, modifierSelectors));
+	const mods = nodes.filter((n) => n.type === 'rule' && isModifierRule(n, modifierSelectors));
+	for (const n of [...base, ...mods]) root.append(n);
 }
 
 function retargetSelectors(root, tokenSelectors, selectorParser) {
@@ -365,7 +381,7 @@ export async function compile(manifest = {}, options = {}) {
 	if (!groups || typeof groups !== 'object' || Array.isArray(groups)) throw new TypeError('registyle compile: groups must be an object map');
 
 	const classEntries = orderedClassEntries(classes);
-	const tokenSelectors = collectRegistrationUtilities(classes, groups, classEntries);
+	const { tokenSelectors, modifierSelectors } = collectRegistrationUtilities(classes, groups, classEntries);
 	const styleRegistry = createRegistry({ injectStyles: false });
 	styleRegistry.all(Object.fromEntries(classEntries.map(([name, config]) => [name, stripUtilities(config)])));
 	for (const [name, components] of Object.entries(groups)) {
@@ -396,6 +412,7 @@ export async function compile(manifest = {}, options = {}) {
 	const result = await postcss([tailwind()]).process(input, { from, map: false });
 	const root = postcss.parse(result.css);
 	retargetSelectors(root, tokenSelectors, selectorParser);
+	reorderRulesBaseFirst(root, modifierSelectors);
 	
 	let finalCss = [rawCss, root.toString()].filter(Boolean).join('\n');
 	
