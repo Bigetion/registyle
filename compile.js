@@ -253,7 +253,12 @@ function collectRegistrationUtilities(classes = {}, groups = {}, classEntries = 
 
 	for (const [baseName, components] of Object.entries(groups)) {
 		for (const [key, config] of Object.entries(components || {})) {
-			const selector = key === 'root' || key === baseName ? `.${baseName}` : `.${baseName}-${key}`;
+			const isRoot = key === 'root' || key === baseName;
+			const selector = isRoot ? `.${baseName}` : `.${baseName}-${key}`;
+			// Group sub-component selectors (non-root keys) are tracked as modifiers so
+			// reorderRulesBaseFirst can place them after the root rule — same cascade
+			// guarantee as class modifiers. Group root selectors are NOT tracked here.
+			if (!isRoot) modifierSelectors.add(selector);
 			const layer = config?.layer;
 			const important = config?.important;
 			collectUtilities(selector, config, tokenSelectors, [], { layer, important });
@@ -276,9 +281,10 @@ function reorderRulesBaseFirst(root, modifierSelectors) {
 	for (const n of [...base, ...mods]) root.append(n);
 }
 
-function retargetSelectors(root, tokenSelectors, selectorParser) {
+function retargetSelectors(root, tokenSelectors, selectorParser, modifierSelectors = new Set()) {
 	const uncompiled = new Set(tokenSelectors.keys());
-	const layerRules = new Map(); // Group rules by layer
+	const baseLayerRules = new Map();    // layer name → rules that belong to base selectors
+	const modifierLayerRules = new Map(); // layer name → rules that belong to modifier selectors
 	
 	root.walkRules((rule) => {
 		let selectors;
@@ -337,22 +343,27 @@ function retargetSelectors(root, tokenSelectors, selectorParser) {
 			});
 		}
 		
-		// Store rule by layer
+		// Store rule by layer, keeping base and modifier layer blocks separate so
+		// reorderRulesBaseFirst can still place modifier rules after base rules even
+		// when they are wrapped in @layer at-rules.
 		if (ruleLayer) {
-			if (!layerRules.has(ruleLayer)) {
-				layerRules.set(ruleLayer, []);
-			}
-			layerRules.get(ruleLayer).push(rule.clone());
-			rule.remove(); // Remove from root, will be added to layer
+			const ruleIsModifier = isModifierRule(rule, modifierSelectors);
+			const targetMap = ruleIsModifier ? modifierLayerRules : baseLayerRules;
+			if (!targetMap.has(ruleLayer)) targetMap.set(ruleLayer, []);
+			targetMap.get(ruleLayer).push(rule.clone());
+			rule.remove();
 		}
 	});
 	
-	// Add layered rules back
-	for (const [layer, rules] of layerRules) {
+	// Append base @layer blocks first, then modifier @layer blocks, so the
+	// cascade order matches non-layered rules: base before modifier.
+	for (const [layer, rules] of baseLayerRules) {
 		const layerAtRule = root.append({ name: 'layer', params: layer });
-		for (const rule of rules) {
-			layerAtRule.append(rule);
-		}
+		for (const rule of rules) layerAtRule.append(rule);
+	}
+	for (const [layer, rules] of modifierLayerRules) {
+		const layerAtRule = root.append({ name: 'layer', params: layer });
+		for (const rule of rules) layerAtRule.append(rule);
 	}
 
 	if (uncompiled.size) {
@@ -411,7 +422,7 @@ export async function compile(manifest = {}, options = {}) {
 	const from = resolve(options.baseDir || process.cwd(), 'registyle.generated.css');
 	const result = await postcss([tailwind()]).process(input, { from, map: false });
 	const root = postcss.parse(result.css);
-	retargetSelectors(root, tokenSelectors, selectorParser);
+	retargetSelectors(root, tokenSelectors, selectorParser, modifierSelectors);
 	reorderRulesBaseFirst(root, modifierSelectors);
 	
 	let finalCss = [rawCss, root.toString()].filter(Boolean).join('\n');

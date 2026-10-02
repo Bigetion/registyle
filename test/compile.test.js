@@ -205,6 +205,26 @@ test('base class rules appear before modifier rules in compiled output (cascade 
 	assert.ok(baseIndex < modifierIndex, 'base .btn rule must appear before .btn-outline modifier rule in compiled CSS');
 });
 
+test('group root rule appears before group sub-component rules in compiled output (cascade order)', async () => {
+	const css = await compile({
+		groups: {
+			card: {
+				root: { tw: 'rounded-xl border-gray-200' },
+				title: { tw: 'text-xl font-bold' },
+				body: { tw: 'p-4 text-sm' },
+			},
+		},
+	});
+	const rootIndex = css.search(/\.card\s*\{/);
+	const titleIndex = css.search(/\.card-title\s*\{/);
+	const bodyIndex = css.search(/\.card-body\s*\{/);
+	assert.ok(rootIndex !== -1, '.card rule must exist in compiled output');
+	assert.ok(titleIndex !== -1, '.card-title rule must exist in compiled output');
+	assert.ok(bodyIndex !== -1, '.card-body rule must exist in compiled output');
+	assert.ok(rootIndex < titleIndex, 'group root .card rule must appear before .card-title sub-component rule');
+	assert.ok(rootIndex < bodyIndex, 'group root .card rule must appear before .card-body sub-component rule');
+});
+
 test('preserves root tokens, universal reset, and global CSS declarations', async () => {
 	const css = await compile({
 		classes: {
