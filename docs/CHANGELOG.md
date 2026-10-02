@@ -4,15 +4,23 @@ All notable changes to registyle will be documented in this file.
 
 ## [2.0.3] - 2026-10-02
 
-### Fixed
-
-- Remove hardcoded version string from README
-- Replace old library name references in demo content
-- Fix CHANGELOG entry dates
-
 ### Added
 
-- GitHub Actions CI workflow for Node.js 18, 20, and 22
+- GitHub Actions CI workflow for Node.js 18, 20, and 22 — runs tests across Node 18, 20, and 22 on every push and pull request, with a separate lint job
+- NPM version, downloads, and license badges in README
+- ESM-only notice in README — documents Node.js 18+ requirement and bundler compatibility
+- `sideEffects` field in `package.json` — enables more accurate tree-shaking in webpack and Rollup
+- `vite-plugin`, `react`, `vue`, and `component-library` keywords in `package.json` for better NPM discoverability
+
+### Fixed
+
+- `virtual.d.ts` — replaced bare module declaration with a typed export so `import styles from 'virtual:registyle.css'` resolves to `string` instead of `any`
+- Remove hardcoded version string from README
+- Replace old library name references in demo content with `registyle`
+
+### Changed
+
+- Package description updated to: *"Write Tailwind utilities once. Use semantic class names everywhere."*
 
 ## [2.0.2] - 2026-10-02
 

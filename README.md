@@ -1,6 +1,12 @@
 # registyle
 
+[![npm version](https://img.shields.io/npm/v/registyle.svg)](https://www.npmjs.com/package/registyle)
+[![npm downloads](https://img.shields.io/npm/dm/registyle.svg)](https://www.npmjs.com/package/registyle)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A semantic styling library that compiles Tailwind CSS v4 utilities into named component classes, with a separate CSS-only runtime for plain declarations.
+
+> **ESM only.** This package requires Node.js 18+ and a bundler that supports ES Modules (Vite, webpack 5, Rollup, esbuild). CommonJS `require()` is not supported.
 
 See [CHANGELOG](./docs/CHANGELOG.md) for version history.
 
