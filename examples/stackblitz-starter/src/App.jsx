@@ -1,21 +1,16 @@
 import { useState } from 'react';
+import { Minus, Plus, RotateCcw, Github, Package } from 'lucide-react';
 import { Button } from './components/Button';
 import { Badge } from './components/Badge';
 import { Card, CardHeader, CardBody, CardFooter } from './components/Card';
 import { Input } from './components/Input';
-
-// ─────────────────────────────────────────────────────────────────────
-// The magic: your HTML contains clean semantic class names.
-// Open DevTools → inspect any element to see "btn btn-primary btn-md"
-// instead of long utility strings.
-// ─────────────────────────────────────────────────────────────────────
 
 export default function App() {
   const [count, setCount] = useState(0);
   const [email, setEmail] = useState('');
 
   return (
-    <div style={{ fontFamily: 'system-ui, sans-serif', minHeight: '100vh', background: '#f9fafb', padding: '32px 16px' }}>
+    <div style={{ fontFamily: 'inherit', minHeight: '100vh', background: '#f9fafb', padding: '32px 16px' }}>
       <div style={{ maxWidth: '640px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '32px' }}>
 
         {/* Header */}
@@ -68,15 +63,19 @@ export default function App() {
           </CardHeader>
           <CardBody>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <Button variant="outline" size="sm" onClick={() => setCount(c => c - 1)}>−</Button>
+              <Button variant="outline" size="sm" onClick={() => setCount(c => c - 1)}>
+                <Minus size={14} />
+              </Button>
               <span style={{ fontSize: '24px', fontWeight: 700, minWidth: '40px', textAlign: 'center' }}>{count}</span>
-              <Button variant="outline" size="sm" onClick={() => setCount(c => c + 1)}>+</Button>
+              <Button variant="outline" size="sm" onClick={() => setCount(c => c + 1)}>
+                <Plus size={14} />
+              </Button>
               <Button
                 variant={count === 0 ? 'ghost' : count > 0 ? 'primary' : 'danger'}
                 size="sm"
                 onClick={() => setCount(0)}
               >
-                Reset
+                <RotateCcw size={14} /> Reset
               </Button>
             </div>
             <p style={{ margin: '12px 0 0', fontSize: '13px', color: '#9ca3af' }}>
@@ -158,17 +157,17 @@ export default function App() {
               href="https://github.com/Bigetion/registyle"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ fontSize: '13px', color: '#3b82f6', textDecoration: 'none' }}
+              style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '13px', color: '#3b82f6', textDecoration: 'none' }}
             >
-              GitHub →
+              <Github size={14} /> GitHub
             </a>
             <a
               href="https://www.npmjs.com/package/registyle"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ fontSize: '13px', color: '#3b82f6', textDecoration: 'none' }}
+              style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '13px', color: '#3b82f6', textDecoration: 'none' }}
             >
-              npm →
+              <Package size={14} /> npm
             </a>
           </CardFooter>
         </Card>
