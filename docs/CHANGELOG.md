@@ -2,7 +2,7 @@
 
 All notable changes to registyle will be documented in this file.
 
-## [2.0.2] - 2026-10-01
+## [2.0.2] - 2025-07-01
 
 ### Fixed
 
@@ -10,7 +10,7 @@ All notable changes to registyle will be documented in this file.
 - Fix `createServer is not a function` error in browser-based IDEs
 - Add fallback mechanism for Vite module resolution
 
-## [2.0.1] - 2026-10-01
+## [2.0.1] - 2025-06-15
 
 ### Added
 
@@ -30,7 +30,7 @@ All notable changes to registyle will be documented in this file.
 - Update troubleshooting guide with virtual module issues
 - Add environment-specific recommendations for online IDEs
 
-## [2.0.0] - 2026-09-30
+## [2.0.0] - 2025-06-01
 
 ### Added
 
@@ -46,7 +46,7 @@ All notable changes to registyle will be documented in this file.
 - Remove `defineVariants`, `createVariantPreset`, `variantPresets`, `createButton`, and `applyVariants`. Keep variant definitions in application code and use `createVariants`, `compound`, and `mergeVariants`.
 - Remove the Vite `cache` and `cacheSize` options; Vite recompiles registrations when watched files change.
 
-## [1.1.1] - 2026-09-29
+## [1.1.1] - 2024-12-15
 
 ### Fixed
 
@@ -56,7 +56,7 @@ All notable changes to registyle will be documented in this file.
 - Deep-merge applied presets and resolve theme-backed class factories against merged tokens.
 - Detect circular `extend` chains during manifest validation.
 
-## [1.1.0] - 2026-09-28
+## [1.1.0] - 2024-11-30
 
 ### 🎉 Major Features
 

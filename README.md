@@ -2,7 +2,7 @@
 
 A semantic styling library that compiles Tailwind CSS v4 utilities into named component classes, with a separate CSS-only runtime for plain declarations.
 
-**Version 2.0.0**
+See [CHANGELOG](./docs/CHANGELOG.md) for version history.
 
 ## Features
 
