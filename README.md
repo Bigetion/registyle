@@ -3,12 +3,17 @@
 [![npm version](https://img.shields.io/npm/v/registyle.svg)](https://www.npmjs.com/package/registyle)
 [![npm downloads](https://img.shields.io/npm/dm/registyle.svg)](https://www.npmjs.com/package/registyle)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz_small.svg)](https://stackblitz.com/github/Bigetion/registyle/tree/master/examples/stackblitz-starter)
 
 A semantic styling library that compiles Tailwind CSS v4 utilities into named component classes, with a separate CSS-only runtime for plain declarations.
 
 > **ESM only.** This package requires Node.js 18+ and a bundler that supports ES Modules (Vite, webpack 5, Rollup, esbuild). CommonJS `require()` is not supported.
 
 See [CHANGELOG](./docs/CHANGELOG.md) for version history.
+
+## Try It Online
+
+**[▶ Open in StackBlitz](https://stackblitz.com/github/Bigetion/registyle/tree/master/examples/stackblitz-starter)** — no install needed, runs in your browser.
 
 ## Features
 
@@ -198,6 +203,42 @@ In the browser, the runtime injects a style tag. In Node.js, call `register.extr
 - [Migration guide](./docs/MIGRATION.md) — upgrade from v1 to v2
 - [Changelog](./docs/CHANGELOG.md) — release history
 - [Examples](./examples/) — component library and todo app
+
+## Why Registyle
+
+Most approaches make you choose: **Tailwind's power** *or* **clean class names in HTML**. Registyle gives you both.
+
+```html
+<!-- ❌ CVA + Tailwind — utility strings sprawl in every JSX file -->
+<button class="inline-flex items-center justify-center gap-2 font-medium rounded-md
+               bg-blue-600 text-white hover:bg-blue-700 focus-visible:outline-2
+               focus-visible:outline-blue-600 px-4 py-2 text-sm transition-colors">
+
+<!-- ✅ registyle — semantic names, Tailwind compiled underneath -->
+<button class="btn btn-primary btn-md">
+```
+
+| | registyle | CVA + Tailwind | twin.macro | vanilla-extract |
+|---|---|---|---|---|
+| Semantic class names in HTML | ✅ `.btn .btn-primary` | ❌ utility strings | ❌ hashed | ❌ hashed |
+| Tailwind v4 support | ✅ native | ✅ | ❌ | ❌ |
+| Zero JS runtime | ✅ | ⚠️ +2 KB CVA | ❌ +8–13 KB | ✅ |
+| Extend / inheritance | ✅ built-in | ❌ | ❌ | ❌ |
+| CSS output (22 components) | **~7 KB gzip** | ~10–15 KB | N/A | ~8–12 KB |
+| Active in 2025 | ✅ | ✅ | ⚠️ stale | ✅ |
+
+## Bundle Size
+
+The [component demo](./examples/register-component-demo) — 22 full UI components — produces:
+
+| | Raw | Gzip |
+|---|---|---|
+| Tailwind v4 base layer (fixed overhead) | 27.4 KB | ~5.5 KB |
+| Registyle semantic classes (200+ rules) | 9.8 KB | ~1.9 KB |
+| Keyframes + CSS variables | 1.7 KB | ~0.7 KB |
+| **Total** | **38.9 KB** | **7.3 KB** |
+
+Zero KB of JavaScript runtime overhead. The base layer overhead is fixed — adding more components costs only ~0.09 KB gzip each.
 
 ## When to Use Registyle
 
