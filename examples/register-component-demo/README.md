@@ -1,6 +1,6 @@
 # Registyle Component Demo
 
-React/Vite port of `tailwind-to-style/examples/register-component-demo`, using Registyle's build-time Tailwind v4 adapter.
+React/Vite port of the original register-component-demo, using Registyle's build-time Tailwind v4 adapter.
 
 ```sh
 npm install
