@@ -5,6 +5,6 @@ import { registyle } from 'registyle/vite';
 export default defineConfig({
   plugins: [
     react(),
-    registyle(), // collects src/registyles/index.js by default
+    registyle({ forceOutFile: true }),
   ],
 });
