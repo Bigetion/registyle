@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Minus, Plus, RotateCcw, Github, Package } from 'lucide-react';
+import { Minus, Plus, RotateCcw, GitBranch, ExternalLink } from 'lucide-react';
 import { Button } from './components/Button';
 import { Badge } from './components/Badge';
 import { Card, CardHeader, CardBody, CardFooter } from './components/Card';
@@ -159,7 +159,7 @@ export default function App() {
               rel="noopener noreferrer"
               style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '13px', color: '#3b82f6', textDecoration: 'none' }}
             >
-              <Github size={14} /> GitHub
+              <GitBranch size={14} /> GitHub
             </a>
             <a
               href="https://www.npmjs.com/package/registyle"
@@ -167,7 +167,7 @@ export default function App() {
               rel="noopener noreferrer"
               style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '13px', color: '#3b82f6', textDecoration: 'none' }}
             >
-              <Package size={14} /> npm
+              <ExternalLink size={14} /> npm
             </a>
           </CardFooter>
         </Card>
