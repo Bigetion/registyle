@@ -2,12 +2,52 @@
 
 All notable changes to registyle will be documented in this file.
 
-## [2.0.0] - 2026-10-02
+## [2.0.3] - 2026-10-02
+
+### Fixed
+
+- Remove hardcoded version string from README
+- Replace old library name references in demo content
+- Fix CHANGELOG entry dates
+
+### Added
+
+- GitHub Actions CI workflow for Node.js 18, 20, and 22
+
+## [2.0.2] - 2026-10-02
+
+### Fixed
+
+- **CodeSandbox Vite Import**: Use direct import instead of dynamic resolution for better CodeSandbox compatibility
+- Fix `createServer is not a function` error in browser-based IDEs
+- Add fallback mechanism for Vite module resolution
+
+## [2.0.1] - 2026-10-02
+
+### Added
+
+- **CodeSandbox/StackBlitz Support**: Auto-detect browser-based development environments and generate physical CSS file when virtual modules are not supported
+- Add `forceOutFile` option to explicitly force physical file output for any environment
+- Add comprehensive CodeSandbox integration guide (`docs/CODESANDBOX.md`)
+- Environment detection for `CODESANDBOX_SSE`, `SANDBOX_ID`, `CODESANDBOX`, and webcontainer shell
+
+### Fixed
+
+- Virtual module (`virtual:registyle.css`) resolution in online IDEs like CodeSandbox and StackBlitz
+- Auto-generate `src/registyle.generated.css` when virtual modules are unavailable
+
+### Documentation
+
+- Add quick reference guide for CodeSandbox setup
+- Update troubleshooting guide with virtual module issues
+- Add environment-specific recommendations for online IDEs
+
+## [2.0.0] - 2026-10-01
 
 ### Added
 
 - **Tailwind v4 Compile Path**: Compile Tailwind utilities onto semantic class names via `registyle/collector` + `registyle/compile` + Vite plugin. No utility scanning — only explicitly registered classes are compiled.
-- **Vite Plugin**: `registyle/vite` plugin collects registrations from a manifest entry, compiles them through Tailwind v4, and exposes the result as `virtual:registyle.css`. Watches for changes and recompiles automatically.
+- **Vite Plugin**: `registyle/vite` collects registrations from a manifest entry, compiles through Tailwind v4, and exposes the result as `virtual:registyle.css`. Watches for changes and recompiles automatically.
 - **Variant Group Expansion**: Grouped prefixes expand at compile time — `hover:(bg-blue text-white)` → `hover:bg-blue hover:text-white`, `border-(2 red-500)` → `border-2 border-red-500`.
 - **`register.group()`**: Register component slots as a group — `card`, `card-title`, `card-body` — from a single call.
 - **`extend` with Topological Sort**: Classes can extend other registered classes. Circular dependency is detected and reported with a clear error.
@@ -16,7 +56,6 @@ All notable changes to registyle will be documented in this file.
 - **CSS Optimization**: Optional minification and adjacent-rule deduplication via PostCSS AST in `compile()`.
 - **Theme System** (`registyle/theme`): Design token helpers — `color()`, `space()`, `text()`, `shadow()`, `rounded()` — with `createTheme()` and `withTheme()`.
 - **Variants Composer** (`registyle/variants`): CVA-inspired `createVariants()` with compound variants, default variants, and `toRegistration()` / `toManifest()` output adapters.
-- **CodeSandbox / StackBlitz Support**: Auto-detect browser-based IDEs and write a physical CSS file when virtual modules are unsupported. `forceOutFile` option available for explicit override.
 - **`cx()` helper**: Conditional class name utility (replaces `cn` from v1).
 - Comprehensive documentation: API reference, integrations guide, advanced guide, troubleshooting, migration guide, and CodeSandbox setup guide.
 
