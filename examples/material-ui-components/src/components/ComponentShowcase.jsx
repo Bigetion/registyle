@@ -566,6 +566,21 @@ const DRAWER_DEMOS = {
   },
 };
 
+const LINK_DEMOS = {
+  link: {
+    title: 'Inline links',
+    caption: 'Use links to navigate to related content while preserving familiar browser behavior.',
+  },
+  'link-variants': {
+    title: 'Semantic link styles',
+    caption: 'Apply subtle, primary, and external-link treatments without changing the anchor semantics.',
+  },
+  'link-accessibility': {
+    title: 'Keyboard and disabled states',
+    caption: 'Keep links discoverable to keyboard users and represent unavailable destinations clearly.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -658,6 +673,8 @@ export default function ComponentShowcase({ component }) {
                                                                                                             ? BREADCRUMBS_DEMOS[demoId]
                                                                                                               : component.slug === 'drawer'
                                                                                                                 ? DRAWER_DEMOS[demoId]
+                                                                                                                  : component.slug === 'link'
+                                                                                                                    ? LINK_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel
