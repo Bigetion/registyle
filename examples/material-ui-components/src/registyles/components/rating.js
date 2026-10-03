@@ -1,20 +1,32 @@
 import { register } from 'registyle/collector';
 
-register('rating', {
-  base: { tw: 'flex items-center gap-0.5' },
-  modifiers: {
-    'label': { tw: 'ml-3' },
-    'demo': { tw: 'flex items-center gap-3' },
+register.group('rating-control', {
+  root: {
+    tw: 'inline-flex items-center gap-1',
+  },
+  precision: {
+    tw: 'cursor-pointer touch-none gap-0.5 rounded-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#86a6ff]',
   },
 });
 
-register('mui-rating-star', {
-  base: { tw: 'text-xl leading-none text-[var(--orange)]' },
-  modifiers: {
-    'muted': { tw: 'text-xl leading-none text-[#51565e]' },
+register('rating-star', {
+  base: {
+    tw: 'inline-flex cursor-pointer items-center justify-center border-0 bg-transparent p-0.5 text-[#f4bd7a] transition-[color,transform] hover:scale-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#86a6ff] disabled:cursor-default disabled:hover:scale-100',
   },
 });
 
-register('rating button', {
-  base: { tw: 'inline-flex p-0.5' },
+register('rating-star-filled', {
+  base: { tw: 'text-[#f4bd7a]' },
+});
+
+register('rating-star-muted', {
+  base: { tw: 'text-[#515d70]' },
+});
+
+register('rating-precision-star', {
+  base: { tw: 'relative inline-flex' },
+});
+
+register('rating-precision-fill', {
+  base: { tw: 'absolute inset-y-0 left-0 overflow-hidden' },
 });

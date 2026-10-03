@@ -120,6 +120,21 @@ const RADIO_GROUP_DEMOS = {
   },
 };
 
+const RATING_DEMOS = {
+  rating: {
+    title: 'Interactive rating',
+    caption: 'Collect a single star rating with pointer or keyboard input.',
+  },
+  'rating-precision': {
+    title: 'Half-star precision',
+    caption: 'Allow ratings in half-star increments for more nuanced feedback.',
+  },
+  'rating-readonly': {
+    title: 'Read-only rating',
+    caption: 'Present an existing rating without implying that it can be changed.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -152,6 +167,8 @@ export default function ComponentShowcase({ component }) {
                     ? NUMBER_FIELD_DEMOS[demoId]
                     : component.slug === 'radio-group'
                       ? RADIO_GROUP_DEMOS[demoId]
+                      : component.slug === 'rating'
+                        ? RATING_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel

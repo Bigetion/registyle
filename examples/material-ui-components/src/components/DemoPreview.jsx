@@ -21,7 +21,6 @@ import {
   Search,
   Settings,
   ShieldCheck,
-  Star,
   Trash2,
   User,
   X,
@@ -34,6 +33,7 @@ import CheckboxDemo from './material/checkbox/CheckboxDemo.jsx';
 import FloatingActionButtonDemo from './material/floating-action-button/FloatingActionButtonDemo.jsx';
 import NumberFieldDemo from './material/number-field/NumberFieldDemo.jsx';
 import RadioGroupDemo from './material/radio-group/RadioGroupDemo.jsx';
+import RatingDemo from './material/rating/RatingDemo.jsx';
 
 const SAMPLE_ITEMS = ['React', 'Vue', 'Angular', 'Svelte'];
 const PLACEMENTS = ['top', 'right', 'bottom', 'left'];
@@ -247,9 +247,6 @@ function SelectionPreview({ demoId }) {
   const [checked, setChecked] = useState(true);
   const [on, setOn] = useState(true);
   const [toggle, setToggle] = useState('list');
-  if (demoId.startsWith('rating')) {
-    return <RatingPreview demoId={demoId} />;
-  }
   if (demoId.startsWith('toggle-button')) {
     return (
       <div className="toggle-button-demo" role="group" aria-label="View">
@@ -269,15 +266,6 @@ function SelectionPreview({ demoId }) {
       {demoId.startsWith('checkbox') && demoId.includes('group') && <p className="preview-note">Selected: {checked ? 'product updates' : 'none'}</p>}
     </div>
   );
-}
-
-function RatingPreview({ demoId }) {
-  const [rating, setRating] = useState(4);
-  const [hover, setHover] = useState(0);
-  const readOnly = demoId.includes('readonly');
-  return <div className="rating-demo"><div className="rating" role={readOnly ? 'img' : 'radiogroup'} aria-label={`${rating} out of 5 stars`}>
-    {[1, 2, 3, 4, 5].map((value) => <button className={cx(value <= (hover || rating) ? 'mui-rating-star' : 'mui-rating-star-muted')} key={value} type="button" disabled={readOnly} onMouseEnter={() => setHover(value)} onMouseLeave={() => setHover(0)} onClick={() => setRating(value)} aria-label={`${value} stars`}><Star size={22} fill="currentColor" strokeWidth={1.5} /></button>)}
-  </div><span className="preview-note">{rating}.0 / 5 {readOnly ? '— read only' : '— click a star to rate'}</span></div>;
 }
 
 function InputPreview({ demoId }) {
@@ -429,11 +417,12 @@ function DemoPreview({ component, demoId }) {
   if (component.slug === 'floating-action-button') return <FloatingActionButtonDemo demoId={demoId} />;
   if (component.slug === 'number-field') return <NumberFieldDemo demoId={demoId} />;
   if (component.slug === 'radio-group') return <RadioGroupDemo demoId={demoId} />;
+  if (component.slug === 'rating') return <RatingDemo demoId={demoId} />;
   if (demoId.startsWith('tooltip') || demoId.startsWith('popover') || demoId.startsWith('menu') || demoId.startsWith('select') || demoId.startsWith('autocomplete') || demoId.startsWith('popper') || demoId.startsWith('click-away') || demoId.startsWith('portal')) return <FloatingDemo demoId={demoId} />;
   if (demoId.startsWith('transfer-list')) return <TransferListPreview demoId={demoId} />;
   if (demoId.startsWith('slider')) return <SliderPreview demoId={demoId} />;
   if (demoId.startsWith('button')) return <ButtonPreview demoId={demoId} />;
-  if (demoId.startsWith('checkbox') || demoId.startsWith('switch') || demoId.startsWith('toggle-button') || demoId.startsWith('rating')) return <SelectionPreview demoId={demoId} />;
+  if (demoId.startsWith('checkbox') || demoId.startsWith('switch') || demoId.startsWith('toggle-button')) return <SelectionPreview demoId={demoId} />;
   if (demoId.startsWith('text-field')) return <InputPreview demoId={demoId} />;
   if (demoId.startsWith('avatar') || demoId.startsWith('badge') || demoId.startsWith('chip') || demoId.startsWith('divider') || demoId.startsWith('icons') || demoId.startsWith('material-icons') || demoId.startsWith('list') || demoId.startsWith('table') || demoId.startsWith('typography')) return <DisplayPreview demoId={demoId} />;
   if (demoId.startsWith('alert') || demoId.startsWith('dialog') || demoId.startsWith('progress') || demoId.startsWith('snackbar') || demoId.startsWith('skeleton') || demoId.startsWith('modal')) return <FeedbackPreview demoId={demoId} />;
