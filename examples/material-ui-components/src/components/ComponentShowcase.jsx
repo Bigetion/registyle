@@ -491,6 +491,21 @@ const CARD_DEMOS = {
   },
 };
 
+const PAPER_DEMOS = {
+  paper: {
+    title: 'Surface elevation',
+    caption: 'Compare how subtle elevation levels separate content while keeping the same base surface.',
+  },
+  'paper-elevation': {
+    title: 'Elevation scale',
+    caption: 'Choose an elevation level to compare how shadow and surface contrast establish hierarchy.',
+  },
+  'paper-variants': {
+    title: 'Surface variants',
+    caption: 'Compare a contained surface, an outlined panel, and a softly raised content area.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -573,6 +588,8 @@ export default function ComponentShowcase({ component }) {
                                                                                         ? APP_BAR_DEMOS[demoId]
                                                                                           : component.slug === 'card'
                                                                                             ? CARD_DEMOS[demoId]
+                                                                                              : component.slug === 'paper'
+                                                                                                ? PAPER_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel

@@ -37,6 +37,7 @@ import SkeletonDemo from './material/skeleton/SkeletonDemo.jsx';
 import AccordionDemo from './material/accordion/AccordionDemo.jsx';
 import AppBarDemo from './material/app-bar/AppBarDemo.jsx';
 import CardDemo from './material/card/CardDemo.jsx';
+import PaperDemo from './material/paper/PaperDemo.jsx';
 import BadgeDemo from './material/badge/BadgeDemo.jsx';
 import ButtonGroupDemo from './material/button-group/ButtonGroupDemo.jsx';
 import ChipDemo from './material/chip/ChipDemo.jsx';
@@ -307,7 +308,6 @@ function FeedbackPreview({ demoId }) {
 
 function SurfacePreview({ demoId }) {
   const [selected, setSelected] = useState(0);
-  if (demoId.startsWith('paper')) return <div className="paper-row"><div className="paper-sample">Elevation 0</div><div className="paper-sample paper-raised">Elevation 3</div><div className="paper-sample paper-outlined">Outlined</div></div>;
   return <div className="preview-row"><span className="mui-chip mui-chip-filled"><Layers size={14} /> Surface</span><span className="preview-note">Composable content surface</span></div>;
 }
 
@@ -329,6 +329,7 @@ function DemoPreview({ component, demoId }) {
   if (component.slug === 'accordion') return <AccordionDemo demoId={demoId} />;
   if (component.slug === 'app-bar') return <AppBarDemo demoId={demoId} />;
   if (component.slug === 'card') return <CardDemo demoId={demoId} />;
+  if (component.slug === 'paper') return <PaperDemo demoId={demoId} />;
   if (component.slug === 'alert') return <AlertDemo demoId={demoId} />;
   if (component.slug === 'dialog') return <DialogDemo demoId={demoId} />;
   if (component.slug === 'progress') return <ProgressDemo demoId={demoId} />;
