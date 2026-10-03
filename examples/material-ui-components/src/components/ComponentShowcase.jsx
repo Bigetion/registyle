@@ -371,6 +371,21 @@ const TYPOGRAPHY_DEMOS = {
   },
 };
 
+const ALERT_DEMOS = {
+  alert: {
+    title: 'Semantic severity',
+    caption: 'Communicate informational, successful, warning, and error states with a clear icon and message.',
+  },
+  'alert-outlined': {
+    title: 'Outlined alerts',
+    caption: 'Keep the same semantic color cues with a lighter, transparent surface.',
+  },
+  'alert-actions': {
+    title: 'Actions and dismissal',
+    caption: 'Offer a useful follow-up action and let users dismiss or restore the message.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -437,6 +452,8 @@ export default function ComponentShowcase({ component }) {
                                                           ? TOOLTIP_DEMOS[demoId]
                                                             : component.slug === 'typography'
                                                               ? TYPOGRAPHY_DEMOS[demoId]
+                                                                : component.slug === 'alert'
+                                                                  ? ALERT_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel

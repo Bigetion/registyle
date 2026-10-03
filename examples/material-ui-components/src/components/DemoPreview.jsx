@@ -29,6 +29,7 @@ import { cx } from 'registyle';
 import { PopperSurface, useClickAway } from './Popper.jsx';
 import AutocompleteDemo from './material/autocomplete/AutocompleteDemo.jsx';
 import AvatarDemo from './material/avatar/AvatarDemo.jsx';
+import AlertDemo from './material/alert/AlertDemo.jsx';
 import BadgeDemo from './material/badge/BadgeDemo.jsx';
 import ButtonGroupDemo from './material/button-group/ButtonGroupDemo.jsx';
 import ChipDemo from './material/chip/ChipDemo.jsx';
@@ -295,7 +296,6 @@ function DisplayPreview({ demoId }) {
 function FeedbackPreview({ demoId }) {
   const [open, setOpen] = useState(demoId.startsWith('snackbar'));
   const [progress, setProgress] = useState(58);
-  if (demoId.startsWith('alert')) return <div className="alert-stack">{[['info', Info, 'Heads up', 'This is an informational message.'], ['success', Check, 'Success', 'Your changes have been saved.'], ['warning', Activity, 'Warning', 'Check the details before continuing.'], ['error', X, 'Something went wrong', 'Please try again in a moment.']].map(([variant, Icon, title, text]) => <div className={`mui-alert mui-alert-${variant}`} key={variant}><Icon size={17} /><span><strong>{title}</strong><small>{text}</small></span>{demoId.includes('actions') && <button type="button" onClick={() => setOpen(false)} aria-label="Dismiss alert"><X size={14} /></button>}</div>)}</div>;
   if (demoId.startsWith('dialog') || demoId.startsWith('modal')) return <div className="dialog-demo"><p className="preview-note">Preview a dialog over the current page.</p><button className="mui-button mui-button-contained" type="button" onClick={() => setOpen(true)}>Open dialog</button>{open && <div className={cx('dialog-overlay', demoId.startsWith('modal') && 'modal-overlay')} role="presentation" onMouseDown={(event) => event.target === event.currentTarget && setOpen(false)}><section className={cx('dialog-box', demoId.startsWith('modal') && 'modal-dialog-box')} role="dialog" aria-modal="true" aria-labelledby={`dialog-title-${demoId}`}><button className="floating-close" type="button" aria-label="Close" onClick={() => setOpen(false)}><X size={16} /></button><h3 id={`dialog-title-${demoId}`}>Discard draft?</h3><p>Your unsaved changes will be permanently removed.</p><div className="dialog-actions"><button className="mui-button mui-button-text" type="button" onClick={() => setOpen(false)}>Cancel</button><button className="mui-button mui-button-contained" type="button" onClick={() => setOpen(false)}>Discard</button></div></section></div>}</div>;
   if (demoId.startsWith('progress')) return <div className="progress-demo"><div className="progress-line"><div className="mui-progress-track"><span className="mui-progress-bar" style={{ width: `${progress}%` }} /></div><span>{progress}%</span></div><div className="progress-actions"><button className="mui-button mui-button-outlined" type="button" onClick={() => setProgress((value) => Math.max(0, value - 10))}>− 10</button><button className="mui-button mui-button-outlined" type="button" onClick={() => setProgress((value) => Math.min(100, value + 10))}>+ 10</button><span className="circular-progress"><Activity size={19} /></span></div></div>;
   if (demoId.startsWith('skeleton')) return <div className="skeleton-card"><span className="skeleton-block skeleton-avatar" /><div><span className="skeleton-block skeleton-title" /><span className="skeleton-block skeleton-copy" /><span className="skeleton-block skeleton-copy short" /></div></div>;
@@ -327,6 +327,7 @@ function NavigationPreview({ demoId }) {
 }
 
 function DemoPreview({ component, demoId }) {
+  if (component.slug === 'alert') return <AlertDemo demoId={demoId} />;
   if (component.slug === 'avatar') return <AvatarDemo demoId={demoId} />;
   if (component.slug === 'badge') return <BadgeDemo demoId={demoId} />;
   if (component.slug === 'chip') return <ChipDemo demoId={demoId} />;

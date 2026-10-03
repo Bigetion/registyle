@@ -24,7 +24,7 @@ export default function ComponentPageLayout({ component, children }) {
       .replace('{count}', component.demos.length),
     purpose,
   ]);
-  if (['chip', 'divider', 'icons', 'material-icons', 'list', 'table', 'tooltip', 'typography'].includes(component.slug)) {
+  if (['chip', 'divider', 'icons', 'material-icons', 'list', 'table', 'tooltip', 'typography', 'alert'].includes(component.slug)) {
     implementationRows.splice(2, 0, [
       'Demo',
       `src/components/material/${component.slug}/${importName}Demo.jsx`,
