@@ -202,7 +202,7 @@ In the browser, the runtime injects a style tag. In Node.js, call `register.extr
 - [Troubleshooting](./docs/TROUBLESHOOTING.md) — common compiler, CSS, and Vite issues
 - [Migration guide](./docs/MIGRATION.md) — upgrade from v1 to v2
 - [Changelog](./docs/CHANGELOG.md) — release history
-- [Examples](./examples/) — component library and todo app
+- [Examples](./examples/) — component library, todo app, and [SaaS tenant dashboard](./examples/saas-tenant-dashboard/README.md)
 
 ## Why Registyle
 
