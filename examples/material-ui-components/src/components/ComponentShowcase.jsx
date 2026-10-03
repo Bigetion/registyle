@@ -236,6 +236,21 @@ const AVATAR_DEMOS = {
   },
 };
 
+const BADGE_DEMOS = {
+  badge: {
+    title: 'Notification counts',
+    caption: 'Show unread counts clearly, including zero and capped large values.',
+  },
+  'badge-colors': {
+    title: 'Visibility and emphasis',
+    caption: 'Control when a badge appears and vary its emphasis for secondary counts.',
+  },
+  'badge-dot': {
+    title: 'Status and compact badges',
+    caption: 'Use a dot for presence and a count badge for compact action indicators.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -284,6 +299,8 @@ export default function ComponentShowcase({ component }) {
                                     ? TOGGLE_BUTTON_DEMOS[demoId]
                                     : component.slug === 'avatar'
                                       ? AVATAR_DEMOS[demoId]
+                                      : component.slug === 'badge'
+                                        ? BADGE_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel
