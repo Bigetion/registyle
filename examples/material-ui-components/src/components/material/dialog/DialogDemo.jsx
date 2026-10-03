@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { AlertTriangle, Check, FileText, X } from 'lucide-react';
 import { cx } from 'registyle';
 
@@ -46,7 +47,7 @@ function DialogShell({ open, onClose, title, description, children, fullscreen =
 
   if (!open) return null;
 
-  return (
+  return createPortal(
     <div className="dialog-overlay" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
       <section
         className={cx('dialog-box', fullscreen && 'dialog-box-fullscreen', tone && `dialog-box-${tone}`)}
@@ -71,7 +72,8 @@ function DialogShell({ open, onClose, title, description, children, fullscreen =
         </div>
         {children}
       </section>
-    </div>
+    </div>,
+    document.body,
   );
 }
 
