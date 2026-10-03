@@ -39,6 +39,7 @@ import AppBarDemo from './material/app-bar/AppBarDemo.jsx';
 import CardDemo from './material/card/CardDemo.jsx';
 import PaperDemo from './material/paper/PaperDemo.jsx';
 import PopoverDemo from './material/popover/PopoverDemo.jsx';
+import BottomNavigationDemo from './material/bottom-navigation/BottomNavigationDemo.jsx';
 import BadgeDemo from './material/badge/BadgeDemo.jsx';
 import ButtonGroupDemo from './material/button-group/ButtonGroupDemo.jsx';
 import ChipDemo from './material/chip/ChipDemo.jsx';
@@ -327,6 +328,7 @@ function NavigationPreview({ demoId }) {
 }
 
 function DemoPreview({ component, demoId }) {
+  if (component.slug === 'bottom-navigation') return <BottomNavigationDemo demoId={demoId} />;
   if (component.slug === 'accordion') return <AccordionDemo demoId={demoId} />;
   if (component.slug === 'app-bar') return <AppBarDemo demoId={demoId} />;
   if (component.slug === 'card') return <CardDemo demoId={demoId} />;

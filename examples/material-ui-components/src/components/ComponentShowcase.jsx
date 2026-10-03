@@ -521,6 +521,21 @@ const POPOVER_DEMOS = {
   },
 };
 
+const BOTTOM_NAVIGATION_DEMOS = {
+  'bottom-navigation': {
+    title: 'Primary destinations',
+    caption: 'Switch between the main sections of an application and reflect the active destination.',
+  },
+  'bottom-navigation-labels': {
+    title: 'Label display behavior',
+    caption: 'Compare labeled destinations with a compact mode that shows a label only for the selected item.',
+  },
+  'bottom-navigation-icons': {
+    title: 'Badges and icon states',
+    caption: 'Add a small notification count while keeping selection and unread state accessible.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -607,6 +622,8 @@ export default function ComponentShowcase({ component }) {
                                                                                                 ? PAPER_DEMOS[demoId]
                                                                                                   : component.slug === 'popover'
                                                                                                     ? POPOVER_DEMOS[demoId]
+                                                                                                      : component.slug === 'bottom-navigation'
+                                                                                                        ? BOTTOM_NAVIGATION_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel
