@@ -311,6 +311,21 @@ const MATERIAL_ICONS_DEMOS = {
   },
 };
 
+const LIST_DEMOS = {
+  list: {
+    title: 'Workspace navigation',
+    caption: 'Use a clear leading icon, descriptive label, and active state for section navigation.',
+  },
+  'list-secondary': {
+    title: 'Secondary content',
+    caption: 'Pair primary labels with supporting details and compact timestamps.',
+  },
+  'list-interactive': {
+    title: 'Interactive preferences',
+    caption: 'Make each row an accessible control and reflect its state immediately.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -369,6 +384,8 @@ export default function ComponentShowcase({ component }) {
                                               ? ICONS_DEMOS[demoId]
                                               : component.slug === 'material-icons'
                                                 ? MATERIAL_ICONS_DEMOS[demoId]
+                                                : component.slug === 'list'
+                                                  ? LIST_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel
