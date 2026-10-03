@@ -416,6 +416,21 @@ const PROGRESS_DEMOS = {
   },
 };
 
+const SNACKBAR_DEMOS = {
+  snackbar: {
+    title: 'Dismissible notification',
+    caption: 'Show a brief status message, then dismiss it or let it disappear automatically.',
+  },
+  'snackbar-action': {
+    title: 'Snackbar with action',
+    caption: 'Offer a quick, reversible action while keeping the message concise and non-blocking.',
+  },
+  'snackbar-position': {
+    title: 'Placement options',
+    caption: 'Compare start, center, and end placement within a notification area.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -488,6 +503,8 @@ export default function ComponentShowcase({ component }) {
                                                                       ? DIALOG_DEMOS[demoId]
                                                                       : component.slug === 'progress'
                                                                         ? PROGRESS_DEMOS[demoId]
+                                                                          : component.slug === 'snackbar'
+                                                                            ? SNACKBAR_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel

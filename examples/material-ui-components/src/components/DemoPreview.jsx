@@ -32,6 +32,7 @@ import AvatarDemo from './material/avatar/AvatarDemo.jsx';
 import AlertDemo from './material/alert/AlertDemo.jsx';
 import DialogDemo from './material/dialog/DialogDemo.jsx';
 import ProgressDemo from './material/progress/ProgressDemo.jsx';
+import SnackbarDemo from './material/snackbar/SnackbarDemo.jsx';
 import BadgeDemo from './material/badge/BadgeDemo.jsx';
 import ButtonGroupDemo from './material/button-group/ButtonGroupDemo.jsx';
 import ChipDemo from './material/chip/ChipDemo.jsx';
@@ -329,6 +330,7 @@ function DemoPreview({ component, demoId }) {
   if (component.slug === 'alert') return <AlertDemo demoId={demoId} />;
   if (component.slug === 'dialog') return <DialogDemo demoId={demoId} />;
   if (component.slug === 'progress') return <ProgressDemo demoId={demoId} />;
+  if (component.slug === 'snackbar') return <SnackbarDemo demoId={demoId} />;
   if (component.slug === 'avatar') return <AvatarDemo demoId={demoId} />;
   if (component.slug === 'badge') return <BadgeDemo demoId={demoId} />;
   if (component.slug === 'chip') return <ChipDemo demoId={demoId} />;
