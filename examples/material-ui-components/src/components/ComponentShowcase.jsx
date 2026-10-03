@@ -386,6 +386,21 @@ const ALERT_DEMOS = {
   },
 };
 
+const DIALOG_DEMOS = {
+  dialog: {
+    title: 'Confirmation dialog',
+    caption: 'Help users confirm whether to save or discard pending changes.',
+  },
+  'dialog-confirmation': {
+    title: 'Destructive confirmation',
+    caption: 'Clearly explain an irreversible action and distinguish the destructive choice.',
+  },
+  'dialog-fullscreen': {
+    title: 'Focused composition',
+    caption: 'Use a larger dialog for a short multi-field task without navigating away.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -454,6 +469,8 @@ export default function ComponentShowcase({ component }) {
                                                               ? TYPOGRAPHY_DEMOS[demoId]
                                                                 : component.slug === 'alert'
                                                                   ? ALERT_DEMOS[demoId]
+                                                                    : component.slug === 'dialog'
+                                                                      ? DIALOG_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel
