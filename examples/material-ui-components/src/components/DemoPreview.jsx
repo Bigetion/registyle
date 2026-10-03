@@ -39,6 +39,7 @@ import SliderDemo from './material/slider/SliderDemo.jsx';
 import SwitchDemo from './material/switch/SwitchDemo.jsx';
 import TextFieldDemo from './material/text-field/TextFieldDemo.jsx';
 import TransferListDemo from './material/transfer-list/TransferListDemo.jsx';
+import ToggleButtonDemo from './material/toggle-button/ToggleButtonDemo.jsx';
 
 const PLACEMENTS = ['top', 'right', 'bottom', 'left'];
 
@@ -238,16 +239,6 @@ function ButtonPreview({ demoId }) {
 
 function SelectionPreview({ demoId }) {
   const [checked, setChecked] = useState(true);
-  const [on, setOn] = useState(true);
-  const [toggle, setToggle] = useState('list');
-  if (demoId.startsWith('toggle-button')) {
-    return (
-      <div className="toggle-button-demo" role="group" aria-label="View">
-        <button className={cx('toggle-button-demo-button', toggle === 'list' && 'toggle-button-demo-selected')} onClick={() => setToggle('list')} type="button"><Layers size={15} /> List</button>
-        <button className={cx('toggle-button-demo-button', toggle === 'grid' && 'toggle-button-demo-selected')} onClick={() => setToggle('grid')} type="button"><Image size={15} /> Grid</button>
-      </div>
-    );
-  }
   return (
     <div className="preview-stack">
       <div className="selection-list">
@@ -255,7 +246,6 @@ function SelectionPreview({ demoId }) {
         <label className="selection-option"><input className="mui-checkbox" type="checkbox" /><span>Subscribe to newsletter</span></label>
         <label className="selection-option is-disabled"><input className="mui-checkbox" type="checkbox" disabled /><span>Disabled option</span></label>
       </div>
-      {demoId.startsWith('switch') && <label className="selection-option switch-option"><input className="mui-switch" type="checkbox" checked={on} onChange={(event) => setOn(event.target.checked)} /><span>Push notifications {on ? 'on' : 'off'}</span></label>}
       {demoId.startsWith('checkbox') && demoId.includes('group') && <p className="preview-note">Selected: {checked ? 'product updates' : 'none'}</p>}
     </div>
   );
@@ -341,6 +331,7 @@ function DemoPreview({ component, demoId }) {
   if (component.slug === 'switch') return <SwitchDemo demoId={demoId} />;
   if (component.slug === 'text-field') return <TextFieldDemo demoId={demoId} />;
   if (component.slug === 'transfer-list') return <TransferListDemo demoId={demoId} />;
+  if (component.slug === 'toggle-button') return <ToggleButtonDemo demoId={demoId} />;
   if (component.slug === 'autocomplete') return <AutocompleteDemo demoId={demoId} />;
   if (component.slug === 'button-group') return <ButtonGroupDemo demoId={demoId} />;
   if (component.slug === 'checkbox') return <CheckboxDemo demoId={demoId} />;
@@ -350,7 +341,7 @@ function DemoPreview({ component, demoId }) {
   if (component.slug === 'rating') return <RatingDemo demoId={demoId} />;
   if (demoId.startsWith('tooltip') || demoId.startsWith('popover') || demoId.startsWith('menu') || demoId.startsWith('autocomplete') || demoId.startsWith('popper') || demoId.startsWith('click-away') || demoId.startsWith('portal')) return <FloatingDemo demoId={demoId} />;
   if (demoId.startsWith('button')) return <ButtonPreview demoId={demoId} />;
-  if (demoId.startsWith('checkbox') || demoId.startsWith('toggle-button')) return <SelectionPreview demoId={demoId} />;
+  if (demoId.startsWith('checkbox')) return <SelectionPreview demoId={demoId} />;
   if (demoId.startsWith('text-field')) return <InputPreview demoId={demoId} />;
   if (demoId.startsWith('avatar') || demoId.startsWith('badge') || demoId.startsWith('chip') || demoId.startsWith('divider') || demoId.startsWith('icons') || demoId.startsWith('material-icons') || demoId.startsWith('list') || demoId.startsWith('table') || demoId.startsWith('typography')) return <DisplayPreview demoId={demoId} />;
   if (demoId.startsWith('alert') || demoId.startsWith('dialog') || demoId.startsWith('progress') || demoId.startsWith('snackbar') || demoId.startsWith('skeleton') || demoId.startsWith('modal')) return <FeedbackPreview demoId={demoId} />;

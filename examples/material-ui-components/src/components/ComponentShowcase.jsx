@@ -206,6 +206,21 @@ const TRANSFER_LIST_DEMOS = {
   },
 };
 
+const TOGGLE_BUTTON_DEMOS = {
+  'toggle-button': {
+    title: 'View selection',
+    caption: 'Switch between related content views with an exclusive pressed state.',
+  },
+  'toggle-button-exclusive': {
+    title: 'Clearable selection',
+    caption: 'Allow an active toggle to be pressed again to clear the selection.',
+  },
+  'toggle-button-sizes': {
+    title: 'Compact icon controls',
+    caption: 'Use concise icon-only toggles with accessible labels when space is limited.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -250,6 +265,8 @@ export default function ComponentShowcase({ component }) {
                                 ? TEXT_FIELD_DEMOS[demoId]
                                 : component.slug === 'transfer-list'
                                   ? TRANSFER_LIST_DEMOS[demoId]
+                                  : component.slug === 'toggle-button'
+                                    ? TOGGLE_BUTTON_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel
