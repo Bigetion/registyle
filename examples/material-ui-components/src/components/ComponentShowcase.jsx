@@ -356,6 +356,21 @@ const TOOLTIP_DEMOS = {
   },
 };
 
+const TYPOGRAPHY_DEMOS = {
+  typography: {
+    title: 'Type scale',
+    caption: 'Build a clear hierarchy from display text through headings, body copy, and captions.',
+  },
+  'typography-weights': {
+    title: 'Font weights',
+    caption: 'Compare regular through bold weights while keeping size and spacing consistent.',
+  },
+  'typography-colors': {
+    title: 'Color and alignment',
+    caption: 'Pair semantic text colors with alignment controls while preserving readability.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -420,6 +435,8 @@ export default function ComponentShowcase({ component }) {
                                                       ? TABLE_DEMOS[demoId]
                                                         : component.slug === 'tooltip'
                                                           ? TOOLTIP_DEMOS[demoId]
+                                                            : component.slug === 'typography'
+                                                              ? TYPOGRAPHY_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel
