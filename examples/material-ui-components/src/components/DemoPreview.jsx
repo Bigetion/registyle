@@ -31,6 +31,7 @@ import AutocompleteDemo from './material/autocomplete/AutocompleteDemo.jsx';
 import AvatarDemo from './material/avatar/AvatarDemo.jsx';
 import AlertDemo from './material/alert/AlertDemo.jsx';
 import DialogDemo from './material/dialog/DialogDemo.jsx';
+import ProgressDemo from './material/progress/ProgressDemo.jsx';
 import BadgeDemo from './material/badge/BadgeDemo.jsx';
 import ButtonGroupDemo from './material/button-group/ButtonGroupDemo.jsx';
 import ChipDemo from './material/chip/ChipDemo.jsx';
@@ -296,8 +297,6 @@ function DisplayPreview({ demoId }) {
 
 function FeedbackPreview({ demoId }) {
   const [open, setOpen] = useState(demoId.startsWith('snackbar'));
-  const [progress, setProgress] = useState(58);
-  if (demoId.startsWith('progress')) return <div className="progress-demo"><div className="progress-line"><div className="mui-progress-track"><span className="mui-progress-bar" style={{ width: `${progress}%` }} /></div><span>{progress}%</span></div><div className="progress-actions"><button className="mui-button mui-button-outlined" type="button" onClick={() => setProgress((value) => Math.max(0, value - 10))}>− 10</button><button className="mui-button mui-button-outlined" type="button" onClick={() => setProgress((value) => Math.min(100, value + 10))}>+ 10</button><span className="circular-progress"><Activity size={19} /></span></div></div>;
   if (demoId.startsWith('skeleton')) return <div className="skeleton-card"><span className="skeleton-block skeleton-avatar" /><div><span className="skeleton-block skeleton-title" /><span className="skeleton-block skeleton-copy" /><span className="skeleton-block skeleton-copy short" /></div></div>;
   return <div className="snackbar-demo"><button className="mui-button mui-button-contained" type="button" onClick={() => setOpen(true)}>Show notification</button>{open && <div className="snackbar"><span>File saved successfully</span><button type="button" onClick={() => setOpen(false)}>UNDO</button><button type="button" aria-label="Dismiss" onClick={() => setOpen(false)}><X size={14} /></button></div>}</div>;
 }
@@ -329,6 +328,7 @@ function NavigationPreview({ demoId }) {
 function DemoPreview({ component, demoId }) {
   if (component.slug === 'alert') return <AlertDemo demoId={demoId} />;
   if (component.slug === 'dialog') return <DialogDemo demoId={demoId} />;
+  if (component.slug === 'progress') return <ProgressDemo demoId={demoId} />;
   if (component.slug === 'avatar') return <AvatarDemo demoId={demoId} />;
   if (component.slug === 'badge') return <BadgeDemo demoId={demoId} />;
   if (component.slug === 'chip') return <ChipDemo demoId={demoId} />;

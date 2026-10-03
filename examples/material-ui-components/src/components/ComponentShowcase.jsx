@@ -401,6 +401,21 @@ const DIALOG_DEMOS = {
   },
 };
 
+const PROGRESS_DEMOS = {
+  progress: {
+    title: 'Linear progress',
+    caption: 'Show a task’s current completion, with an indeterminate state for work whose duration is not known.',
+  },
+  'progress-circular': {
+    title: 'Circular progress',
+    caption: 'Use a compact circular indicator for ongoing work, either with a known value or without one.',
+  },
+  'progress-buffer': {
+    title: 'Buffered progress',
+    caption: 'Distinguish completed work from content that has been buffered and is ready to process.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -471,6 +486,8 @@ export default function ComponentShowcase({ component }) {
                                                                   ? ALERT_DEMOS[demoId]
                                                                     : component.slug === 'dialog'
                                                                       ? DIALOG_DEMOS[demoId]
+                                                                      : component.slug === 'progress'
+                                                                        ? PROGRESS_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel
