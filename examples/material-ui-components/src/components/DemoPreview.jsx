@@ -32,6 +32,7 @@ import AutocompleteDemo from './material/autocomplete/AutocompleteDemo.jsx';
 import ButtonGroupDemo from './material/button-group/ButtonGroupDemo.jsx';
 import CheckboxDemo from './material/checkbox/CheckboxDemo.jsx';
 import FloatingActionButtonDemo from './material/floating-action-button/FloatingActionButtonDemo.jsx';
+import NumberFieldDemo from './material/number-field/NumberFieldDemo.jsx';
 
 const SAMPLE_ITEMS = ['React', 'Vue', 'Angular', 'Svelte'];
 const PLACEMENTS = ['top', 'right', 'bottom', 'left'];
@@ -431,12 +432,13 @@ function DemoPreview({ component, demoId }) {
   if (component.slug === 'button-group') return <ButtonGroupDemo demoId={demoId} />;
   if (component.slug === 'checkbox') return <CheckboxDemo demoId={demoId} />;
   if (component.slug === 'floating-action-button') return <FloatingActionButtonDemo demoId={demoId} />;
+  if (component.slug === 'number-field') return <NumberFieldDemo demoId={demoId} />;
   if (demoId.startsWith('tooltip') || demoId.startsWith('popover') || demoId.startsWith('menu') || demoId.startsWith('select') || demoId.startsWith('autocomplete') || demoId.startsWith('popper') || demoId.startsWith('click-away') || demoId.startsWith('portal')) return <FloatingDemo demoId={demoId} />;
   if (demoId.startsWith('transfer-list')) return <TransferListPreview demoId={demoId} />;
   if (demoId.startsWith('slider')) return <SliderPreview demoId={demoId} />;
   if (demoId.startsWith('button')) return <ButtonPreview demoId={demoId} />;
   if (demoId.startsWith('checkbox') || demoId.startsWith('radio') || demoId.startsWith('switch') || demoId.startsWith('toggle-button') || demoId.startsWith('rating')) return <SelectionPreview demoId={demoId} />;
-  if (demoId.startsWith('text-field') || demoId.startsWith('number-field')) return <InputPreview demoId={demoId} />;
+  if (demoId.startsWith('text-field')) return <InputPreview demoId={demoId} />;
   if (demoId.startsWith('avatar') || demoId.startsWith('badge') || demoId.startsWith('chip') || demoId.startsWith('divider') || demoId.startsWith('icons') || demoId.startsWith('material-icons') || demoId.startsWith('list') || demoId.startsWith('table') || demoId.startsWith('typography')) return <DisplayPreview demoId={demoId} />;
   if (demoId.startsWith('alert') || demoId.startsWith('dialog') || demoId.startsWith('progress') || demoId.startsWith('snackbar') || demoId.startsWith('skeleton') || demoId.startsWith('modal')) return <FeedbackPreview demoId={demoId} />;
   if (demoId.startsWith('accordion') || demoId.startsWith('app-bar') || demoId.startsWith('card') || demoId.startsWith('paper')) return <SurfacePreview demoId={demoId} />;

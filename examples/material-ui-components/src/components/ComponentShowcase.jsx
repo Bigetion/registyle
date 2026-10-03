@@ -90,6 +90,21 @@ const FAB_DEMOS = {
   },
 };
 
+const NUMBER_FIELD_DEMOS = {
+  'number-field': {
+    title: 'Stepped quantity',
+    caption: 'Adjust a whole-number value with keyboard input or increment controls.',
+  },
+  'number-field-steps': {
+    title: 'Custom step size',
+    caption: 'Use fractional steps when a value needs more precise adjustments.',
+  },
+  'number-field-limits': {
+    title: 'Minimum and maximum',
+    caption: 'Keep changes inside an allowed range and disable controls at its limits.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -118,6 +133,8 @@ export default function ComponentShowcase({ component }) {
                 ? CHECKBOX_DEMOS[demoId]
                 : component.slug === 'floating-action-button'
                   ? FAB_DEMOS[demoId]
+                  : component.slug === 'number-field'
+                    ? NUMBER_FIELD_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel
