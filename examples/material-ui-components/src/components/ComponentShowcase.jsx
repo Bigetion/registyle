@@ -596,6 +596,21 @@ const MENU_DEMOS = {
   },
 };
 
+const PAGINATION_DEMOS = {
+  pagination: {
+    title: 'Page navigation',
+    caption: 'Move through a page range with clear current-page, previous, next, first, and last controls.',
+  },
+  'pagination-outlined': {
+    title: 'Outlined pagination',
+    caption: 'Use outlined page controls to distinguish navigation from the surrounding content.',
+  },
+  'pagination-sizes': {
+    title: 'Rows per page',
+    caption: 'Change how many results are shown and keep the current page within the new range.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -692,6 +707,8 @@ export default function ComponentShowcase({ component }) {
                                                                                                                     ? LINK_DEMOS[demoId]
                                                                                                                       : component.slug === 'menu'
                                                                                                                         ? MENU_DEMOS[demoId]
+                                                                                                                              : component.slug === 'pagination'
+                                                                                                                                ? PAGINATION_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel
