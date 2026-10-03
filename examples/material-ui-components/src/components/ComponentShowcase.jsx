@@ -105,6 +105,21 @@ const NUMBER_FIELD_DEMOS = {
   },
 };
 
+const RADIO_GROUP_DEMOS = {
+  'radio-group': {
+    title: 'Single selection',
+    caption: 'Present related options with clear supporting details and one selected value.',
+  },
+  'radio-group-row': {
+    title: 'Horizontal layout',
+    caption: 'Arrange short choices in a row when there is enough room.',
+  },
+  'radio-group-disabled': {
+    title: 'Disabled option',
+    caption: 'Communicate when an option is unavailable without making it selectable.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -135,6 +150,8 @@ export default function ComponentShowcase({ component }) {
                   ? FAB_DEMOS[demoId]
                   : component.slug === 'number-field'
                     ? NUMBER_FIELD_DEMOS[demoId]
+                    : component.slug === 'radio-group'
+                      ? RADIO_GROUP_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel

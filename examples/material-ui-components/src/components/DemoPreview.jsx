@@ -33,6 +33,7 @@ import ButtonGroupDemo from './material/button-group/ButtonGroupDemo.jsx';
 import CheckboxDemo from './material/checkbox/CheckboxDemo.jsx';
 import FloatingActionButtonDemo from './material/floating-action-button/FloatingActionButtonDemo.jsx';
 import NumberFieldDemo from './material/number-field/NumberFieldDemo.jsx';
+import RadioGroupDemo from './material/radio-group/RadioGroupDemo.jsx';
 
 const SAMPLE_ITEMS = ['React', 'Vue', 'Angular', 'Svelte'];
 const PLACEMENTS = ['top', 'right', 'bottom', 'left'];
@@ -244,16 +245,10 @@ function ButtonPreview({ demoId }) {
 
 function SelectionPreview({ demoId }) {
   const [checked, setChecked] = useState(true);
-  const [radio, setRadio] = useState('comfortable');
   const [on, setOn] = useState(true);
   const [toggle, setToggle] = useState('list');
   if (demoId.startsWith('rating')) {
     return <RatingPreview demoId={demoId} />;
-  }
-  if (demoId.startsWith('radio')) {
-    return <div className="selection-list" role="radiogroup" aria-label="Density">
-      {['compact', 'comfortable', 'spacious'].map((item) => <label className="selection-option" key={item}><input className="mui-radio" type="radio" name={demoId} checked={radio === item} onChange={() => setRadio(item)} /><span>{item[0].toUpperCase() + item.slice(1)}</span></label>)}
-    </div>;
   }
   if (demoId.startsWith('toggle-button')) {
     return (
@@ -433,11 +428,12 @@ function DemoPreview({ component, demoId }) {
   if (component.slug === 'checkbox') return <CheckboxDemo demoId={demoId} />;
   if (component.slug === 'floating-action-button') return <FloatingActionButtonDemo demoId={demoId} />;
   if (component.slug === 'number-field') return <NumberFieldDemo demoId={demoId} />;
+  if (component.slug === 'radio-group') return <RadioGroupDemo demoId={demoId} />;
   if (demoId.startsWith('tooltip') || demoId.startsWith('popover') || demoId.startsWith('menu') || demoId.startsWith('select') || demoId.startsWith('autocomplete') || demoId.startsWith('popper') || demoId.startsWith('click-away') || demoId.startsWith('portal')) return <FloatingDemo demoId={demoId} />;
   if (demoId.startsWith('transfer-list')) return <TransferListPreview demoId={demoId} />;
   if (demoId.startsWith('slider')) return <SliderPreview demoId={demoId} />;
   if (demoId.startsWith('button')) return <ButtonPreview demoId={demoId} />;
-  if (demoId.startsWith('checkbox') || demoId.startsWith('radio') || demoId.startsWith('switch') || demoId.startsWith('toggle-button') || demoId.startsWith('rating')) return <SelectionPreview demoId={demoId} />;
+  if (demoId.startsWith('checkbox') || demoId.startsWith('switch') || demoId.startsWith('toggle-button') || demoId.startsWith('rating')) return <SelectionPreview demoId={demoId} />;
   if (demoId.startsWith('text-field')) return <InputPreview demoId={demoId} />;
   if (demoId.startsWith('avatar') || demoId.startsWith('badge') || demoId.startsWith('chip') || demoId.startsWith('divider') || demoId.startsWith('icons') || demoId.startsWith('material-icons') || demoId.startsWith('list') || demoId.startsWith('table') || demoId.startsWith('typography')) return <DisplayPreview demoId={demoId} />;
   if (demoId.startsWith('alert') || demoId.startsWith('dialog') || demoId.startsWith('progress') || demoId.startsWith('snackbar') || demoId.startsWith('skeleton') || demoId.startsWith('modal')) return <FeedbackPreview demoId={demoId} />;
