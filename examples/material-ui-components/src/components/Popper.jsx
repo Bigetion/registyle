@@ -12,6 +12,7 @@ export function PopperSurface({
   children,
   className = 'popper-surface',
   role = 'dialog',
+  ariaLabel,
   onEscape,
   modifiers = NO_MODIFIERS,
   fallbackPlacements = DEFAULT_FALLBACK_PLACEMENTS,
@@ -61,6 +62,7 @@ export function PopperSurface({
         else if (surfaceRef) surfaceRef.current = node;
       }}
       role={role}
+      aria-label={ariaLabel}
       style={{ visibility: positioned ? 'visible' : 'hidden' }}
     >
       {children}

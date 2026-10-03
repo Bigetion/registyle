@@ -506,6 +506,21 @@ const PAPER_DEMOS = {
   },
 };
 
+const POPOVER_DEMOS = {
+  popover: {
+    title: 'Project details',
+    caption: 'Anchor a compact project summary to a trigger and dismiss it with a click away or Escape.',
+  },
+  'popover-placements': {
+    title: 'Placement controls',
+    caption: 'Preview top, right, bottom, and left placements, with Popper keeping the surface in view.',
+  },
+  'popover-interactive': {
+    title: 'Interactive options',
+    caption: 'Choose a workspace color from the floating panel and see the selected value update immediately.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -590,6 +605,8 @@ export default function ComponentShowcase({ component }) {
                                                                                             ? CARD_DEMOS[demoId]
                                                                                               : component.slug === 'paper'
                                                                                                 ? PAPER_DEMOS[demoId]
+                                                                                                  : component.slug === 'popover'
+                                                                                                    ? POPOVER_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel

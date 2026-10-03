@@ -38,6 +38,7 @@ import AccordionDemo from './material/accordion/AccordionDemo.jsx';
 import AppBarDemo from './material/app-bar/AppBarDemo.jsx';
 import CardDemo from './material/card/CardDemo.jsx';
 import PaperDemo from './material/paper/PaperDemo.jsx';
+import PopoverDemo from './material/popover/PopoverDemo.jsx';
 import BadgeDemo from './material/badge/BadgeDemo.jsx';
 import ButtonGroupDemo from './material/button-group/ButtonGroupDemo.jsx';
 import ChipDemo from './material/chip/ChipDemo.jsx';
@@ -330,6 +331,7 @@ function DemoPreview({ component, demoId }) {
   if (component.slug === 'app-bar') return <AppBarDemo demoId={demoId} />;
   if (component.slug === 'card') return <CardDemo demoId={demoId} />;
   if (component.slug === 'paper') return <PaperDemo demoId={demoId} />;
+  if (component.slug === 'popover') return <PopoverDemo demoId={demoId} />;
   if (component.slug === 'alert') return <AlertDemo demoId={demoId} />;
   if (component.slug === 'dialog') return <DialogDemo demoId={demoId} />;
   if (component.slug === 'progress') return <ProgressDemo demoId={demoId} />;
