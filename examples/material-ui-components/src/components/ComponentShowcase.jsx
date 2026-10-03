@@ -581,6 +581,21 @@ const LINK_DEMOS = {
   },
 };
 
+const MENU_DEMOS = {
+  menu: {
+    title: 'Context actions',
+    caption: 'Open a compact action list anchored to its trigger and dismiss it with Escape or a click away.',
+  },
+  'menu-placements': {
+    title: 'Placement options',
+    caption: 'Position a menu around its trigger and let Popper keep it within the available viewport.',
+  },
+  'menu-selection': {
+    title: 'Selectable options',
+    caption: 'Choose a sort order from a keyboard-accessible menu and reflect the current selection.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -675,6 +690,8 @@ export default function ComponentShowcase({ component }) {
                                                                                                                 ? DRAWER_DEMOS[demoId]
                                                                                                                   : component.slug === 'link'
                                                                                                                     ? LINK_DEMOS[demoId]
+                                                                                                                      : component.slug === 'menu'
+                                                                                                                        ? MENU_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel

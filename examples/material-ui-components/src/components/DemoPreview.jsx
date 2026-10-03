@@ -43,6 +43,7 @@ import BottomNavigationDemo from './material/bottom-navigation/BottomNavigationD
 import BreadcrumbsDemo from './material/breadcrumbs/BreadcrumbsDemo.jsx';
 import DrawerDemo from './material/drawer/DrawerDemo.jsx';
 import LinkDemo from './material/link/LinkDemo.jsx';
+import MenuDemo from './material/menu/MenuDemo.jsx';
 import BadgeDemo from './material/badge/BadgeDemo.jsx';
 import ButtonGroupDemo from './material/button-group/ButtonGroupDemo.jsx';
 import ChipDemo from './material/chip/ChipDemo.jsx';
@@ -328,6 +329,7 @@ function NavigationPreview({ demoId }) {
 }
 
 function DemoPreview({ component, demoId }) {
+  if (component.slug === 'menu') return <MenuDemo demoId={demoId} />;
   if (component.slug === 'link') return <LinkDemo demoId={demoId} />;
   if (component.slug === 'drawer') return <DrawerDemo demoId={demoId} />;
   if (component.slug === 'breadcrumbs') return <BreadcrumbsDemo demoId={demoId} />;
@@ -365,7 +367,7 @@ function DemoPreview({ component, demoId }) {
   if (component.slug === 'number-field') return <NumberFieldDemo demoId={demoId} />;
   if (component.slug === 'radio-group') return <RadioGroupDemo demoId={demoId} />;
   if (component.slug === 'rating') return <RatingDemo demoId={demoId} />;
-  if (demoId.startsWith('tooltip') || demoId.startsWith('popover') || demoId.startsWith('menu') || demoId.startsWith('autocomplete') || demoId.startsWith('popper') || demoId.startsWith('click-away') || demoId.startsWith('portal')) return <FloatingDemo demoId={demoId} />;
+  if (demoId.startsWith('tooltip') || demoId.startsWith('popover') || demoId.startsWith('autocomplete') || demoId.startsWith('popper') || demoId.startsWith('click-away') || demoId.startsWith('portal')) return <FloatingDemo demoId={demoId} />;
   if (demoId.startsWith('button')) return <ButtonPreview demoId={demoId} />;
   if (demoId.startsWith('checkbox')) return <SelectionPreview demoId={demoId} />;
   if (demoId.startsWith('text-field')) return <InputPreview demoId={demoId} />;
