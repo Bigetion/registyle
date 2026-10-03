@@ -135,6 +135,17 @@ const RATING_DEMOS = {
   },
 };
 
+const SELECT_DEMOS = {
+  select: {
+    title: 'Single selection',
+    caption: 'Choose one available option with pointer or keyboard input.',
+  },
+  'select-multiple': {
+    title: 'Multiple selection',
+    caption: 'Choose several related options and remove selections individually.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -169,6 +180,8 @@ export default function ComponentShowcase({ component }) {
                       ? RADIO_GROUP_DEMOS[demoId]
                       : component.slug === 'rating'
                         ? RATING_DEMOS[demoId]
+                        : component.slug === 'select'
+                          ? SELECT_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel

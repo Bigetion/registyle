@@ -10,7 +10,7 @@ const components = [
       ['Number Field', 'NEW', 'number-field', 'A numeric input with controls for incrementing and decrementing a value.', ['number-field', 'number-field-steps', 'number-field-limits']],
       ['Radio Group', '', 'radio-group', 'Radio buttons allow the user to select one option from a set.', ['radio-group', 'radio-group-row', 'radio-group-disabled']],
       ['Rating', '', 'rating', 'Ratings provide insight regarding others’ opinions and experiences.', ['rating', 'rating-precision', 'rating-readonly']],
-      ['Select', '', 'select', 'Select components are used for collecting user-provided information from a list of options.', ['select', 'select-native', 'select-multiple']],
+      ['Select', '', 'select', 'Select components are used for collecting user-provided information from a list of options.', ['select', 'select-multiple']],
       ['Slider', '', 'slider', 'Sliders let users make selections from a range of values.', ['slider', 'slider-range', 'slider-marks']],
       ['Switch', '', 'switch', 'Switches toggle the state of a single setting on or off.', ['switch', 'switch-colors', 'switch-labels']],
       ['Text Field', '', 'text-field', 'Text fields let users enter and edit text.', ['text-field', 'text-field-validation', 'text-field-adornments']],
