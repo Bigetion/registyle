@@ -40,6 +40,7 @@ import CardDemo from './material/card/CardDemo.jsx';
 import PaperDemo from './material/paper/PaperDemo.jsx';
 import PopoverDemo from './material/popover/PopoverDemo.jsx';
 import BottomNavigationDemo from './material/bottom-navigation/BottomNavigationDemo.jsx';
+import BreadcrumbsDemo from './material/breadcrumbs/BreadcrumbsDemo.jsx';
 import BadgeDemo from './material/badge/BadgeDemo.jsx';
 import ButtonGroupDemo from './material/button-group/ButtonGroupDemo.jsx';
 import ChipDemo from './material/chip/ChipDemo.jsx';
@@ -317,7 +318,6 @@ function NavigationPreview({ demoId }) {
   const [selected, setSelected] = useState(0);
   const [step, setStep] = useState(1);
   const [open, setOpen] = useState(false);
-  if (demoId.startsWith('breadcrumbs')) return <div className="breadcrumbs-demo"><a href="#home">Home</a><ChevronRight size={13} /><a href="#components">Components</a><ChevronRight size={13} /><span>Breadcrumbs</span></div>;
   if (demoId.startsWith('pagination')) return <div className="pagination-demo"><button type="button" aria-label="Previous page" onClick={() => setSelected(Math.max(0, selected - 1))}><ChevronLeft size={15} /></button>{[1, 2, 3, '…', 8].map((item, index) => <button className={cx(selected === index && 'pagination-active')} key={`${item}-${index}`} type="button" onClick={() => typeof item === 'number' && setSelected(index)}>{item}</button>)}<button type="button" aria-label="Next page" onClick={() => setSelected(Math.min(4, selected + 1))}><ChevronRight size={15} /></button></div>;
   if (demoId.startsWith('stepper')) return <div className="stepper-demo">{['Details', 'Address', 'Payment'].map((name, index) => <button key={name} type="button" onClick={() => setStep(index)}><span className={cx('step-number', index < step && 'step-complete')}>{index < step ? <Check size={13} /> : index + 1}</span><span className={cx(index === step && 'step-current')}>{name}</span>{index < 2 && <i />}</button>)}</div>;
   if (demoId.startsWith('drawer')) return <div className="drawer-demo"><button className="mui-button mui-button-outlined" type="button" onClick={() => setOpen(true)}><Layers size={14} /> Open temporary drawer</button>{open && <div className="drawer-overlay" onMouseDown={(event) => event.target === event.currentTarget && setOpen(false)}><aside className="drawer-panel"><button className="floating-close" type="button" aria-label="Close drawer" onClick={() => setOpen(false)}><X size={15} /></button><strong>Workspace</strong>{[[Home, 'Overview'], [Layers, 'Projects'], [Settings, 'Settings']].map(([Icon, name]) => <button key={name} type="button" onClick={() => { setSelected(name); setOpen(false); }}><Icon size={16} />{name}</button>)}</aside></div>}<span className="preview-note">Selected: {typeof selected === 'string' ? selected : 'Overview'}</span></div>;
@@ -328,6 +328,7 @@ function NavigationPreview({ demoId }) {
 }
 
 function DemoPreview({ component, demoId }) {
+  if (component.slug === 'breadcrumbs') return <BreadcrumbsDemo demoId={demoId} />;
   if (component.slug === 'bottom-navigation') return <BottomNavigationDemo demoId={demoId} />;
   if (component.slug === 'accordion') return <AccordionDemo demoId={demoId} />;
   if (component.slug === 'app-bar') return <AppBarDemo demoId={demoId} />;
@@ -369,7 +370,7 @@ function DemoPreview({ component, demoId }) {
   if (demoId.startsWith('avatar') || demoId.startsWith('badge') || demoId.startsWith('chip') || demoId.startsWith('divider') || demoId.startsWith('icons') || demoId.startsWith('material-icons') || demoId.startsWith('list') || demoId.startsWith('table') || demoId.startsWith('typography')) return <DisplayPreview demoId={demoId} />;
   if (demoId.startsWith('alert') || demoId.startsWith('dialog') || demoId.startsWith('progress') || demoId.startsWith('snackbar') || demoId.startsWith('modal')) return <FeedbackPreview demoId={demoId} />;
   if (demoId.startsWith('accordion') || demoId.startsWith('app-bar') || demoId.startsWith('card') || demoId.startsWith('paper')) return <SurfacePreview demoId={demoId} />;
-  if (demoId.startsWith('tabs') || demoId.startsWith('breadcrumbs') || demoId.startsWith('pagination') || demoId.startsWith('stepper') || demoId.startsWith('link') || demoId.startsWith('bottom-navigation') || demoId.startsWith('drawer') || demoId.startsWith('speed-dial')) return <NavigationPreview demoId={demoId} />;
+  if (demoId.startsWith('tabs') || demoId.startsWith('pagination') || demoId.startsWith('stepper') || demoId.startsWith('link') || demoId.startsWith('bottom-navigation') || demoId.startsWith('drawer') || demoId.startsWith('speed-dial')) return <NavigationPreview demoId={demoId} />;
   return <div className="preview-row"><span className="mui-chip mui-chip-primary">{component.name}</span><span className="preview-note">Interactive {component.name.toLowerCase()} example</span></div>;
 }
 

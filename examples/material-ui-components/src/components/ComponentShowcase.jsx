@@ -536,6 +536,21 @@ const BOTTOM_NAVIGATION_DEMOS = {
   },
 };
 
+const BREADCRUMBS_DEMOS = {
+  breadcrumbs: {
+    title: 'Page hierarchy',
+    caption: 'Show the current location in context and let users return to an ancestor page.',
+  },
+  'breadcrumbs-separators': {
+    title: 'Separator styles',
+    caption: 'Compare chevron, slash, and dot separators while preserving the same navigation hierarchy.',
+  },
+  'breadcrumbs-collapsed': {
+    title: 'Collapsed hierarchy',
+    caption: 'Keep long paths compact and reveal hidden ancestors when the user needs them.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -624,6 +639,8 @@ export default function ComponentShowcase({ component }) {
                                                                                                     ? POPOVER_DEMOS[demoId]
                                                                                                       : component.slug === 'bottom-navigation'
                                                                                                         ? BOTTOM_NAVIGATION_DEMOS[demoId]
+                                                                                                          : component.slug === 'breadcrumbs'
+                                                                                                            ? BREADCRUMBS_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel
