@@ -28,6 +28,7 @@ import {
 } from 'lucide-react';
 import { cx } from 'registyle';
 import { PopperSurface, useClickAway } from './Popper.jsx';
+import AutocompleteDemo from './material/autocomplete/AutocompleteDemo.jsx';
 
 const SAMPLE_ITEMS = ['React', 'Vue', 'Angular', 'Svelte'];
 const PLACEMENTS = ['top', 'right', 'bottom', 'left'];
@@ -43,11 +44,10 @@ function FloatingDemo({ demoId }) {
 
   const isTooltip = demoId.startsWith('tooltip');
   const isMenu = demoId.startsWith('menu');
-  const isSelect = demoId.startsWith('select') || demoId.startsWith('autocomplete');
+  const isSelect = demoId.startsWith('select');
   const isPopper = demoId.startsWith('popper');
   const isClickAway = demoId.startsWith('click-away');
   const isPortal = demoId.startsWith('portal');
-  const isAutocomplete = demoId.startsWith('autocomplete');
   const label = isTooltip
     ? 'Hover or focus to see tooltip'
     : isSelect
@@ -78,35 +78,21 @@ function FloatingDemo({ demoId }) {
           ))}
         </div>
       )}
-      {isAutocomplete ? (
-        <input
-          className="mui-input floating-autocomplete-input"
-          ref={anchorRef}
-          value={selected}
-          placeholder="Search frameworks"
-          aria-label="Search frameworks"
-          aria-autocomplete="list"
-          aria-expanded={open}
-          onChange={(event) => { setSelected(event.target.value); setOpen(true); }}
-          onFocus={() => setOpen(true)}
-        />
-      ) : (
-        <button
-          className={cx('mui-button', 'mui-button-outlined', 'floating-trigger', isSelect && 'select-trigger')}
-          type="button"
-          ref={anchorRef}
-          aria-expanded={open}
-          aria-haspopup={isTooltip ? undefined : isSelect ? 'listbox' : 'dialog'}
-          onClick={() => !isTooltip && setOpen((value) => !value)}
-          onMouseEnter={() => isTooltip && setOpen(true)}
-          onMouseLeave={() => isTooltip && setOpen(false)}
-          onFocus={() => isTooltip && setOpen(true)}
-          onBlur={() => isTooltip && setOpen(false)}
-        >
-          {label}
-          {!isTooltip && <ChevronDown size={14} />}
-        </button>
-      )}
+      <button
+        className={cx('mui-button', 'mui-button-outlined', 'floating-trigger', isSelect && 'select-trigger')}
+        type="button"
+        ref={anchorRef}
+        aria-expanded={open}
+        aria-haspopup={isTooltip ? undefined : isSelect ? 'listbox' : 'dialog'}
+        onClick={() => !isTooltip && setOpen((value) => !value)}
+        onMouseEnter={() => isTooltip && setOpen(true)}
+        onMouseLeave={() => isTooltip && setOpen(false)}
+        onFocus={() => isTooltip && setOpen(true)}
+        onBlur={() => isTooltip && setOpen(false)}
+      >
+        {label}
+        {!isTooltip && <ChevronDown size={14} />}
+      </button>
       <PopperSurface
         open={open}
         anchorRef={anchorRef}
@@ -132,9 +118,7 @@ function FloatingDemo({ demoId }) {
           </div>
         ) : isSelect ? (
           <div className="floating-menu select-options" role="listbox">
-            {SAMPLE_ITEMS.filter((item) =>
-                item.toLowerCase().includes(isAutocomplete ? selected.toLowerCase() : ''),
-            ).map((item) => (
+            {SAMPLE_ITEMS.map((item) => (
               <button key={item} type="button" role="option" onClick={() => { setSelected(item); dismiss(); }}>
                 {item}{selected === item && <Check size={14} />}
               </button>
@@ -445,6 +429,7 @@ function NavigationPreview({ demoId }) {
 }
 
 function DemoPreview({ component, demoId }) {
+  if (component.slug === 'autocomplete') return <AutocompleteDemo demoId={demoId} />;
   if (demoId.startsWith('tooltip') || demoId.startsWith('popover') || demoId.startsWith('menu') || demoId.startsWith('select') || demoId.startsWith('autocomplete') || demoId.startsWith('popper') || demoId.startsWith('click-away') || demoId.startsWith('portal')) return <FloatingDemo demoId={demoId} />;
   if (demoId.startsWith('transfer-list')) return <TransferListPreview demoId={demoId} />;
   if (demoId.startsWith('slider')) return <SliderPreview demoId={demoId} />;

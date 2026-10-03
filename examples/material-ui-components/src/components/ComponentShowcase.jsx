@@ -30,6 +30,21 @@ const BUTTON_DEMOS = {
   },
 };
 
+const AUTOCOMPLETE_DEMOS = {
+  autocomplete: {
+    title: 'Search and select',
+    caption: 'Filter a curated list and select one framework with keyboard or pointer.',
+  },
+  'autocomplete-multiple': {
+    title: 'Multiple selection',
+    caption: 'Build a compact selection of frameworks with removable tags.',
+  },
+  'autocomplete-free': {
+    title: 'Free solo',
+    caption: 'Choose a suggestion or create a custom value that is not in the list.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -48,7 +63,11 @@ export default function ComponentShowcase({ component }) {
   return (
     <div className={`component-showcase component-showcase-${component.slug}`}>
       {component.demos.map((demoId) => {
-        const demo = component.slug === 'button' ? BUTTON_DEMOS[demoId] : undefined;
+        const demo = component.slug === 'button'
+          ? BUTTON_DEMOS[demoId]
+          : component.slug === 'autocomplete'
+            ? AUTOCOMPLETE_DEMOS[demoId]
+            : undefined;
         return (
           <DemoPanel
             key={demoId}
