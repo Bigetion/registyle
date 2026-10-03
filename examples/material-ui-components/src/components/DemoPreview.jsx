@@ -37,6 +37,7 @@ import RatingDemo from './material/rating/RatingDemo.jsx';
 import SelectDemo from './material/select/SelectDemo.jsx';
 import SliderDemo from './material/slider/SliderDemo.jsx';
 import SwitchDemo from './material/switch/SwitchDemo.jsx';
+import TextFieldDemo from './material/text-field/TextFieldDemo.jsx';
 
 const PLACEMENTS = ['top', 'right', 'bottom', 'left'];
 
@@ -383,6 +384,7 @@ function DemoPreview({ component, demoId }) {
   if (component.slug === 'select') return <SelectDemo demoId={demoId} />;
   if (component.slug === 'slider') return <SliderDemo demoId={demoId} />;
   if (component.slug === 'switch') return <SwitchDemo demoId={demoId} />;
+  if (component.slug === 'text-field') return <TextFieldDemo demoId={demoId} />;
   if (component.slug === 'autocomplete') return <AutocompleteDemo demoId={demoId} />;
   if (component.slug === 'button-group') return <ButtonGroupDemo demoId={demoId} />;
   if (component.slug === 'checkbox') return <CheckboxDemo demoId={demoId} />;

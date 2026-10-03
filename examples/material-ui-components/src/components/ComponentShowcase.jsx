@@ -176,6 +176,21 @@ const SWITCH_DEMOS = {
   },
 };
 
+const TEXT_FIELD_DEMOS = {
+  'text-field': {
+    title: 'Basic field',
+    caption: 'Collect a short text value with a clear label and helpful guidance.',
+  },
+  'text-field-validation': {
+    title: 'Validation',
+    caption: 'Show a useful email error when submitted and confirm valid input.',
+  },
+  'text-field-adornments': {
+    title: 'Search adornment',
+    caption: 'Add a leading icon and a clear action without obscuring the text input.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -216,6 +231,8 @@ export default function ComponentShowcase({ component }) {
                             ? SLIDER_DEMOS[demoId]
                             : component.slug === 'switch'
                               ? SWITCH_DEMOS[demoId]
+                              : component.slug === 'text-field'
+                                ? TEXT_FIELD_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel
