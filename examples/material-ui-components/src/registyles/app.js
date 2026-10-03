@@ -151,5 +151,9 @@ register.all({
   'preview-stack': { tw: 'flex w-full flex-col items-start gap-4' },
   'preview-row': { tw: 'flex flex-wrap items-center gap-3' },
   'preview-note': { tw: 'text-xs text-[var(--subtle)]' },
+  'selection-list': { tw: 'flex flex-wrap items-center gap-x-6 gap-y-3' },
+  'selection-option': { tw: 'flex cursor-pointer items-center gap-2.5 text-xs text-[var(--text)]' },
+  'selection-copy': { tw: 'flex min-w-0 flex-col gap-1' },
+  'is-disabled': { tw: 'cursor-not-allowed opacity-40' },
   'breadcrumbs a': { tw: 'text-[var(--subtle)] no-underline hover:text-[var(--mui-blue)]' },
 });

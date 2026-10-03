@@ -60,6 +60,21 @@ const BUTTON_GROUP_DEMOS = {
   },
 };
 
+const CHECKBOX_DEMOS = {
+  checkbox: {
+    title: 'Checkbox states',
+    caption: 'Make independent choices clear with checked, unchecked, and disabled states.',
+  },
+  'checkbox-indeterminate': {
+    title: 'Select all and indeterminate',
+    caption: 'Show partial selection clearly and let one control update a related set.',
+  },
+  'checkbox-group': {
+    title: 'Checkbox group',
+    caption: 'Collect multiple related choices and summarize the current selection.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -84,6 +99,8 @@ export default function ComponentShowcase({ component }) {
             ? AUTOCOMPLETE_DEMOS[demoId]
             : component.slug === 'button-group'
               ? BUTTON_GROUP_DEMOS[demoId]
+              : component.slug === 'checkbox'
+                ? CHECKBOX_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel

@@ -30,6 +30,7 @@ import { cx } from 'registyle';
 import { PopperSurface, useClickAway } from './Popper.jsx';
 import AutocompleteDemo from './material/autocomplete/AutocompleteDemo.jsx';
 import ButtonGroupDemo from './material/button-group/ButtonGroupDemo.jsx';
+import CheckboxDemo from './material/checkbox/CheckboxDemo.jsx';
 
 const SAMPLE_ITEMS = ['React', 'Vue', 'Angular', 'Svelte'];
 const PLACEMENTS = ['top', 'right', 'bottom', 'left'];
@@ -437,6 +438,7 @@ function NavigationPreview({ demoId }) {
 function DemoPreview({ component, demoId }) {
   if (component.slug === 'autocomplete') return <AutocompleteDemo demoId={demoId} />;
   if (component.slug === 'button-group') return <ButtonGroupDemo demoId={demoId} />;
+  if (component.slug === 'checkbox') return <CheckboxDemo demoId={demoId} />;
   if (demoId.startsWith('tooltip') || demoId.startsWith('popover') || demoId.startsWith('menu') || demoId.startsWith('select') || demoId.startsWith('autocomplete') || demoId.startsWith('popper') || demoId.startsWith('click-away') || demoId.startsWith('portal')) return <FloatingDemo demoId={demoId} />;
   if (demoId.startsWith('transfer-list')) return <TransferListPreview demoId={demoId} />;
   if (demoId.startsWith('slider')) return <SliderPreview demoId={demoId} />;
