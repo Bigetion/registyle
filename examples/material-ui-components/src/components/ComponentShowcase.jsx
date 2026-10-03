@@ -45,6 +45,21 @@ const AUTOCOMPLETE_DEMOS = {
   },
 };
 
+const BUTTON_GROUP_DEMOS = {
+  'button-group': {
+    title: 'Segmented choices',
+    caption: 'Keep a small set of mutually exclusive views in one compact control.',
+  },
+  'button-group-vertical': {
+    title: 'Vertical controls',
+    caption: 'Change orientation while keeping related actions visually connected.',
+  },
+  'button-group-split': {
+    title: 'Split action',
+    caption: 'Pair a primary action with clearly discoverable alternatives.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -67,6 +82,8 @@ export default function ComponentShowcase({ component }) {
           ? BUTTON_DEMOS[demoId]
           : component.slug === 'autocomplete'
             ? AUTOCOMPLETE_DEMOS[demoId]
+            : component.slug === 'button-group'
+              ? BUTTON_GROUP_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel

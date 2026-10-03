@@ -29,6 +29,7 @@ import {
 import { cx } from 'registyle';
 import { PopperSurface, useClickAway } from './Popper.jsx';
 import AutocompleteDemo from './material/autocomplete/AutocompleteDemo.jsx';
+import ButtonGroupDemo from './material/button-group/ButtonGroupDemo.jsx';
 
 const SAMPLE_ITEMS = ['React', 'Vue', 'Angular', 'Svelte'];
 const PLACEMENTS = ['top', 'right', 'bottom', 'left'];
@@ -262,7 +263,12 @@ function SelectionPreview({ demoId }) {
     </div>;
   }
   if (demoId.startsWith('toggle-button')) {
-    return <div className="button-group toggle-button-demo" role="group" aria-label="View"><button className={cx(toggle === 'list' && 'button-group-selected')} onClick={() => setToggle('list')} type="button"><Layers size={15} /> List</button><button className={cx(toggle === 'grid' && 'button-group-selected')} onClick={() => setToggle('grid')} type="button"><Image size={15} /> Grid</button></div>;
+    return (
+      <div className="toggle-button-demo" role="group" aria-label="View">
+        <button className={cx('toggle-button-demo-button', toggle === 'list' && 'toggle-button-demo-selected')} onClick={() => setToggle('list')} type="button"><Layers size={15} /> List</button>
+        <button className={cx('toggle-button-demo-button', toggle === 'grid' && 'toggle-button-demo-selected')} onClick={() => setToggle('grid')} type="button"><Image size={15} /> Grid</button>
+      </div>
+    );
   }
   return (
     <div className="preview-stack">
@@ -430,6 +436,7 @@ function NavigationPreview({ demoId }) {
 
 function DemoPreview({ component, demoId }) {
   if (component.slug === 'autocomplete') return <AutocompleteDemo demoId={demoId} />;
+  if (component.slug === 'button-group') return <ButtonGroupDemo demoId={demoId} />;
   if (demoId.startsWith('tooltip') || demoId.startsWith('popover') || demoId.startsWith('menu') || demoId.startsWith('select') || demoId.startsWith('autocomplete') || demoId.startsWith('popper') || demoId.startsWith('click-away') || demoId.startsWith('portal')) return <FloatingDemo demoId={demoId} />;
   if (demoId.startsWith('transfer-list')) return <TransferListPreview demoId={demoId} />;
   if (demoId.startsWith('slider')) return <SliderPreview demoId={demoId} />;
