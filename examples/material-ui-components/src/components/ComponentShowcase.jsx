@@ -75,6 +75,21 @@ const CHECKBOX_DEMOS = {
   },
 };
 
+const FAB_DEMOS = {
+  fab: {
+    title: 'Floating actions',
+    caption: 'Keep the screen’s primary action easy to reach and visually distinct.',
+  },
+  'fab-sizes': {
+    title: 'FAB sizes',
+    caption: 'Choose a control size that fits the action’s prominence and available space.',
+  },
+  'fab-group': {
+    title: 'Quick action group',
+    caption: 'Reveal secondary actions from one compact floating action button.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -101,6 +116,8 @@ export default function ComponentShowcase({ component }) {
               ? BUTTON_GROUP_DEMOS[demoId]
               : component.slug === 'checkbox'
                 ? CHECKBOX_DEMOS[demoId]
+                : component.slug === 'floating-action-button'
+                  ? FAB_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel
