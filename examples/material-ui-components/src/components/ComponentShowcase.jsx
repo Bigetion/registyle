@@ -611,6 +611,21 @@ const PAGINATION_DEMOS = {
   },
 };
 
+const SPEED_DIAL_DEMOS = {
+  'speed-dial': {
+    title: 'Quick actions',
+    caption: 'Group related shortcuts behind one floating action button and choose an action from the expanded dial.',
+  },
+  'speed-dial-directions': {
+    title: 'Expansion directions',
+    caption: 'Preview actions expanding up, right, down, or left from the primary floating button.',
+  },
+  'speed-dial-open': {
+    title: 'Expanded actions',
+    caption: 'Show an expanded speed dial with labeled, discoverable actions and a clear close control.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -709,6 +724,8 @@ export default function ComponentShowcase({ component }) {
                                                                                                                         ? MENU_DEMOS[demoId]
                                                                                                                               : component.slug === 'pagination'
                                                                                                                                 ? PAGINATION_DEMOS[demoId]
+                                                                                                                                  : component.slug === 'speed-dial'
+                                                                                                                                    ? SPEED_DIAL_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel
