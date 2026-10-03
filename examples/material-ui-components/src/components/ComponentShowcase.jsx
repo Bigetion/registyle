@@ -251,6 +251,36 @@ const BADGE_DEMOS = {
   },
 };
 
+const CHIP_DEMOS = {
+  chip: {
+    title: 'Chip variants',
+    caption: 'Use compact labels with leading icons to communicate status and context.',
+  },
+  'chip-colors': {
+    title: 'Selectable filters',
+    caption: 'Toggle related filter chips on and off while keeping selection accessible.',
+  },
+  'chip-deletable': {
+    title: 'Removable tags',
+    caption: 'Let users remove individual chips and restore the original set.',
+  },
+};
+
+const DIVIDER_DEMOS = {
+  divider: {
+    title: 'Horizontal dividers',
+    caption: 'Separate related sections with a subtle, full-width rule.',
+  },
+  'divider-vertical': {
+    title: 'Vertical divider',
+    caption: 'Group controls in a horizontal toolbar without adding visual noise.',
+  },
+  'divider-inset': {
+    title: 'Inset divider',
+    caption: 'Align a separator with list content while leaving leading icons clear.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -301,6 +331,10 @@ export default function ComponentShowcase({ component }) {
                                       ? AVATAR_DEMOS[demoId]
                                       : component.slug === 'badge'
                                         ? BADGE_DEMOS[demoId]
+                                        : component.slug === 'chip'
+                                          ? CHIP_DEMOS[demoId]
+                                          : component.slug === 'divider'
+                                            ? DIVIDER_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel

@@ -5,7 +5,7 @@ import DemoPanel from './DemoPanel.jsx';
 
 const IMPLEMENTATION_ROWS = [
   ['Page', 'src/pages/components/{slug}/Page.jsx', 'Dedicated React Router page.'],
-  ['Component', 'src/components/material/{slug}/{name}.jsx', 'Interactive examples for this component.'],
+  ['Component', 'src/components/material/{slug}/{name}.jsx', 'Dedicated component page entry point.'],
   ['Registyle', 'src/registyles/components/{slug}.js', 'Component-specific styles and variants.'],
   ['Examples', '{count} live examples', 'Rendered in the examples section above.'],
 ];
@@ -24,6 +24,13 @@ export default function ComponentPageLayout({ component, children }) {
       .replace('{count}', component.demos.length),
     purpose,
   ]);
+  if (component.slug === 'chip' || component.slug === 'divider') {
+    implementationRows.splice(2, 0, [
+      'Demo',
+      `src/components/material/${component.slug}/${importName}Demo.jsx`,
+      'Interactive examples rendered in the showcase above.',
+    ]);
+  }
 
   return (
     <div className="content-width component-page">

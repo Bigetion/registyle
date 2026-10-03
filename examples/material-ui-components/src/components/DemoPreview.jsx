@@ -31,7 +31,9 @@ import AutocompleteDemo from './material/autocomplete/AutocompleteDemo.jsx';
 import AvatarDemo from './material/avatar/AvatarDemo.jsx';
 import BadgeDemo from './material/badge/BadgeDemo.jsx';
 import ButtonGroupDemo from './material/button-group/ButtonGroupDemo.jsx';
+import ChipDemo from './material/chip/ChipDemo.jsx';
 import CheckboxDemo from './material/checkbox/CheckboxDemo.jsx';
+import DividerDemo from './material/divider/DividerDemo.jsx';
 import FloatingActionButtonDemo from './material/floating-action-button/FloatingActionButtonDemo.jsx';
 import NumberFieldDemo from './material/number-field/NumberFieldDemo.jsx';
 import RadioGroupDemo from './material/radio-group/RadioGroupDemo.jsx';
@@ -281,9 +283,6 @@ function InputPreview({ demoId }) {
 }
 
 function DisplayPreview({ demoId }) {
-  const [dismissed, setDismissed] = useState(false);
-  if (demoId.startsWith('chip')) return <div className="preview-row"><span className="mui-chip mui-chip-filled">Default</span><span className="mui-chip mui-chip-primary">Primary</span><span className="mui-chip mui-chip-success">Success <Check size={13} /></span><button className="mui-chip mui-chip-filled" type="button" onClick={() => setDismissed(true)}>{dismissed ? 'Removed' : <>Filter <X size={13} /></>}</button></div>;
-  if (demoId.startsWith('divider')) return <div className="divider-demo"><span>Account settings</span><div className="mui-divider" /><span>Privacy &amp; security</span><div className="mui-divider" /><span>Notifications</span></div>;
   if (demoId.startsWith('icons') || demoId.startsWith('material-icons')) return <div className={cx('icon-gallery', demoId.startsWith('material-icons') && 'material-icons-gallery')}>{[[Home, 'Home'], [Search, 'Search'], [Settings, 'Settings'], [Cloud, 'Cloud'], [Heart, 'Favorite'], [FileText, 'File']].map(([Icon, name]) => <button key={name} type="button" aria-label={name}><Icon size={20} /><span>{name}</span></button>)}</div>;
   if (demoId.startsWith('typography')) return <div className="typography-demo"><h3>Heading 3 <small>Roboto / 24px</small></h3><p>Body 1 — The quick brown fox jumps over the lazy dog.</p><span className="preview-note">Caption text / 12px / medium contrast</span></div>;
   if (demoId.startsWith('list')) return <div className="demo-list">{[[User, 'Profile', 'Manage your account'], [Bell, 'Notifications', '3 unread messages'], [ShieldCheck, 'Security', 'Password and sign-in']].map(([Icon, title, secondary]) => <button type="button" key={title}><Icon size={18} /><span><strong>{title}</strong><small>{secondary}</small></span><ChevronRight size={15} /></button>)}</div>;
@@ -328,6 +327,8 @@ function NavigationPreview({ demoId }) {
 function DemoPreview({ component, demoId }) {
   if (component.slug === 'avatar') return <AvatarDemo demoId={demoId} />;
   if (component.slug === 'badge') return <BadgeDemo demoId={demoId} />;
+  if (component.slug === 'chip') return <ChipDemo demoId={demoId} />;
+  if (component.slug === 'divider') return <DividerDemo demoId={demoId} />;
   if (component.slug === 'select') return <SelectDemo demoId={demoId} />;
   if (component.slug === 'slider') return <SliderDemo demoId={demoId} />;
   if (component.slug === 'switch') return <SwitchDemo demoId={demoId} />;
