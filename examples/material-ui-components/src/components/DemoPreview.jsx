@@ -35,6 +35,8 @@ import ChipDemo from './material/chip/ChipDemo.jsx';
 import CheckboxDemo from './material/checkbox/CheckboxDemo.jsx';
 import DividerDemo from './material/divider/DividerDemo.jsx';
 import FloatingActionButtonDemo from './material/floating-action-button/FloatingActionButtonDemo.jsx';
+import IconsDemo from './material/icons/IconsDemo.jsx';
+import MaterialIconsDemo from './material/material-icons/MaterialIconsDemo.jsx';
 import NumberFieldDemo from './material/number-field/NumberFieldDemo.jsx';
 import RadioGroupDemo from './material/radio-group/RadioGroupDemo.jsx';
 import RatingDemo from './material/rating/RatingDemo.jsx';
@@ -283,7 +285,6 @@ function InputPreview({ demoId }) {
 }
 
 function DisplayPreview({ demoId }) {
-  if (demoId.startsWith('icons') || demoId.startsWith('material-icons')) return <div className={cx('icon-gallery', demoId.startsWith('material-icons') && 'material-icons-gallery')}>{[[Home, 'Home'], [Search, 'Search'], [Settings, 'Settings'], [Cloud, 'Cloud'], [Heart, 'Favorite'], [FileText, 'File']].map(([Icon, name]) => <button key={name} type="button" aria-label={name}><Icon size={20} /><span>{name}</span></button>)}</div>;
   if (demoId.startsWith('typography')) return <div className="typography-demo"><h3>Heading 3 <small>Roboto / 24px</small></h3><p>Body 1 — The quick brown fox jumps over the lazy dog.</p><span className="preview-note">Caption text / 12px / medium contrast</span></div>;
   if (demoId.startsWith('list')) return <div className="demo-list">{[[User, 'Profile', 'Manage your account'], [Bell, 'Notifications', '3 unread messages'], [ShieldCheck, 'Security', 'Password and sign-in']].map(([Icon, title, secondary]) => <button type="button" key={title}><Icon size={18} /><span><strong>{title}</strong><small>{secondary}</small></span><ChevronRight size={15} /></button>)}</div>;
   if (demoId.startsWith('table')) return <div className="table-wrap"><table className="mini-table"><thead><tr><th>Name</th><th>Status</th><th>Role</th></tr></thead><tbody><tr><td>Olivia Martin</td><td><span className="status-pill">Active</span></td><td>Admin</td></tr><tr><td>Jackson Lee</td><td><span className="status-pill">Active</span></td><td>Editor</td></tr><tr><td>Isabella Nguyen</td><td><span className="status-pill status-idle">Invited</span></td><td>Viewer</td></tr></tbody></table></div>;
@@ -329,6 +330,8 @@ function DemoPreview({ component, demoId }) {
   if (component.slug === 'badge') return <BadgeDemo demoId={demoId} />;
   if (component.slug === 'chip') return <ChipDemo demoId={demoId} />;
   if (component.slug === 'divider') return <DividerDemo demoId={demoId} />;
+  if (component.slug === 'icons') return <IconsDemo demoId={demoId} />;
+  if (component.slug === 'material-icons') return <MaterialIconsDemo demoId={demoId} />;
   if (component.slug === 'select') return <SelectDemo demoId={demoId} />;
   if (component.slug === 'slider') return <SliderDemo demoId={demoId} />;
   if (component.slug === 'switch') return <SwitchDemo demoId={demoId} />;

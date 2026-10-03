@@ -281,6 +281,36 @@ const DIVIDER_DEMOS = {
   },
 };
 
+const ICONS_DEMOS = {
+  icons: {
+    title: 'Browse the icon library',
+    caption: 'Search, filter, and select a symbol from a practical interface icon set.',
+  },
+  'icons-colors': {
+    title: 'Semantic icon colors',
+    caption: 'Use restrained color to clarify status and reinforce meaning.',
+  },
+  'icons-buttons': {
+    title: 'Icon buttons',
+    caption: 'Keep icon-only actions compact, keyboard accessible, and clearly labeled.',
+  },
+};
+
+const MATERIAL_ICONS_DEMOS = {
+  'material-icons': {
+    title: 'Material-style glyphs',
+    caption: 'Browse familiar interface symbols presented in a consistent icon tile system.',
+  },
+  'material-icons-sizes': {
+    title: 'Icon sizing',
+    caption: 'Choose a consistent glyph size for dense controls, default actions, and display use.',
+  },
+  'material-icons-actions': {
+    title: 'Icon action toolbar',
+    caption: 'Combine recognizable glyphs with accessible action labels and live state.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -335,6 +365,10 @@ export default function ComponentShowcase({ component }) {
                                           ? CHIP_DEMOS[demoId]
                                           : component.slug === 'divider'
                                             ? DIVIDER_DEMOS[demoId]
+                                            : component.slug === 'icons'
+                                              ? ICONS_DEMOS[demoId]
+                                              : component.slug === 'material-icons'
+                                                ? MATERIAL_ICONS_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel
