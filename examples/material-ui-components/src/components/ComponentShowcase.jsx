@@ -161,6 +161,21 @@ const SLIDER_DEMOS = {
   },
 };
 
+const SWITCH_DEMOS = {
+  switch: {
+    title: 'Switch states',
+    caption: 'Toggle a setting on or off and distinguish disabled controls clearly.',
+  },
+  'switch-colors': {
+    title: 'Semantic colors',
+    caption: 'Use restrained color variants to communicate meaningful switch states.',
+  },
+  'switch-labels': {
+    title: 'Labeled settings',
+    caption: 'Pair switches with concise setting names and useful supporting text.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -199,6 +214,8 @@ export default function ComponentShowcase({ component }) {
                           ? SELECT_DEMOS[demoId]
                           : component.slug === 'slider'
                             ? SLIDER_DEMOS[demoId]
+                            : component.slug === 'switch'
+                              ? SWITCH_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel

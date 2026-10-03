@@ -36,6 +36,7 @@ import RadioGroupDemo from './material/radio-group/RadioGroupDemo.jsx';
 import RatingDemo from './material/rating/RatingDemo.jsx';
 import SelectDemo from './material/select/SelectDemo.jsx';
 import SliderDemo from './material/slider/SliderDemo.jsx';
+import SwitchDemo from './material/switch/SwitchDemo.jsx';
 
 const PLACEMENTS = ['top', 'right', 'bottom', 'left'];
 
@@ -381,6 +382,7 @@ function NavigationPreview({ demoId }) {
 function DemoPreview({ component, demoId }) {
   if (component.slug === 'select') return <SelectDemo demoId={demoId} />;
   if (component.slug === 'slider') return <SliderDemo demoId={demoId} />;
+  if (component.slug === 'switch') return <SwitchDemo demoId={demoId} />;
   if (component.slug === 'autocomplete') return <AutocompleteDemo demoId={demoId} />;
   if (component.slug === 'button-group') return <ButtonGroupDemo demoId={demoId} />;
   if (component.slug === 'checkbox') return <CheckboxDemo demoId={demoId} />;
@@ -391,7 +393,7 @@ function DemoPreview({ component, demoId }) {
   if (demoId.startsWith('tooltip') || demoId.startsWith('popover') || demoId.startsWith('menu') || demoId.startsWith('autocomplete') || demoId.startsWith('popper') || demoId.startsWith('click-away') || demoId.startsWith('portal')) return <FloatingDemo demoId={demoId} />;
   if (demoId.startsWith('transfer-list')) return <TransferListPreview demoId={demoId} />;
   if (demoId.startsWith('button')) return <ButtonPreview demoId={demoId} />;
-  if (demoId.startsWith('checkbox') || demoId.startsWith('switch') || demoId.startsWith('toggle-button')) return <SelectionPreview demoId={demoId} />;
+  if (demoId.startsWith('checkbox') || demoId.startsWith('toggle-button')) return <SelectionPreview demoId={demoId} />;
   if (demoId.startsWith('text-field')) return <InputPreview demoId={demoId} />;
   if (demoId.startsWith('avatar') || demoId.startsWith('badge') || demoId.startsWith('chip') || demoId.startsWith('divider') || demoId.startsWith('icons') || demoId.startsWith('material-icons') || demoId.startsWith('list') || demoId.startsWith('table') || demoId.startsWith('typography')) return <DisplayPreview demoId={demoId} />;
   if (demoId.startsWith('alert') || demoId.startsWith('dialog') || demoId.startsWith('progress') || demoId.startsWith('snackbar') || demoId.startsWith('skeleton') || demoId.startsWith('modal')) return <FeedbackPreview demoId={demoId} />;
