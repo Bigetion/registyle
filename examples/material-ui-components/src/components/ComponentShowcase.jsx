@@ -551,6 +551,21 @@ const BREADCRUMBS_DEMOS = {
   },
 };
 
+const DRAWER_DEMOS = {
+  drawer: {
+    title: 'Temporary navigation drawer',
+    caption: 'Open a modal side panel for primary destinations and dismiss it with Escape or a backdrop click.',
+  },
+  'drawer-temporary': {
+    title: 'Temporary drawer with sections',
+    caption: 'Group related navigation destinations and close the drawer after selecting a page.',
+  },
+  'drawer-permanent': {
+    title: 'Permanent navigation drawer',
+    caption: 'Keep navigation visible beside the main content in a persistent application layout.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -641,6 +656,8 @@ export default function ComponentShowcase({ component }) {
                                                                                                         ? BOTTOM_NAVIGATION_DEMOS[demoId]
                                                                                                           : component.slug === 'breadcrumbs'
                                                                                                             ? BREADCRUMBS_DEMOS[demoId]
+                                                                                                              : component.slug === 'drawer'
+                                                                                                                ? DRAWER_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel
