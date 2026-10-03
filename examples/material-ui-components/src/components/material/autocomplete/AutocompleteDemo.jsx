@@ -11,6 +11,7 @@ const OPTIONS = [
   { label: 'Solid', detail: 'Reactive UI library', group: 'Frontend', mark: 'So' },
   { label: 'Astro', detail: 'Content-driven web framework', group: 'Frontend', mark: 'As' },
 ];
+const FALLBACK_PLACEMENTS = ['top-start'];
 
 function normalize(value) {
   return value.trim().toLocaleLowerCase();
@@ -192,6 +193,7 @@ export default function AutocompleteDemo({ demoId }) {
         anchorRef={anchorRef}
         surfaceRef={surfaceRef}
         placement="bottom-start"
+        fallbackPlacements={FALLBACK_PLACEMENTS}
         className="autocomplete-popover"
         role="listbox"
         onEscape={dismiss}

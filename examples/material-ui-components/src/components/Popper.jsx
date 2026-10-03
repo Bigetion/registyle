@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { createPopper } from '@popperjs/core';
 
 const NO_MODIFIERS = [];
+const DEFAULT_FALLBACK_PLACEMENTS = ['top', 'right', 'left'];
 
 export function PopperSurface({
   open,
@@ -13,6 +14,7 @@ export function PopperSurface({
   role = 'dialog',
   onEscape,
   modifiers = NO_MODIFIERS,
+  fallbackPlacements = DEFAULT_FALLBACK_PLACEMENTS,
   surfaceRef,
 }) {
   const localPopperRef = useRef(null);
@@ -29,7 +31,7 @@ export function PopperSurface({
       strategy: 'fixed',
       modifiers: [
         { name: 'offset', options: { offset: [0, 8] } },
-        { name: 'flip', options: { fallbackPlacements: ['top', 'right', 'left'] } },
+        { name: 'flip', options: { fallbackPlacements } },
         { name: 'preventOverflow', options: { padding: 8 } },
         ...modifiers,
       ],
@@ -37,7 +39,7 @@ export function PopperSurface({
     });
 
     return () => instance.destroy();
-  }, [anchorRef, modifiers, open, placement]);
+  }, [anchorRef, fallbackPlacements, modifiers, open, placement]);
 
   useLayoutEffect(() => {
     if (!open || !onEscape) return undefined;
