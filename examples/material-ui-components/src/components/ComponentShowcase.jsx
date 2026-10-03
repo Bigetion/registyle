@@ -326,6 +326,21 @@ const LIST_DEMOS = {
   },
 };
 
+const TABLE_DEMOS = {
+  table: {
+    title: 'Sortable project table',
+    caption: 'Scan project owners, status, updates, and progress with sortable column headings.',
+  },
+  'table-dense': {
+    title: 'Compact density',
+    caption: 'Reduce row padding to fit more information into a limited space.',
+  },
+  'table-selection': {
+    title: 'Row selection',
+    caption: 'Select individual rows or toggle the entire page with an accessible indeterminate state.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -386,6 +401,8 @@ export default function ComponentShowcase({ component }) {
                                                 ? MATERIAL_ICONS_DEMOS[demoId]
                                                 : component.slug === 'list'
                                                   ? LIST_DEMOS[demoId]
+                                                    : component.slug === 'table'
+                                                      ? TABLE_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel

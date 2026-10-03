@@ -38,6 +38,7 @@ import FloatingActionButtonDemo from './material/floating-action-button/Floating
 import IconsDemo from './material/icons/IconsDemo.jsx';
 import ListDemo from './material/list/ListDemo.jsx';
 import MaterialIconsDemo from './material/material-icons/MaterialIconsDemo.jsx';
+import TableDemo from './material/table/TableDemo.jsx';
 import NumberFieldDemo from './material/number-field/NumberFieldDemo.jsx';
 import RadioGroupDemo from './material/radio-group/RadioGroupDemo.jsx';
 import RatingDemo from './material/rating/RatingDemo.jsx';
@@ -287,7 +288,6 @@ function InputPreview({ demoId }) {
 
 function DisplayPreview({ demoId }) {
   if (demoId.startsWith('typography')) return <div className="typography-demo"><h3>Heading 3 <small>Roboto / 24px</small></h3><p>Body 1 — The quick brown fox jumps over the lazy dog.</p><span className="preview-note">Caption text / 12px / medium contrast</span></div>;
-  if (demoId.startsWith('table')) return <div className="table-wrap"><table className="mini-table"><thead><tr><th>Name</th><th>Status</th><th>Role</th></tr></thead><tbody><tr><td>Olivia Martin</td><td><span className="status-pill">Active</span></td><td>Admin</td></tr><tr><td>Jackson Lee</td><td><span className="status-pill">Active</span></td><td>Editor</td></tr><tr><td>Isabella Nguyen</td><td><span className="status-pill status-idle">Invited</span></td><td>Viewer</td></tr></tbody></table></div>;
   return <div className="preview-row"><span className="mui-chip mui-chip-filled">Data display</span><span className="mui-chip mui-chip-primary">Material</span><span className="preview-note">Responsive component preview</span></div>;
 }
 
@@ -332,6 +332,7 @@ function DemoPreview({ component, demoId }) {
   if (component.slug === 'divider') return <DividerDemo demoId={demoId} />;
   if (component.slug === 'icons') return <IconsDemo demoId={demoId} />;
   if (component.slug === 'list') return <ListDemo demoId={demoId} />;
+  if (component.slug === 'table') return <TableDemo demoId={demoId} />;
   if (component.slug === 'material-icons') return <MaterialIconsDemo demoId={demoId} />;
   if (component.slug === 'select') return <SelectDemo demoId={demoId} />;
   if (component.slug === 'slider') return <SliderDemo demoId={demoId} />;
