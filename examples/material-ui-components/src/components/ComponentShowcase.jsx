@@ -461,6 +461,21 @@ const ACCORDION_DEMOS = {
   },
 };
 
+const APP_BAR_DEMOS = {
+  'app-bar': {
+    title: 'Workspace toolbar',
+    caption: 'Keep the current destination and primary actions visible in a balanced application bar.',
+  },
+  'app-bar-search': {
+    title: 'Search and actions',
+    caption: 'Integrate an expandable search field and action buttons without crowding the toolbar.',
+  },
+  'app-bar-responsive': {
+    title: 'Responsive navigation',
+    caption: 'Adapt the toolbar at narrow widths and expose a compact navigation menu.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -539,6 +554,8 @@ export default function ComponentShowcase({ component }) {
                                                                                 ? SKELETON_DEMOS[demoId]
                                                                                   : component.slug === 'accordion'
                                                                                     ? ACCORDION_DEMOS[demoId]
+                                                                                      : component.slug === 'app-bar'
+                                                                                        ? APP_BAR_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel
