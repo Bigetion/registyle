@@ -38,6 +38,7 @@ import SelectDemo from './material/select/SelectDemo.jsx';
 import SliderDemo from './material/slider/SliderDemo.jsx';
 import SwitchDemo from './material/switch/SwitchDemo.jsx';
 import TextFieldDemo from './material/text-field/TextFieldDemo.jsx';
+import TransferListDemo from './material/transfer-list/TransferListDemo.jsx';
 
 const PLACEMENTS = ['top', 'right', 'bottom', 'left'];
 
@@ -287,52 +288,6 @@ function InputPreview({ demoId }) {
   );
 }
 
-function TransferListPreview({ demoId }) {
-  const [available, setAvailable] = useState(['Bluetooth', 'Notifications', 'Location']);
-  const [chosen, setChosen] = useState(['Wi-Fi']);
-  const [selected, setSelected] = useState([]);
-
-  function moveRight() {
-    const moving = available.filter((item) => selected.includes(item));
-    setChosen((items) => [...items, ...moving]);
-    setAvailable((items) => items.filter((item) => !moving.includes(item)));
-    setSelected([]);
-  }
-
-  function moveLeft() {
-    const moving = chosen.filter((item) => selected.includes(item));
-    setAvailable((items) => [...items, ...moving]);
-    setChosen((items) => items.filter((item) => !moving.includes(item)));
-    setSelected([]);
-  }
-
-  return (
-    <div className="transfer-demo">
-      {[['Available', available], ['Selected', chosen]].map(([title, items]) => (
-        <div className="transfer-list" key={title}>
-          <strong>{title}</strong>
-          {items.map((item) => (
-            <label key={item}>
-              <input
-                type="checkbox"
-                checked={selected.includes(item)}
-                onChange={() => setSelected((values) => values.includes(item) ? values.filter((value) => value !== item) : [...values, item])}
-              />
-              {item}
-            </label>
-          ))}
-          {!items.length && <span className="preview-note">No items</span>}
-        </div>
-      ))}
-      <div className="transfer-actions">
-        <button className="mui-button mui-button-outlined" type="button" aria-label="Move selected items right" onClick={moveRight}>→</button>
-        <button className="mui-button mui-button-outlined" type="button" aria-label="Move selected items left" onClick={moveLeft}>←</button>
-      </div>
-      <span className="preview-note">{demoId.includes('selection') ? 'Select one or more rows, then move them.' : 'Move options between lists.'}</span>
-    </div>
-  );
-}
-
 function DisplayPreview({ demoId }) {
   const [dismissed, setDismissed] = useState(false);
   if (demoId.startsWith('avatar')) return <div className="preview-row"><span className="mui-avatar">JD</span><span className="mui-avatar mui-avatar-green"><User size={17} /></span><span className="mui-avatar mui-avatar-orange">AL</span><span className="avatar-stack"><span className="mui-avatar">JD</span><span className="mui-avatar mui-avatar-green">MK</span><span className="mui-avatar mui-avatar-orange">AL</span></span></div>;
@@ -385,6 +340,7 @@ function DemoPreview({ component, demoId }) {
   if (component.slug === 'slider') return <SliderDemo demoId={demoId} />;
   if (component.slug === 'switch') return <SwitchDemo demoId={demoId} />;
   if (component.slug === 'text-field') return <TextFieldDemo demoId={demoId} />;
+  if (component.slug === 'transfer-list') return <TransferListDemo demoId={demoId} />;
   if (component.slug === 'autocomplete') return <AutocompleteDemo demoId={demoId} />;
   if (component.slug === 'button-group') return <ButtonGroupDemo demoId={demoId} />;
   if (component.slug === 'checkbox') return <CheckboxDemo demoId={demoId} />;
@@ -393,7 +349,6 @@ function DemoPreview({ component, demoId }) {
   if (component.slug === 'radio-group') return <RadioGroupDemo demoId={demoId} />;
   if (component.slug === 'rating') return <RatingDemo demoId={demoId} />;
   if (demoId.startsWith('tooltip') || demoId.startsWith('popover') || demoId.startsWith('menu') || demoId.startsWith('autocomplete') || demoId.startsWith('popper') || demoId.startsWith('click-away') || demoId.startsWith('portal')) return <FloatingDemo demoId={demoId} />;
-  if (demoId.startsWith('transfer-list')) return <TransferListPreview demoId={demoId} />;
   if (demoId.startsWith('button')) return <ButtonPreview demoId={demoId} />;
   if (demoId.startsWith('checkbox') || demoId.startsWith('toggle-button')) return <SelectionPreview demoId={demoId} />;
   if (demoId.startsWith('text-field')) return <InputPreview demoId={demoId} />;

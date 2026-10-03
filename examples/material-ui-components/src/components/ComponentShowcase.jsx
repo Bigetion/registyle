@@ -191,6 +191,21 @@ const TEXT_FIELD_DEMOS = {
   },
 };
 
+const TRANSFER_LIST_DEMOS = {
+  'transfer-list': {
+    title: 'Move selected items',
+    caption: 'Choose items from either side and move them between available and selected lists.',
+  },
+  'transfer-list-selection': {
+    title: 'Bulk selection',
+    caption: 'Select every item at once and see partial selection reflected in the list header.',
+  },
+  'transfer-list-actions': {
+    title: 'Move all items',
+    caption: 'Move selected items or transfer an entire list with dedicated actions.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -233,6 +248,8 @@ export default function ComponentShowcase({ component }) {
                               ? SWITCH_DEMOS[demoId]
                               : component.slug === 'text-field'
                                 ? TEXT_FIELD_DEMOS[demoId]
+                                : component.slug === 'transfer-list'
+                                  ? TRANSFER_LIST_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel
