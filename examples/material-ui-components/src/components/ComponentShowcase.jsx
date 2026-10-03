@@ -146,6 +146,21 @@ const SELECT_DEMOS = {
   },
 };
 
+const SLIDER_DEMOS = {
+  slider: {
+    title: 'Continuous value',
+    caption: 'Adjust a value smoothly across a range with pointer or keyboard input.',
+  },
+  'slider-range': {
+    title: 'Range selection',
+    caption: 'Set minimum and maximum values while keeping the selected range valid.',
+  },
+  'slider-marks': {
+    title: 'Discrete steps',
+    caption: 'Snap to labeled values when only specific increments are meaningful.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -182,6 +197,8 @@ export default function ComponentShowcase({ component }) {
                         ? RATING_DEMOS[demoId]
                         : component.slug === 'select'
                           ? SELECT_DEMOS[demoId]
+                          : component.slug === 'slider'
+                            ? SLIDER_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel
