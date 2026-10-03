@@ -36,6 +36,7 @@ import SnackbarDemo from './material/snackbar/SnackbarDemo.jsx';
 import SkeletonDemo from './material/skeleton/SkeletonDemo.jsx';
 import AccordionDemo from './material/accordion/AccordionDemo.jsx';
 import AppBarDemo from './material/app-bar/AppBarDemo.jsx';
+import CardDemo from './material/card/CardDemo.jsx';
 import BadgeDemo from './material/badge/BadgeDemo.jsx';
 import ButtonGroupDemo from './material/button-group/ButtonGroupDemo.jsx';
 import ChipDemo from './material/chip/ChipDemo.jsx';
@@ -306,7 +307,6 @@ function FeedbackPreview({ demoId }) {
 
 function SurfacePreview({ demoId }) {
   const [selected, setSelected] = useState(0);
-  if (demoId.startsWith('card')) return <article className="sample-card"><div className="sample-card-media"><Image size={22} /><span>IMAGE PREVIEW</span></div><div className="sample-card-copy"><strong>Card title</strong><p>Cards provide a flexible surface for grouping related content.</p><button className="mui-button mui-button-text" type="button">LEARN MORE</button></div></article>;
   if (demoId.startsWith('paper')) return <div className="paper-row"><div className="paper-sample">Elevation 0</div><div className="paper-sample paper-raised">Elevation 3</div><div className="paper-sample paper-outlined">Outlined</div></div>;
   return <div className="preview-row"><span className="mui-chip mui-chip-filled"><Layers size={14} /> Surface</span><span className="preview-note">Composable content surface</span></div>;
 }
@@ -328,6 +328,7 @@ function NavigationPreview({ demoId }) {
 function DemoPreview({ component, demoId }) {
   if (component.slug === 'accordion') return <AccordionDemo demoId={demoId} />;
   if (component.slug === 'app-bar') return <AppBarDemo demoId={demoId} />;
+  if (component.slug === 'card') return <CardDemo demoId={demoId} />;
   if (component.slug === 'alert') return <AlertDemo demoId={demoId} />;
   if (component.slug === 'dialog') return <DialogDemo demoId={demoId} />;
   if (component.slug === 'progress') return <ProgressDemo demoId={demoId} />;

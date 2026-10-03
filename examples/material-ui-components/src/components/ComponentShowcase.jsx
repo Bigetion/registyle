@@ -476,6 +476,21 @@ const APP_BAR_DEMOS = {
   },
 };
 
+const CARD_DEMOS = {
+  card: {
+    title: 'Project overview',
+    caption: 'Group a project summary, status, and a useful action into one clear content surface.',
+  },
+  'card-actions': {
+    title: 'Interactive actions',
+    caption: 'Provide useful card actions and update the interface with their current state.',
+  },
+  'card-media': {
+    title: 'Media and content',
+    caption: 'Combine a strong visual header with supporting text and a compact metadata row.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -556,6 +571,8 @@ export default function ComponentShowcase({ component }) {
                                                                                     ? ACCORDION_DEMOS[demoId]
                                                                                       : component.slug === 'app-bar'
                                                                                         ? APP_BAR_DEMOS[demoId]
+                                                                                          : component.slug === 'card'
+                                                                                            ? CARD_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel
