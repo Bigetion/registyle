@@ -34,6 +34,7 @@ import DialogDemo from './material/dialog/DialogDemo.jsx';
 import ProgressDemo from './material/progress/ProgressDemo.jsx';
 import SnackbarDemo from './material/snackbar/SnackbarDemo.jsx';
 import SkeletonDemo from './material/skeleton/SkeletonDemo.jsx';
+import AccordionDemo from './material/accordion/AccordionDemo.jsx';
 import BadgeDemo from './material/badge/BadgeDemo.jsx';
 import ButtonGroupDemo from './material/button-group/ButtonGroupDemo.jsx';
 import ChipDemo from './material/chip/ChipDemo.jsx';
@@ -303,9 +304,7 @@ function FeedbackPreview({ demoId }) {
 }
 
 function SurfacePreview({ demoId }) {
-  const [expanded, setExpanded] = useState(true);
   const [selected, setSelected] = useState(0);
-  if (demoId.startsWith('accordion')) return <div className="accordion-demo">{['What is Registyle?', 'How does style collection work?', 'Can I customize the theme?'].map((title, index) => <section key={title}><button type="button" aria-expanded={expanded && selected === index} onClick={() => { setSelected(index); setExpanded(selected === index ? !expanded : true); }}><span>{title}</span><ChevronDown size={15} /></button>{expanded && selected === index && <p>Register semantic component styles once, then use stable class names throughout your application.</p>}</section>)}</div>;
   if (demoId.startsWith('app-bar')) return <div className="mini-appbar"><span className="brand-mark brand-mark-small">M</span><strong>Workspace</strong><div className="topbar-spacer" /><button className="mui-icon-button" type="button" aria-label="Notifications"><Bell size={17} /></button><span className="mui-avatar">JD</span></div>;
   if (demoId.startsWith('card')) return <article className="sample-card"><div className="sample-card-media"><Image size={22} /><span>IMAGE PREVIEW</span></div><div className="sample-card-copy"><strong>Card title</strong><p>Cards provide a flexible surface for grouping related content.</p><button className="mui-button mui-button-text" type="button">LEARN MORE</button></div></article>;
   if (demoId.startsWith('paper')) return <div className="paper-row"><div className="paper-sample">Elevation 0</div><div className="paper-sample paper-raised">Elevation 3</div><div className="paper-sample paper-outlined">Outlined</div></div>;
@@ -327,6 +326,7 @@ function NavigationPreview({ demoId }) {
 }
 
 function DemoPreview({ component, demoId }) {
+  if (component.slug === 'accordion') return <AccordionDemo demoId={demoId} />;
   if (component.slug === 'alert') return <AlertDemo demoId={demoId} />;
   if (component.slug === 'dialog') return <DialogDemo demoId={demoId} />;
   if (component.slug === 'progress') return <ProgressDemo demoId={demoId} />;

@@ -446,6 +446,21 @@ const SKELETON_DEMOS = {
   },
 };
 
+const ACCORDION_DEMOS = {
+  accordion: {
+    title: 'Single panel expansion',
+    caption: 'Expand one section at a time and collapse the open section when it is activated again.',
+  },
+  'accordion-controlled': {
+    title: 'Multiple panel expansion',
+    caption: 'Open several sections independently and use the controls to expand or collapse all panels.',
+  },
+  'accordion-disabled': {
+    title: 'Disabled panel',
+    caption: 'Keep unavailable content visible in the list while communicating that it cannot be expanded.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -522,6 +537,8 @@ export default function ComponentShowcase({ component }) {
                                                                             ? SNACKBAR_DEMOS[demoId]
                                                                               : component.slug === 'skeleton'
                                                                                 ? SKELETON_DEMOS[demoId]
+                                                                                  : component.slug === 'accordion'
+                                                                                    ? ACCORDION_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel
