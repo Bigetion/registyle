@@ -39,7 +39,7 @@ register('alert-actions', {
 });
 
 register('alert-action-link', {
-  base: { tw: 'inline-flex h-7 cursor-pointer items-center rounded px-2 text-[9px] font-semibold text-current hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-current' },
+  base: { tw: 'inline-flex h-7 cursor-pointer appearance-none items-center rounded border-0 bg-transparent px-2 text-[9px] font-semibold text-current shadow-none hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-current' },
 });
 
 register('alert-action-icon', {
