@@ -33,6 +33,7 @@ import AlertDemo from './material/alert/AlertDemo.jsx';
 import DialogDemo from './material/dialog/DialogDemo.jsx';
 import ProgressDemo from './material/progress/ProgressDemo.jsx';
 import SnackbarDemo from './material/snackbar/SnackbarDemo.jsx';
+import SkeletonDemo from './material/skeleton/SkeletonDemo.jsx';
 import BadgeDemo from './material/badge/BadgeDemo.jsx';
 import ButtonGroupDemo from './material/button-group/ButtonGroupDemo.jsx';
 import ChipDemo from './material/chip/ChipDemo.jsx';
@@ -298,7 +299,6 @@ function DisplayPreview({ demoId }) {
 
 function FeedbackPreview({ demoId }) {
   const [open, setOpen] = useState(demoId.startsWith('snackbar'));
-  if (demoId.startsWith('skeleton')) return <div className="skeleton-card"><span className="skeleton-block skeleton-avatar" /><div><span className="skeleton-block skeleton-title" /><span className="skeleton-block skeleton-copy" /><span className="skeleton-block skeleton-copy short" /></div></div>;
   return <div className="snackbar-demo"><button className="mui-button mui-button-contained" type="button" onClick={() => setOpen(true)}>Show notification</button>{open && <div className="snackbar"><span>File saved successfully</span><button type="button" onClick={() => setOpen(false)}>UNDO</button><button type="button" aria-label="Dismiss" onClick={() => setOpen(false)}><X size={14} /></button></div>}</div>;
 }
 
@@ -331,6 +331,7 @@ function DemoPreview({ component, demoId }) {
   if (component.slug === 'dialog') return <DialogDemo demoId={demoId} />;
   if (component.slug === 'progress') return <ProgressDemo demoId={demoId} />;
   if (component.slug === 'snackbar') return <SnackbarDemo demoId={demoId} />;
+  if (component.slug === 'skeleton') return <SkeletonDemo demoId={demoId} />;
   if (component.slug === 'avatar') return <AvatarDemo demoId={demoId} />;
   if (component.slug === 'badge') return <BadgeDemo demoId={demoId} />;
   if (component.slug === 'chip') return <ChipDemo demoId={demoId} />;
@@ -359,7 +360,7 @@ function DemoPreview({ component, demoId }) {
   if (demoId.startsWith('checkbox')) return <SelectionPreview demoId={demoId} />;
   if (demoId.startsWith('text-field')) return <InputPreview demoId={demoId} />;
   if (demoId.startsWith('avatar') || demoId.startsWith('badge') || demoId.startsWith('chip') || demoId.startsWith('divider') || demoId.startsWith('icons') || demoId.startsWith('material-icons') || demoId.startsWith('list') || demoId.startsWith('table') || demoId.startsWith('typography')) return <DisplayPreview demoId={demoId} />;
-  if (demoId.startsWith('alert') || demoId.startsWith('dialog') || demoId.startsWith('progress') || demoId.startsWith('snackbar') || demoId.startsWith('skeleton') || demoId.startsWith('modal')) return <FeedbackPreview demoId={demoId} />;
+  if (demoId.startsWith('alert') || demoId.startsWith('dialog') || demoId.startsWith('progress') || demoId.startsWith('snackbar') || demoId.startsWith('modal')) return <FeedbackPreview demoId={demoId} />;
   if (demoId.startsWith('accordion') || demoId.startsWith('app-bar') || demoId.startsWith('card') || demoId.startsWith('paper')) return <SurfacePreview demoId={demoId} />;
   if (demoId.startsWith('tabs') || demoId.startsWith('breadcrumbs') || demoId.startsWith('pagination') || demoId.startsWith('stepper') || demoId.startsWith('link') || demoId.startsWith('bottom-navigation') || demoId.startsWith('drawer') || demoId.startsWith('speed-dial')) return <NavigationPreview demoId={demoId} />;
   return <div className="preview-row"><span className="mui-chip mui-chip-primary">{component.name}</span><span className="preview-note">Interactive {component.name.toLowerCase()} example</span></div>;

@@ -431,6 +431,21 @@ const SNACKBAR_DEMOS = {
   },
 };
 
+const SKELETON_DEMOS = {
+  skeleton: {
+    title: 'Loading profile card',
+    caption: 'Preview a content placeholder while profile data is loading, then reveal the finished content.',
+  },
+  'skeleton-variants': {
+    title: 'Shape and content variants',
+    caption: 'Combine text, circular, and rectangular placeholders to match the content being loaded.',
+  },
+  'skeleton-animation': {
+    title: 'Animation styles',
+    caption: 'Compare pulse and wave motion, or disable animation to reduce visual movement.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -505,6 +520,8 @@ export default function ComponentShowcase({ component }) {
                                                                         ? PROGRESS_DEMOS[demoId]
                                                                           : component.slug === 'snackbar'
                                                                             ? SNACKBAR_DEMOS[demoId]
+                                                                              : component.slug === 'skeleton'
+                                                                                ? SKELETON_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel
