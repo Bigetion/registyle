@@ -28,6 +28,7 @@ import {
 import { cx } from 'registyle';
 import { PopperSurface, useClickAway } from './Popper.jsx';
 import AutocompleteDemo from './material/autocomplete/AutocompleteDemo.jsx';
+import AvatarDemo from './material/avatar/AvatarDemo.jsx';
 import ButtonGroupDemo from './material/button-group/ButtonGroupDemo.jsx';
 import CheckboxDemo from './material/checkbox/CheckboxDemo.jsx';
 import FloatingActionButtonDemo from './material/floating-action-button/FloatingActionButtonDemo.jsx';
@@ -280,7 +281,6 @@ function InputPreview({ demoId }) {
 
 function DisplayPreview({ demoId }) {
   const [dismissed, setDismissed] = useState(false);
-  if (demoId.startsWith('avatar')) return <div className="preview-row"><span className="mui-avatar">JD</span><span className="mui-avatar mui-avatar-green"><User size={17} /></span><span className="mui-avatar mui-avatar-orange">AL</span><span className="avatar-stack"><span className="mui-avatar">JD</span><span className="mui-avatar mui-avatar-green">MK</span><span className="mui-avatar mui-avatar-orange">AL</span></span></div>;
   if (demoId.startsWith('badge')) return <div className="preview-row"><span className="badge-anchor"><Bell size={21} /><span className="badge-count">4</span></span><span className="badge-anchor"><Mail size={21} /><span className="badge-dot" /></span><span className="preview-note">Unread notifications</span></div>;
   if (demoId.startsWith('chip')) return <div className="preview-row"><span className="mui-chip mui-chip-filled">Default</span><span className="mui-chip mui-chip-primary">Primary</span><span className="mui-chip mui-chip-success">Success <Check size={13} /></span><button className="mui-chip mui-chip-filled" type="button" onClick={() => setDismissed(true)}>{dismissed ? 'Removed' : <>Filter <X size={13} /></>}</button></div>;
   if (demoId.startsWith('divider')) return <div className="divider-demo"><span>Account settings</span><div className="mui-divider" /><span>Privacy &amp; security</span><div className="mui-divider" /><span>Notifications</span></div>;
@@ -326,6 +326,7 @@ function NavigationPreview({ demoId }) {
 }
 
 function DemoPreview({ component, demoId }) {
+  if (component.slug === 'avatar') return <AvatarDemo demoId={demoId} />;
   if (component.slug === 'select') return <SelectDemo demoId={demoId} />;
   if (component.slug === 'slider') return <SliderDemo demoId={demoId} />;
   if (component.slug === 'switch') return <SwitchDemo demoId={demoId} />;

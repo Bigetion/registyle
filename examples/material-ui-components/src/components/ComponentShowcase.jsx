@@ -221,6 +221,21 @@ const TOGGLE_BUTTON_DEMOS = {
   },
 };
 
+const AVATAR_DEMOS = {
+  avatar: {
+    title: 'Avatar fallbacks',
+    caption: 'Represent a person with initials, an icon, or a neutral fallback.',
+  },
+  'avatar-sizes': {
+    title: 'Avatar sizes',
+    caption: 'Choose a size that fits the density and hierarchy of the surrounding interface.',
+  },
+  'avatar-group': {
+    title: 'Avatar group',
+    caption: 'Show a compact team of people and summarize additional members.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -267,6 +282,8 @@ export default function ComponentShowcase({ component }) {
                                   ? TRANSFER_LIST_DEMOS[demoId]
                                   : component.slug === 'toggle-button'
                                     ? TOGGLE_BUTTON_DEMOS[demoId]
+                                    : component.slug === 'avatar'
+                                      ? AVATAR_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel
