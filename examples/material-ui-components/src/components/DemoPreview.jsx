@@ -39,6 +39,7 @@ import IconsDemo from './material/icons/IconsDemo.jsx';
 import ListDemo from './material/list/ListDemo.jsx';
 import MaterialIconsDemo from './material/material-icons/MaterialIconsDemo.jsx';
 import TableDemo from './material/table/TableDemo.jsx';
+import TooltipDemo from './material/tooltip/TooltipDemo.jsx';
 import NumberFieldDemo from './material/number-field/NumberFieldDemo.jsx';
 import RadioGroupDemo from './material/radio-group/RadioGroupDemo.jsx';
 import RatingDemo from './material/rating/RatingDemo.jsx';
@@ -333,6 +334,7 @@ function DemoPreview({ component, demoId }) {
   if (component.slug === 'icons') return <IconsDemo demoId={demoId} />;
   if (component.slug === 'list') return <ListDemo demoId={demoId} />;
   if (component.slug === 'table') return <TableDemo demoId={demoId} />;
+  if (component.slug === 'tooltip') return <TooltipDemo demoId={demoId} />;
   if (component.slug === 'material-icons') return <MaterialIconsDemo demoId={demoId} />;
   if (component.slug === 'select') return <SelectDemo demoId={demoId} />;
   if (component.slug === 'slider') return <SliderDemo demoId={demoId} />;

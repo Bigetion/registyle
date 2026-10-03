@@ -341,6 +341,21 @@ const TABLE_DEMOS = {
   },
 };
 
+const TOOLTIP_DEMOS = {
+  tooltip: {
+    title: 'Accessible helper',
+    caption: 'Reveal concise supporting information on hover or keyboard focus.',
+  },
+  'tooltip-placements': {
+    title: 'Placement controls',
+    caption: 'Preview top, right, bottom, and left placements using Popper positioning.',
+  },
+  'tooltip-interactive': {
+    title: 'Contextual tooltip',
+    caption: 'Show richer guidance on hover, focus, or click, and dismiss it with Escape.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -403,6 +418,8 @@ export default function ComponentShowcase({ component }) {
                                                   ? LIST_DEMOS[demoId]
                                                     : component.slug === 'table'
                                                       ? TABLE_DEMOS[demoId]
+                                                        : component.slug === 'tooltip'
+                                                          ? TOOLTIP_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel
