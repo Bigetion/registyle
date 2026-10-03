@@ -3,7 +3,7 @@ const components = [
     group: 'Inputs',
     items: [
       ['Autocomplete', 'NEW', 'autocomplete', 'Suggest and select a value from a searchable list of options.', ['autocomplete', 'autocomplete-multiple', 'autocomplete-free']],
-      ['Button', '', 'button', 'Buttons communicate actions and let people make choices with a single tap.', ['button', 'button-colors', 'button-loading']],
+      ['Button', '', 'button', 'Buttons communicate actions and let people make choices with a single tap.', ['button', 'button-colors', 'button-sizes', 'button-icons', 'button-loading']],
       ['Button Group', '', 'button-group', 'Group related buttons together into a single, connected control.', ['button-group', 'button-group-vertical', 'button-group-split']],
       ['Checkbox', '', 'checkbox', 'Checkboxes let users select one or more items from a set.', ['checkbox', 'checkbox-indeterminate', 'checkbox-group']],
       ['Floating Action Button', '', 'floating-action-button', 'A floating action button performs the primary action on a screen.', ['fab', 'fab-sizes', 'fab-group']],

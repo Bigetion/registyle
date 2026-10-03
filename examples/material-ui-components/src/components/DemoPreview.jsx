@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Activity,
   ArrowRight,
@@ -164,40 +164,102 @@ function FloatingDemo({ demoId }) {
 function ButtonPreview({ demoId }) {
   const [loading, setLoading] = useState(false);
   const [pressed, setPressed] = useState(false);
-  return (
-    <div className="preview-stack">
+  const timerRef = useRef(null);
+  const buttonClass = 'mui-button';
+
+  useEffect(() => () => window.clearTimeout(timerRef.current), []);
+
+  if (demoId.startsWith('fab') || demoId.startsWith('floating-action-button')) {
+    return (
       <div className="preview-row">
-        <button className="mui-button mui-button-contained" type="button" onClick={() => setPressed(true)}>Primary action</button>
-        <button className="mui-button mui-button-outlined" type="button">Outlined</button>
-        <button className="mui-button mui-button-text" type="button">Text</button>
-        <button className="mui-button mui-button-contained" type="button" disabled>Disabled</button>
+        <button className="fab-preview" type="button" aria-label="Create"><Plus size={20} /></button>
+        <button className="fab-preview fab-small" type="button" aria-label="Add favorite"><Heart size={17} /></button>
+        <span className="preview-note">Primary floating actions</span>
       </div>
-      {demoId.includes('colors') && (
-        <div className="preview-row">
-          <button className="mui-button color-success" type="button"><Check size={14} /> Success</button>
-          <button className="mui-button color-warning" type="button"><Info size={14} /> Warning</button>
-          <button className="mui-button color-danger" type="button"><Trash2 size={14} /> Delete</button>
+    );
+  }
+
+  if (demoId === 'button-colors') {
+    return (
+      <div className="button-example-section">
+        <span className="button-example-label">Semantic variants</span>
+        <div className="button-example-row">
+          <button className={cx(buttonClass, 'mui-button-color-success')} type="button"><Check size={14} /> Success</button>
+          <button className={cx(buttonClass, 'mui-button-color-warning')} type="button"><Info size={14} /> Warning</button>
+          <button className={cx(buttonClass, 'mui-button-color-danger')} type="button"><Trash2 size={14} /> Delete</button>
         </div>
-      )}
-      {demoId.includes('loading') && (
-        <div className="preview-row">
-          <button className="mui-button mui-button-contained" type="button" disabled={loading} onClick={() => { setLoading(true); window.setTimeout(() => setLoading(false), 1000); }}>
-            {loading ? <Activity className="spin" size={14} /> : <Plus size={14} />}
-            {loading ? 'Saving…' : 'Save changes'}
+        <span className="preview-note">Reserve semantic colors for actions where intent matters.</span>
+      </div>
+    );
+  }
+
+  if (demoId === 'button-sizes') {
+    return (
+      <div className="button-example-section">
+        <span className="button-example-label">Adjust the visual density</span>
+        <div className="button-example-row">
+          <button className={cx(buttonClass, 'mui-button-text', 'mui-button-small')} type="button">Small</button>
+          <button className={cx(buttonClass, 'mui-button-outlined')} type="button">Medium</button>
+          <button className={cx(buttonClass, 'mui-button-contained', 'mui-button-large')} type="button">Large action</button>
+        </div>
+        <span className="preview-note">Use one consistent size within a related control group.</span>
+      </div>
+    );
+  }
+
+  if (demoId === 'button-icons') {
+    return (
+      <div className="button-example-section">
+        <span className="button-example-label">Icon placement</span>
+        <div className="button-example-row">
+          <button className={cx(buttonClass, 'mui-button-contained')} type="button"><Plus size={15} /> Create project</button>
+          <button className={cx(buttonClass, 'mui-button-outlined')} type="button">Continue <ArrowRight size={15} /></button>
+          <button className="button-example-icon-button" type="button" aria-label="Add item"><Plus size={17} /></button>
+        </div>
+        <span className="preview-note">Icon-only actions include an accessible label.</span>
+      </div>
+    );
+  }
+
+  if (demoId === 'button-loading') {
+    return (
+      <div className="button-example-section">
+        <span className="button-example-label">Async action state</span>
+        <div className="button-example-row">
+          <button
+            className={cx(buttonClass, 'mui-button-contained')}
+            type="button"
+            disabled={loading}
+            aria-busy={loading}
+            onClick={() => {
+              setLoading(true);
+              timerRef.current = window.setTimeout(() => {
+                setLoading(false);
+                setPressed(true);
+              }, 1000);
+            }}
+          >
+            {loading ? <Activity className="spin" size={14} /> : <Check size={14} />}
+            {loading ? 'Saving changes…' : pressed ? 'Saved' : 'Save changes'}
           </button>
-          <span className="preview-note">{pressed ? 'Action received.' : 'Try the async loading state.'}</span>
+          <span className="button-example-status" role="status">
+            {loading ? 'Please wait while your changes are saved.' : pressed ? 'Your changes are saved.' : 'Click to preview a pending action.'}
+          </span>
         </div>
-      )}
-      {demoId.includes('group') && (
-        <div className="button-group" role="group" aria-label="Text alignment">
-          {['Left', 'Center', 'Right'].map((item) => (
-            <button className={cx(pressed ? item === 'Center' && 'button-group-selected' : item === 'Left' && 'button-group-selected')} key={item} type="button" onClick={() => setPressed(true)}>{item}</button>
-          ))}
-        </div>
-      )}
-      {(demoId.startsWith('fab') || demoId.startsWith('floating-action-button')) && (
-        <div className="preview-row"><button className="fab-preview" type="button" aria-label="Create"><Plus size={20} /></button><button className="fab-preview fab-small" type="button" aria-label="Add favorite"><Heart size={17} /></button><span className="preview-note">Primary floating actions</span></div>
-      )}
+      </div>
+    );
+  }
+
+  return (
+    <div className="button-example-section">
+      <span className="button-example-label">Choose a visual hierarchy</span>
+      <div className="button-example-row">
+        <button className={cx(buttonClass, 'mui-button-contained')} type="button" onClick={() => setPressed(true)}>Contained</button>
+        <button className={cx(buttonClass, 'mui-button-outlined')} type="button">Outlined</button>
+        <button className={cx(buttonClass, 'mui-button-text')} type="button">Text button</button>
+        <button className={cx(buttonClass, 'mui-button-contained')} type="button" disabled>Disabled</button>
+      </div>
+      {pressed && <span className="preview-note" role="status">Button action selected.</span>}
     </div>
   );
 }

@@ -7,6 +7,29 @@ const styleSources = import.meta.glob('../registyles/components/*.js', {
   import: 'default',
 });
 
+const BUTTON_DEMOS = {
+  button: {
+    title: 'Button variants',
+    caption: 'Choose the right visual weight for each action in your interface.',
+  },
+  'button-colors': {
+    title: 'Semantic colors',
+    caption: 'Use color to reinforce intent without changing the button behavior.',
+  },
+  'button-sizes': {
+    title: 'Button sizes',
+    caption: 'Balance compact controls with comfortable, prominent actions.',
+  },
+  'button-icons': {
+    title: 'Icons and actions',
+    caption: 'Pair icons with labels to make common actions easier to scan.',
+  },
+  'button-loading': {
+    title: 'Loading and disabled',
+    caption: 'Give feedback while an action is running and prevent duplicate submissions.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -24,16 +47,19 @@ export default function ComponentShowcase({ component }) {
 
   return (
     <div className={`component-showcase component-showcase-${component.slug}`}>
-      {component.demos.map((demoId) => (
-        <DemoPanel
-          key={demoId}
-          title={titleFromDemo(demoId)}
-          caption={`Explore the ${titleFromDemo(demoId).toLowerCase()} example for ${component.name} with live controls.`}
-          code={styleSource}
-        >
-          <DemoPreview component={component} demoId={demoId} />
-        </DemoPanel>
-      ))}
+      {component.demos.map((demoId) => {
+        const demo = component.slug === 'button' ? BUTTON_DEMOS[demoId] : undefined;
+        return (
+          <DemoPanel
+            key={demoId}
+            title={demo?.title ?? titleFromDemo(demoId)}
+            caption={demo?.caption ?? `Explore the ${titleFromDemo(demoId).toLowerCase()} example for ${component.name} with live controls.`}
+            code={styleSource}
+          >
+            <DemoPreview component={component} demoId={demoId} />
+          </DemoPanel>
+        );
+      })}
     </div>
   );
 }
