@@ -17,7 +17,7 @@ register('mui-tabs-list-scrollable', {
 });
 
 register('mui-tab', {
-  base: { tw: 'relative inline-flex min-h-10 shrink-0 cursor-pointer items-center justify-center gap-1.5 border-0 bg-transparent px-3 text-[8px] font-medium text-[#94a1b3] transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-[#8baeff] sm:px-4 sm:text-[9px]' },
+  base: { tw: 'relative inline-flex min-h-10 shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-t-md border-0 bg-transparent px-3 text-[8px] font-medium text-[#94a1b3] transition-colors hover:bg-[#1b2431] hover:text-white focus-visible:outline-2 focus-visible:outline-[#8baeff] sm:px-4 sm:text-[9px]' },
 });
 
 register('mui-tab-active', {
@@ -26,6 +26,10 @@ register('mui-tab-active', {
 
 register('mui-tab[aria-selected="true"]', {
   base: { tw: 'font-semibold text-[#e0eaff] hover:text-[#e0eaff]' },
+});
+
+register('mui-tab[aria-selected="true"]:hover', {
+  base: { tw: 'bg-[#1b2431]' },
 });
 
 register('mui-tab-indicator', {
