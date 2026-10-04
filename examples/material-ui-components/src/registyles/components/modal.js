@@ -17,7 +17,7 @@ register('modal-demo-eyebrow', {
 });
 
 register('modal-demo-overlay', {
-  base: { tw: 'fixed inset-0 z-[70] flex items-center justify-center overflow-y-auto bg-[#05070be8] p-4 backdrop-blur-[3px] max-sm:items-end max-sm:p-0' },
+  base: { tw: 'fixed inset-0 z-[70] flex items-center justify-center overflow-y-auto bg-[#080b12a6] p-4 backdrop-blur-[1.5px] max-sm:items-end max-sm:p-0' },
 });
 
 register('modal-demo-surface', {
