@@ -34,9 +34,13 @@ function TabList({ items, selected, onSelect, idPrefix, variant = 'standard', la
           key={itemLabel}
           onClick={() => onSelect(index)}
         >
-          {Icon && <Icon size={13} aria-hidden="true" />}
-          <span>{itemLabel}</span>
-          {badge !== undefined && <span className="mui-tab-badge">{badge}</span>}
+          {index === selected && <span className="mui-tab-highlight" aria-hidden="true" />}
+          <span className="mui-tab-content">
+            {Icon && <Icon size={13} aria-hidden="true" />}
+            <span>{itemLabel}</span>
+            {badge !== undefined && <span className="mui-tab-badge">{badge}</span>}
+          </span>
+          {index === selected && <span className="mui-tab-indicator" aria-hidden="true" />}
         </button>
       ))}
     </div>
