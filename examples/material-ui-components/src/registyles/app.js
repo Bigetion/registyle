@@ -75,11 +75,6 @@ register.all({
   },
   'source-link': { tw: 'font-medium text-[var(--mui-blue)] hover:underline' },
   'mobile-menu': { tw: 'hidden shrink-0 max-md:inline-flex max-sm:size-8' },
-  'mobile-nav': { tw: 'flex gap-1 overflow-x-auto border-b border-[var(--border)] px-3 py-2 md:hidden [&_a]:no-underline' },
-  'mobile-nav-link': {
-    tw: 'shrink-0 rounded-md px-3 py-2 text-xs text-[var(--muted)] hover:bg-[var(--panel-raised)]',
-  },
-  'mobile-nav-link-active': { tw: 'shrink-0 rounded-md bg-[var(--mui-blue-soft)] px-3 py-2 text-xs text-[var(--mui-blue)]' },
   'sidebar-bottom': {
     tw: 'mt-3 flex shrink-0 items-center gap-2.5 border-t border-[#222b3a] bg-[#0a0e15] px-1 py-3 text-[10px] text-[var(--subtle)] [&_svg:last-child]:ml-auto',
   },

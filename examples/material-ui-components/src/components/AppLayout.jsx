@@ -168,8 +168,6 @@ export default function AppLayout() {
     }
   }
 
-  const popularComponents = componentCatalog.slice(0, 8);
-
   return (
     <div className="app-shell">
       <header className="topbar">
@@ -292,19 +290,6 @@ export default function AppLayout() {
         </aside>
 
         <main className="main-content">
-          <nav className="mobile-nav" aria-label="Popular components">
-            {popularComponents.map(({ name, slug }) => (
-              <NavLink
-                className={({ isActive }) =>
-                  cx(isActive ? 'mobile-nav-link-active' : 'mobile-nav-link')
-                }
-                key={slug}
-                to={`/components/${slug}`}
-              >
-                {name}
-              </NavLink>
-            ))}
-          </nav>
           <Outlet />
         </main>
       </div>
