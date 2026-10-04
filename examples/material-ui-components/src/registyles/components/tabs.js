@@ -17,7 +17,7 @@ register('mui-tabs-list-scrollable', {
 });
 
 register('mui-tab', {
-  base: { tw: 'relative inline-flex min-h-10 shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-t-md border-0 bg-transparent px-3 text-[8px] font-medium text-[#94a1b3] transition-colors hover:bg-white/5 hover:text-white focus-visible:outline-2 focus-visible:outline-[#8baeff] sm:px-4 sm:text-[9px]' },
+  base: { tw: 'relative inline-flex min-h-10 shrink-0 cursor-pointer items-center justify-center gap-1.5 border-0 bg-transparent px-3 text-[8px] font-medium text-[#94a1b3] transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-[#8baeff] sm:px-4 sm:text-[9px]' },
 });
 
 register('mui-tab-active', {
@@ -25,19 +25,11 @@ register('mui-tab-active', {
 });
 
 register('mui-tab[aria-selected="true"]', {
-  base: { tw: 'font-semibold text-[#e0eaff]' },
-});
-
-register('mui-tab-content', {
-  base: { tw: 'relative z-10 inline-flex items-center justify-center gap-1.5' },
-});
-
-register('mui-tab-highlight', {
-  base: { tw: 'absolute inset-x-1 top-1 bottom-0 rounded-t-md bg-[#263954]' },
+  base: { tw: 'font-semibold text-[#e0eaff] hover:text-[#e0eaff]' },
 });
 
 register('mui-tab-indicator', {
-  base: { tw: 'absolute bottom-0 left-2 right-2 z-10 h-0.5 rounded-full bg-[#8baeff] shadow-[0_0_8px_#8baeff90]' },
+  base: { tw: 'absolute bottom-0 left-2 right-2 h-0.5 rounded-full bg-[#8baeff]' },
 });
 
 register('mui-tab-with-icon', {
