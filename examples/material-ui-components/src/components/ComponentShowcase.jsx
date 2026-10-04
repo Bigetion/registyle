@@ -641,6 +641,21 @@ const STEPPER_DEMOS = {
   },
 };
 
+const TABS_DEMOS = {
+  tabs: {
+    title: 'Workspace views',
+    caption: 'Switch between related sections and keep each selected panel connected to its tab.',
+  },
+  'tabs-scrollable': {
+    title: 'Scrollable filters',
+    caption: 'Keep a larger set of filters in one tab row that can scroll on narrow screens.',
+  },
+  'tabs-centered': {
+    title: 'Centered settings',
+    caption: 'Center a compact group of settings tabs while preserving keyboard navigation.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -743,6 +758,8 @@ export default function ComponentShowcase({ component }) {
                                                                                                                                     ? SPEED_DIAL_DEMOS[demoId]
                                                                                                                                       : component.slug === 'stepper'
                                                                                                                                         ? STEPPER_DEMOS[demoId]
+                                                                                                                                          : component.slug === 'tabs'
+                                                                                                                                            ? TABS_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel
