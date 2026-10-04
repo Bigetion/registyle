@@ -20,7 +20,7 @@ register.all({
   },
   'app-layout': { tw: 'flex min-h-screen pt-14' },
   'sidebar': {
-    tw: 'fixed bottom-0 left-0 top-14 z-10 flex w-[276px] flex-col overflow-hidden border-r border-[#202938] bg-[linear-gradient(180deg,#0b0f17,#0a0e15)] px-3.5 py-5 max-lg:w-[246px] max-md:hidden',
+    tw: 'fixed bottom-0 left-0 top-14 z-10 hidden w-[246px] flex-col overflow-hidden border-r border-[#202938] bg-[linear-gradient(180deg,#0b0f17,#0a0e15)] px-3.5 py-5 md:flex lg:w-[276px]',
   },
   'sidebar-scroll': {
     tw: 'min-h-0 flex-1 overflow-y-auto pb-2 [scrollbar-width:thin] [scrollbar-color:#354156_transparent]',
@@ -44,7 +44,7 @@ register.all({
     tw: 'ml-auto rounded-full border border-[#385143] bg-[#14271f] px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-wide text-[#8de0b5]',
   },
   'main-content': {
-    tw: 'ml-[276px] min-w-0 flex-1 px-[clamp(28px,5vw,76px)] py-12 max-lg:ml-[246px] max-lg:px-8 max-md:ml-0 max-md:px-7 max-md:py-8 max-sm:px-4 max-sm:py-6',
+    tw: 'ml-0 min-w-0 flex-1 px-4 py-6 md:ml-[246px] md:px-7 md:py-8 lg:ml-[276px] lg:px-8 xl:px-[clamp(28px,5vw,76px)] xl:py-12',
   },
   'content-width': { tw: 'mx-auto max-w-[1050px]' },
   'breadcrumbs': { tw: 'mb-7 flex items-center gap-2.5 text-[10px] tracking-[.02em] text-[var(--subtle)] [&_a]:text-[var(--subtle)] [&_a]:no-underline [&_a:hover]:text-[var(--mui-blue)]' },
@@ -74,7 +74,7 @@ register.all({
     tw: 'flex items-center justify-between border-t border-[#242e3e] px-5 py-3 text-[10px] text-[var(--subtle)] max-sm:px-4',
   },
   'source-link': { tw: 'font-medium text-[var(--mui-blue)] hover:underline' },
-  'mobile-menu': { tw: 'hidden shrink-0 max-md:inline-flex max-sm:size-8' },
+  'mobile-menu': { tw: 'inline-flex size-8 shrink-0 md:hidden' },
   'sidebar-bottom': {
     tw: 'mt-3 flex shrink-0 items-center gap-2.5 border-t border-[#222b3a] bg-[#0a0e15] px-1 py-3 text-[10px] text-[var(--subtle)] [&_svg:last-child]:ml-auto',
   },
