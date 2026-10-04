@@ -48,6 +48,7 @@ import StepperDemo from './material/stepper/StepperDemo.jsx';
 import TabsDemo from './material/tabs/TabsDemo.jsx';
 import ClickAwayListenerDemo from './material/click-away-listener/ClickAwayListenerDemo.jsx';
 import ModalDemo from './material/modal/ModalDemo.jsx';
+import PopperDemo from './material/popper/PopperDemo.jsx';
 import BadgeDemo from './material/badge/BadgeDemo.jsx';
 import ButtonGroupDemo from './material/button-group/ButtonGroupDemo.jsx';
 import ChipDemo from './material/chip/ChipDemo.jsx';
@@ -70,8 +71,6 @@ import TextFieldDemo from './material/text-field/TextFieldDemo.jsx';
 import TransferListDemo from './material/transfer-list/TransferListDemo.jsx';
 import ToggleButtonDemo from './material/toggle-button/ToggleButtonDemo.jsx';
 
-const PLACEMENTS = ['top', 'right', 'bottom', 'left'];
-
 function FloatingDemo({ demoId }) {
   const anchorRef = useRef(null);
   const surfaceRef = useRef(null);
@@ -83,37 +82,20 @@ function FloatingDemo({ demoId }) {
 
   const isTooltip = demoId.startsWith('tooltip');
   const isMenu = demoId.startsWith('menu');
-  const isPopper = demoId.startsWith('popper');
   const isClickAway = demoId.startsWith('click-away');
   const isPortal = demoId.startsWith('portal');
   const label = isTooltip
     ? 'Hover or focus to see tooltip'
     : isMenu
         ? 'Open actions'
-        : isPopper
-          ? 'Toggle Popper'
-          : isClickAway
-            ? 'Open click-away panel'
-            : isPortal
-              ? 'Open portal content'
-              : 'Open popover';
+        : isClickAway
+          ? 'Open click-away panel'
+          : isPortal
+            ? 'Open portal content'
+            : 'Open popover';
 
   return (
     <div className={cx('floating-demo', isClickAway && 'click-away-demo')}>
-      {isPopper && (
-        <div className="placement-picker" aria-label="Popper placement">
-          {PLACEMENTS.map((item) => (
-            <button
-              className={cx(placement.startsWith(item) ? 'placement-active' : 'placement-button')}
-              key={item}
-              onClick={() => setPlacement(item)}
-              type="button"
-            >
-              {item}
-            </button>
-          ))}
-        </div>
-      )}
       <button
         className={cx('mui-button', 'mui-button-outlined', 'floating-trigger')}
         type="button"
@@ -332,6 +314,7 @@ function NavigationPreview({ demoId }) {
 }
 
 function DemoPreview({ component, demoId }) {
+  if (component.slug === 'popper') return <PopperDemo demoId={demoId} />;
   if (component.slug === 'modal') return <ModalDemo demoId={demoId} />;
   if (component.slug === 'click-away-listener') return <ClickAwayListenerDemo demoId={demoId} />;
   if (component.slug === 'menu') return <MenuDemo demoId={demoId} />;
@@ -376,7 +359,7 @@ function DemoPreview({ component, demoId }) {
   if (component.slug === 'number-field') return <NumberFieldDemo demoId={demoId} />;
   if (component.slug === 'radio-group') return <RadioGroupDemo demoId={demoId} />;
   if (component.slug === 'rating') return <RatingDemo demoId={demoId} />;
-  if (demoId.startsWith('tooltip') || demoId.startsWith('popover') || demoId.startsWith('autocomplete') || demoId.startsWith('popper') || demoId.startsWith('portal')) return <FloatingDemo demoId={demoId} />;
+  if (demoId.startsWith('tooltip') || demoId.startsWith('popover') || demoId.startsWith('autocomplete') || demoId.startsWith('portal')) return <FloatingDemo demoId={demoId} />;
   if (demoId.startsWith('button')) return <ButtonPreview demoId={demoId} />;
   if (demoId.startsWith('checkbox')) return <SelectionPreview demoId={demoId} />;
   if (demoId.startsWith('text-field')) return <InputPreview demoId={demoId} />;

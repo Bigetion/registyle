@@ -686,6 +686,21 @@ const MODAL_DEMOS = {
   },
 };
 
+const POPPER_DEMOS = {
+  popper: {
+    title: 'Anchored surface',
+    caption: 'Position content relative to a reference element, then dismiss it with a click away or Escape.',
+  },
+  'popper-placements': {
+    title: 'Placement controls',
+    caption: 'Compare top, right, bottom, and left placements and see when Popper flips to stay in view.',
+  },
+  'popper-offset': {
+    title: 'Offset modifier',
+    caption: 'Adjust skidding and distance to control how far the floating surface sits from its reference.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -794,6 +809,8 @@ export default function ComponentShowcase({ component }) {
                                                                                                                                                 ? CLICK_AWAY_DEMOS[demoId]
                                                                                                                                                   : component.slug === 'modal'
                                                                                                                                                     ? MODAL_DEMOS[demoId]
+                                                                                                                                                      : component.slug === 'popper'
+                                                                                                                                                        ? POPPER_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel
