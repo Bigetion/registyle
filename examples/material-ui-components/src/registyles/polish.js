@@ -8,7 +8,7 @@ register.all({
   'topbar-github': {
     tw: 'inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] bg-[#ffffff03] px-2.5 py-1.5 text-[10px] font-medium text-[var(--muted)] no-underline transition-colors hover:border-[#455675] hover:text-white max-sm:hidden',
   },
-  'help-button': { tw: 'size-8 border border-transparent hover:border-[var(--border)]' },
+  'help-button': { tw: 'size-8 shrink-0 border border-transparent text-[var(--muted)] no-underline hover:border-[var(--border)] hover:text-white max-sm:hidden' },
   'sidebar-bottom-icon': { tw: 'flex size-7 items-center justify-center rounded-lg border border-[#2b3b37] bg-[#111e1c] text-[#80d6b1]' },
   'component-hero': {
     tw: 'relative mb-7 flex min-h-[220px] items-center justify-between gap-8 overflow-hidden rounded-2xl border border-[#29354a] bg-[linear-gradient(115deg,rgba(18,26,40,.98),rgba(14,19,30,.92)_58%,rgba(26,35,55,.76))] px-8 py-8 shadow-[0_18px_55px_rgba(0,0,0,.18)] max-sm:min-h-0 max-sm:flex-wrap max-sm:gap-5 max-sm:px-5 max-sm:py-6',

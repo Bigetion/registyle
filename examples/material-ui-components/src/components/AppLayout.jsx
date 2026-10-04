@@ -5,7 +5,6 @@ import {
   ExternalLink,
   Menu,
   Search,
-  Settings2,
   ShieldCheck,
   X,
 } from 'lucide-react';
@@ -19,6 +18,9 @@ export default function AppLayout() {
   const searchRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
+  const shortcutLabel = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.userAgent)
+    ? '⌘ K'
+    : 'Ctrl K';
 
   const filteredGroups = useMemo(
     () =>
@@ -37,6 +39,14 @@ export default function AppLayout() {
     setMobileNavOpen(false);
     window.scrollTo({ top: 0, behavior: 'auto' });
   }, [location.pathname]);
+
+  useEffect(() => {
+    function closeNavigation(event) {
+      if (event.key === 'Escape') setMobileNavOpen(false);
+    }
+    window.addEventListener('keydown', closeNavigation);
+    return () => window.removeEventListener('keydown', closeNavigation);
+  }, []);
 
   useEffect(() => {
     function handleShortcut(event) {
@@ -80,9 +90,9 @@ export default function AppLayout() {
           <span className="brand-mark" aria-hidden="true"><span>M</span></span>
           <span className="brand-lockup"><span className="brand-name">Material Studio</span><span className="brand-subtitle">by Registyle</span></span>
         </NavLink>
-        <button className="version-button" type="button" aria-label="Version 9.4.0">
-          <span className="version-indicator" /> v9.4.0 <span className="version-chevron">⌄</span>
-        </button>
+        <span className="version-badge">
+          <span className="version-indicator" /> v9.4.0
+        </span>
         <div className="topbar-spacer" />
         <label className="search-box">
           <Search size={15} />
@@ -104,7 +114,7 @@ export default function AppLayout() {
               <X size={13} />
             </button>
           ) : (
-            <kbd>⌘ K</kbd>
+            <kbd>{shortcutLabel}</kbd>
           )}
           {query && (
             <div className="search-results" role="listbox" aria-label="Component results">
@@ -134,44 +144,58 @@ export default function AppLayout() {
         <a className="topbar-github" href="https://github.com/Bigetion/registyle" target="_blank" rel="noreferrer">
         <span>Open source</span><ArrowUpRight size={13} />
         </a>
-        <button className="mui-icon-button help-button" type="button" aria-label="Help and documentation">
-        <CircleHelp size={17} />
-        </button>
+        <a
+          className="mui-icon-button help-button"
+          href="https://mui.com/material-ui/getting-started/"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Material UI documentation"
+          title="Material UI documentation"
+        >
+          <CircleHelp size={17} />
+        </a>
       </header>
 
       <div className="app-layout">
+        {mobileNavOpen && (
+          <button
+            className="mobile-nav-backdrop"
+            type="button"
+            aria-label="Close navigation"
+            onClick={() => setMobileNavOpen(false)}
+          />
+        )}
         <aside
           className={cx('sidebar', mobileNavOpen && 'sidebar-open')}
           aria-label="Component navigation"
         >
           <div className="sidebar-intro">
             <span className="sidebar-label">Explore library</span>
-            <button className="mui-icon-button" type="button" aria-label="Navigation settings">
-              <Settings2 size={15} />
-            </button>
           </div>
-          {filteredGroups.length ? (
-            filteredGroups.map(({ group, items }) => (
-              <nav className="nav-section" key={group} aria-label={group}>
-                <h2 className="nav-heading">
-                  {group}
-                  <span className="nav-group-count">{items.length.toString().padStart(2, '0')}</span>
-                </h2>
-                {items.map(({ name, badge, slug }) => (
-                  <NavLink
-                    className={({ isActive }) => cx(isActive ? 'nav-link-active' : 'nav-link')}
-                    key={slug}
-                    to={`/components/${slug}`}
-                  >
-                    {name}
-                    {badge && <span className="new-chip">{badge}</span>}
-                  </NavLink>
-                ))}
-              </nav>
-            ))
-          ) : (
-            <p className="empty-search">No components match “{query}”.</p>
-          )}
+          <div className="sidebar-scroll">
+            {filteredGroups.length ? (
+              filteredGroups.map(({ group, items }) => (
+                <nav className="nav-section" key={group} aria-label={group}>
+                  <h2 className="nav-heading">
+                    {group}
+                    <span className="nav-group-count">{items.length.toString().padStart(2, '0')}</span>
+                  </h2>
+                  {items.map(({ name, badge, slug }) => (
+                    <NavLink
+                      className={({ isActive }) => cx(isActive ? 'nav-link-active' : 'nav-link')}
+                      key={slug}
+                      to={`/components/${slug}`}
+                    >
+                      {name}
+                      {badge && <span className="new-chip">{badge}</span>}
+                    </NavLink>
+                  ))}
+                </nav>
+              ))
+            ) : (
+              <p className="empty-search">No components match “{query}”.</p>
+            )}
+          </div>
           <div className="sidebar-bottom">
             <div className="sidebar-bottom-icon"><ShieldCheck size={14} /></div>
             <span><strong>Built with Registyle</strong><small>Semantic styling, made simple</small></span>
