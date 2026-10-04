@@ -41,7 +41,7 @@ const ClickAwayListener = forwardRef(function ClickAwayListener(
   }, [onClickAway, mouseEvent, touchEvent]);
 
   return (
-    <div {...props} ref={setRef} className={cx('mui-click-away-listener', className)}>
+    <div {...props} ref={setRef} className={cx('rgi-click-away-listener', className)}>
       {children}
     </div>
   );

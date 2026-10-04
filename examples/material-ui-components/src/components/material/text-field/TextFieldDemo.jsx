@@ -61,7 +61,7 @@ function ValidationTextField() {
         onChange={handleChange}
       />
       <div className="text-field-actions">
-        <button className="mui-button mui-button-contained" type="submit">
+        <button className="rgi-button rgi-button-contained" type="submit">
           Continue
         </button>
         <span className="text-field-helper" role="status" aria-live="polite">

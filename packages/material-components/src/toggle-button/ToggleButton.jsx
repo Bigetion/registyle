@@ -11,9 +11,9 @@ const ToggleButton = forwardRef(function ToggleButton(
       {...props}
       ref={ref}
       className={cx(
-        'mui-toggle-button',
-        size === 'small' && 'mui-toggle-button-small',
-        selected && 'mui-toggle-button-selected',
+        'rgi-toggle-button',
+        size === 'small' && 'rgi-toggle-button-small',
+        selected && 'rgi-toggle-button-selected',
         className,
       )}
       type={type}

@@ -36,7 +36,7 @@ function ProgressTrack({ label, value, buffer }) {
 
   return (
     <div
-      className="mui-progress-track progress-track"
+      className="rgi-progress-track progress-track"
       role="progressbar"
       aria-label={label}
       aria-valuemin={0}
@@ -46,7 +46,7 @@ function ProgressTrack({ label, value, buffer }) {
     >
       {buffer !== undefined && <span className="progress-buffer-bar" style={{ width: `${buffer}%` }} />}
       <span
-        className={`mui-progress-bar${indeterminate ? ' progress-indeterminate-bar' : ''}`}
+        className={`rgi-progress-bar${indeterminate ? ' progress-indeterminate-bar' : ''}`}
         style={indeterminate ? { animation: INDETERMINATE_ANIMATION } : { width: `${value}%` }}
       />
     </div>
@@ -69,10 +69,10 @@ function LinearProgressDemo() {
         </div>
         <ProgressTrack label="Project file upload" value={value} />
         <div className="progress-actions">
-          <button className="mui-button mui-button-outlined" type="button" disabled={value === 0} onClick={() => setValue((current) => Math.max(0, current - 10))}>
+          <button className="rgi-button rgi-button-outlined" type="button" disabled={value === 0} onClick={() => setValue((current) => Math.max(0, current - 10))}>
             − 10%
           </button>
-          <button className="mui-button mui-button-outlined" type="button" disabled={value === 100} onClick={() => setValue((current) => Math.min(100, current + 10))}>
+          <button className="rgi-button rgi-button-outlined" type="button" disabled={value === 100} onClick={() => setValue((current) => Math.min(100, current + 10))}>
             + 10%
           </button>
         </div>
@@ -110,10 +110,10 @@ function CircularProgressDemo() {
         </div>
       </div>
       <div className="progress-actions">
-        <button className="mui-button mui-button-outlined" type="button" disabled={value === 0} onClick={() => setValue((current) => Math.max(0, current - 10))}>
+        <button className="rgi-button rgi-button-outlined" type="button" disabled={value === 0} onClick={() => setValue((current) => Math.max(0, current - 10))}>
           − 10%
         </button>
-        <button className="mui-button mui-button-outlined" type="button" disabled={value === 100} onClick={() => setValue((current) => Math.min(100, current + 10))}>
+        <button className="rgi-button rgi-button-outlined" type="button" disabled={value === 100} onClick={() => setValue((current) => Math.min(100, current + 10))}>
           + 10%
         </button>
       </div>
@@ -152,10 +152,10 @@ function BufferedProgressDemo() {
         </div>
       </div>
       <div className="progress-actions">
-        <button className="mui-button mui-button-contained" type="button" disabled={value === 100} onClick={receiveChunk}>
+        <button className="rgi-button rgi-button-contained" type="button" disabled={value === 100} onClick={receiveChunk}>
           Buffer next segment
         </button>
-        <button className="mui-button mui-button-outlined" type="button" onClick={reset}>
+        <button className="rgi-button rgi-button-outlined" type="button" onClick={reset}>
           Reset
         </button>
       </div>

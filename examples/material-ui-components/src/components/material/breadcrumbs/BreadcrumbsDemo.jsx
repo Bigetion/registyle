@@ -29,7 +29,7 @@ function BreadcrumbsDemoExample({ demoId }) {
 
   return (
     <div className={cx('breadcrumbs-demo', isCollapsed && 'breadcrumbs-collapsed-demo')}>
-      <nav className="mui-breadcrumbs" aria-label="Breadcrumb">
+      <nav className="rgi-breadcrumbs" aria-label="Breadcrumb">
         <ol>
           {visiblePath.map((label, index) => {
             const last = index === visiblePath.length - 1;

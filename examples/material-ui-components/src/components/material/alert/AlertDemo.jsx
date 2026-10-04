@@ -13,7 +13,7 @@ function Alert({ variant, Icon, title, description, outlined = false, children, 
   const role = variant === 'error' ? 'alert' : 'status';
 
   return (
-    <div className={cx('mui-alert', `mui-alert-${variant}`, outlined && 'mui-alert-outlined')} role={role}>
+    <div className={cx('rgi-alert', `rgi-alert-${variant}`, outlined && 'rgi-alert-outlined')} role={role}>
       <Icon className="alert-icon" size={17} aria-hidden="true" />
       <span className="alert-copy">
         <strong>{title}</strong>
@@ -75,7 +75,7 @@ function AlertActions() {
       ) : (
         <div className="alert-empty">
           <span>{message || 'Alert dismissed.'}</span>
-          <button className="mui-button mui-button-text" type="button" onClick={() => { setVisible(true); setMessage(''); }}>
+          <button className="rgi-button rgi-button-text" type="button" onClick={() => { setVisible(true); setMessage(''); }}>
             Restore alert
           </button>
         </div>

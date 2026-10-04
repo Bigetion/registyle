@@ -1,6 +1,6 @@
 import { register } from 'registyle/collector';
 
-register('mui-typography', {
+register('rgi-typography', {
   base: { tw: 'm-0 text-[var(--mui-typography-color,var(--text,#edf2fb))]' },
   modifiers: {
     h1: { tw: 'text-4xl leading-tight tracking-tight' },

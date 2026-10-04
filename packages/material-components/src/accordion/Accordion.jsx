@@ -33,35 +33,35 @@ const Accordion = forwardRef(function Accordion(
       {...props}
       ref={ref}
       className={cx(
-        'mui-accordion',
-        isExpanded && 'mui-accordion-expanded',
-        disabled && 'mui-accordion-disabled',
+        'rgi-accordion',
+        isExpanded && 'rgi-accordion-expanded',
+        disabled && 'rgi-accordion-disabled',
         className,
       )}
     >
-      <h3 className="mui-accordion-heading">
+      <h3 className="rgi-accordion-heading">
         <button
           id={summaryId}
-          className="mui-accordion-trigger"
+          className="rgi-accordion-trigger"
           type="button"
           aria-expanded={isExpanded}
           aria-controls={panelId}
           disabled={disabled}
           onClick={toggle}
         >
-          <span className="mui-accordion-title">{title}</span>
-          <span className="mui-accordion-icon" aria-hidden="true">
+          <span className="rgi-accordion-title">{title}</span>
+          <span className="rgi-accordion-icon" aria-hidden="true">
             {expandIcon}
           </span>
         </button>
       </h3>
       <section
         id={panelId}
-        className="mui-accordion-panel"
+        className="rgi-accordion-panel"
         aria-labelledby={summaryId}
         hidden={!isExpanded}
       >
-        <div className="mui-accordion-content">{children}</div>
+        <div className="rgi-accordion-content">{children}</div>
       </section>
     </section>
   );

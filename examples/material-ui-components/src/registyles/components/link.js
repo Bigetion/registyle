@@ -28,15 +28,15 @@ register('link-inline-row', {
   base: { tw: 'mt-1 flex flex-wrap items-center gap-2.5' },
 });
 
-register('mui-link-underlined', {
+register('rgi-link-underlined', {
   base: { tw: 'underline' },
 });
 
-register('mui-link-subtle', {
+register('rgi-link-subtle', {
   base: { tw: 'text-[#bac5d4] hover:text-white' },
 });
 
-register('mui-link-external', {
+register('rgi-link-external', {
   base: { tw: 'text-[#87d4c2]' },
 });
 
@@ -52,7 +52,7 @@ register('link-variant-row', {
   base: { tw: 'flex min-h-11 flex-wrap items-center justify-between gap-3 border-b border-[#293342] px-3.5 py-2 last:border-b-0 [&>span]:text-[8px] [&>span]:text-[var(--muted)]' },
 });
 
-register('link-variant-row .mui-link', {
+register('link-variant-row .rgi-link', {
   base: { tw: 'text-[8px]' },
 });
 
@@ -64,7 +64,7 @@ register('link-accessibility-row', {
   base: { tw: 'flex flex-wrap items-center gap-4' },
 });
 
-register('mui-link-disabled', {
+register('rgi-link-disabled', {
   base: { tw: 'cursor-not-allowed text-[#6f7b8d] no-underline hover:text-[#6f7b8d] hover:no-underline' },
 });
 

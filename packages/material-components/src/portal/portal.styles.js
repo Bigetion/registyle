@@ -1,3 +1,3 @@
 import { register } from 'registyle/collector';
 
-register('mui-portal', { base: { tw: 'contents' } });
+register('rgi-portal', { base: { tw: 'contents' } });

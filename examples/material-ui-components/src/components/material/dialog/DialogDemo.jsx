@@ -100,7 +100,7 @@ function DialogExample({ demoId }) {
     <div className="dialog-demo">
       {notice && <span className="preview-note" role="status" aria-live="polite">{notice}</span>}
       <button
-        className="mui-button mui-button-contained"
+        className="rgi-button rgi-button-contained"
         type="button"
         ref={triggerRef}
         onClick={() => { setNotice(''); setOpen(true); }}
@@ -127,17 +127,17 @@ function DialogExample({ demoId }) {
             </label>
             <div className="dialog-audience"><span className="dialog-audience-dot" /> Visible to <strong>All workspace members</strong></div>
             <div className="dialog-actions">
-              <button className="mui-button mui-button-text" type="button" onClick={close}>Cancel</button>
-              <button className="mui-button mui-button-contained" type="button" onClick={() => { close(); setNotice('Announcement published to your workspace.'); }}>Publish announcement</button>
+              <button className="rgi-button rgi-button-text" type="button" onClick={close}>Cancel</button>
+              <button className="rgi-button rgi-button-contained" type="button" onClick={() => { close(); setNotice('Announcement published to your workspace.'); }}>Publish announcement</button>
             </div>
           </div>
         ) : (
           <div className="dialog-actions">
-            <button className="mui-button mui-button-text" type="button" onClick={() => { close(); setNotice(isConfirmation ? 'Project kept.' : 'Changes discarded.'); }}>
+            <button className="rgi-button rgi-button-text" type="button" onClick={() => { close(); setNotice(isConfirmation ? 'Project kept.' : 'Changes discarded.'); }}>
               {isConfirmation ? 'Keep project' : 'Discard'}
             </button>
             <button
-              className={cx('mui-button', isConfirmation ? 'mui-button-color-danger' : 'mui-button-contained')}
+              className={cx('rgi-button', isConfirmation ? 'rgi-button-color-danger' : 'rgi-button-contained')}
               type="button"
               onClick={() => { close(); setNotice(isConfirmation ? 'Project deleted.' : 'Changes saved.'); }}
             >

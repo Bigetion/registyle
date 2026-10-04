@@ -32,18 +32,18 @@ const SpeedDial = forwardRef(function SpeedDial(
       {...props}
       ref={ref}
       className={cx(
-        'mui-speed-dial',
-        `mui-speed-dial-${direction}`,
-        open && 'mui-speed-dial-open',
+        'rgi-speed-dial',
+        `rgi-speed-dial-${direction}`,
+        open && 'rgi-speed-dial-open',
         className,
       )}
     >
-      <fieldset id={listId} className="mui-speed-dial-actions" aria-label="Actions" hidden={!open}>
+      <fieldset id={listId} className="rgi-speed-dial-actions" aria-label="Actions" hidden={!open}>
         {actions.map((action, index) => (
           <button
             key={action.key ?? action.name ?? index}
             type="button"
-            className="mui-speed-dial-action"
+            className="rgi-speed-dial-action"
             aria-label={action.name ?? `Action ${index + 1}`}
             title={action.name ?? `Action ${index + 1}`}
             disabled={action.disabled}
@@ -59,7 +59,7 @@ const SpeedDial = forwardRef(function SpeedDial(
       </fieldset>
       <button
         type="button"
-        className="mui-speed-dial-trigger"
+        className="rgi-speed-dial-trigger"
         aria-label={open ? 'Close actions' : ariaLabel}
         aria-expanded={open}
         aria-controls={listId}

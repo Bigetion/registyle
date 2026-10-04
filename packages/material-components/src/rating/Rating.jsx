@@ -46,18 +46,18 @@ const Rating = forwardRef(function Rating(
       <div
         {...props}
         ref={ref}
-        className={cx('mui-rating', 'mui-rating-readonly', className)}
+        className={cx('rgi-rating', 'rgi-rating-readonly', className)}
         role="img"
         aria-label={`${rating} out of ${safeMax} stars`}
       >
         {name && (
-          <input className="mui-rating-form-value" type="hidden" name={name} value={rating} />
+          <input className="rgi-rating-form-value" type="hidden" name={name} value={rating} />
         )}
         {Array.from({ length: safeMax }, (_, index) => index + 1).map((starValue) => (
           <span
             className={cx(
-              'mui-rating-choice-star',
-              starValue <= rating && 'mui-rating-choice-star-selected',
+              'rgi-rating-choice-star',
+              starValue <= rating && 'rgi-rating-choice-star-selected',
             )}
             aria-hidden="true"
             key={starValue}
@@ -73,7 +73,7 @@ const Rating = forwardRef(function Rating(
     <div
       {...props}
       ref={ref}
-      className={cx('mui-rating', disabled && 'mui-rating-disabled', className)}
+      className={cx('rgi-rating', disabled && 'rgi-rating-disabled', className)}
       role="radiogroup"
       aria-label={label}
     >
@@ -83,7 +83,7 @@ const Rating = forwardRef(function Rating(
         return (
           // biome-ignore lint/a11y/useSemanticElements: Rating uses roving-focus buttons as the selectable stars in a radio group.
           <button
-            className="mui-rating-choice"
+            className="rgi-rating-choice"
             type="button"
             role="radio"
             aria-checked={checked}
@@ -97,8 +97,8 @@ const Rating = forwardRef(function Rating(
           >
             <span
               className={cx(
-                'mui-rating-choice-star',
-                starValue <= rating && 'mui-rating-choice-star-selected',
+                'rgi-rating-choice-star',
+                starValue <= rating && 'rgi-rating-choice-star-selected',
               )}
               aria-hidden="true"
             >
@@ -107,7 +107,7 @@ const Rating = forwardRef(function Rating(
           </button>
         );
       })}
-      {name && <input className="mui-rating-form-value" type="hidden" name={name} value={rating} />}
+      {name && <input className="rgi-rating-form-value" type="hidden" name={name} value={rating} />}
     </div>
   );
 });

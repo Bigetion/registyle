@@ -1,6 +1,6 @@
 import { register } from 'registyle/collector';
 
-register.group('mui-autocomplete', {
+register.group('rgi-autocomplete', {
   root: { tw: 'relative block w-full text-[var(--text,#edf2fb)]' },
   input: {
     tw: 'h-10 w-full rounded-md border border-[var(--border,#64748b)] bg-[var(--surface,#111827)] px-3 text-sm text-[var(--text,#edf2fb)] placeholder:text-[var(--muted,#94a3b8)] focus:border-[var(--mui-blue,#547be8)] focus:outline-none focus:ring-2 focus:ring-[var(--mui-blue-soft,rgba(84,123,232,.25))] disabled:cursor-not-allowed disabled:opacity-50',

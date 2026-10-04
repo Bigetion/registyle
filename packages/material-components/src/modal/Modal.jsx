@@ -55,7 +55,7 @@ const Modal = forwardRef(function Modal(
     <Portal container={container}>
       {/* biome-ignore lint/a11y/noStaticElementInteractions: The backdrop closes only when the pointer lands outside the modal. */}
       <div
-        className="mui-modal-backdrop"
+        className="rgi-modal-backdrop"
         onMouseDown={(event) => {
           onMouseDown?.(event);
           if (!event.defaultPrevented && closeOnBackdrop && event.target === event.currentTarget)
@@ -70,7 +70,7 @@ const Modal = forwardRef(function Modal(
           aria-label={ariaLabel}
           aria-labelledby={labelledBy}
           tabIndex={-1}
-          className={cx('mui-modal', className)}
+          className={cx('rgi-modal', className)}
           onKeyDown={(event) => {
             props.onKeyDown?.(event);
             if (event.defaultPrevented || event.key !== 'Tab') return;

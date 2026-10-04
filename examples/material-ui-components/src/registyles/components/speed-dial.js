@@ -16,27 +16,27 @@ register('speed-dial-kicker', {
   base: { tw: 'text-[7px] font-semibold tracking-[.14em] text-[#90a8cd]' },
 });
 
-register('mui-speed-dial-up', {
+register('rgi-speed-dial-up', {
   base: { tw: 'flex-col' },
 });
 
-register('mui-speed-dial-down', {
+register('rgi-speed-dial-down', {
   base: { tw: 'flex-col' },
 });
 
-register('mui-speed-dial-left', {
+register('rgi-speed-dial-left', {
   base: { tw: 'flex-row-reverse' },
 });
 
-register('mui-speed-dial-actions-hidden', {
+register('rgi-speed-dial-actions-hidden', {
   base: { tw: 'pointer-events-none invisible scale-95 opacity-0' },
 });
 
-register('mui-speed-dial-up .mui-speed-dial-actions', {
+register('rgi-speed-dial-up .rgi-speed-dial-actions', {
   base: { tw: 'flex-col' },
 });
 
-register('mui-speed-dial-down .mui-speed-dial-actions', {
+register('rgi-speed-dial-down .rgi-speed-dial-actions', {
   base: { tw: 'flex-col' },
 });
 
@@ -44,19 +44,19 @@ register('speed-dial-action-tooltip', {
   base: { tw: 'pointer-events-none absolute right-[calc(100%+10px)] whitespace-nowrap rounded-md border border-[#354154] bg-[#171f2c] px-2 py-1.5 text-[8px] text-[#e0e8f5] opacity-0 shadow-lg transition-opacity' },
 });
 
-register('mui-speed-dial-action:hover .speed-dial-action-tooltip', {
+register('rgi-speed-dial-action:hover .speed-dial-action-tooltip', {
   base: { tw: 'opacity-100' },
 });
 
-register('mui-speed-dial-action:focus-visible .speed-dial-action-tooltip', {
+register('rgi-speed-dial-action:focus-visible .speed-dial-action-tooltip', {
   base: { tw: 'opacity-100' },
 });
 
-register('mui-speed-dial-right .mui-speed-dial-action span', {
+register('rgi-speed-dial-right .rgi-speed-dial-action span', {
   base: { tw: 'left-[calc(100%+10px)] right-auto' },
 });
 
-register('mui-speed-dial-fab', {
+register('rgi-speed-dial-fab', {
   base: { tw: 'inline-flex size-11 shrink-0 cursor-pointer items-center justify-center rounded-full border border-[#9ab8f2] bg-[#8baeff] text-[#101827] shadow-[0_8px_20px_#0008] transition-transform hover:scale-105 hover:bg-[#a3beff] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c5d7ff]' },
 });
 
@@ -76,7 +76,7 @@ register('speed-dial-direction-stage', {
   base: { tw: 'flex min-h-[185px] items-center justify-center gap-4 overflow-hidden rounded-lg border border-dashed border-[#303a49] bg-[#0d121b] p-5' },
 });
 
-register('speed-dial-direction-stage .mui-speed-dial-actions', {
+register('speed-dial-direction-stage .rgi-speed-dial-actions', {
   base: { tw: 'gap-2' },
 });
 
@@ -96,6 +96,6 @@ register('speed-dial-open-icon', {
   base: { tw: 'inline-flex size-8 shrink-0 items-center justify-center rounded-lg border border-[#364760] bg-[#24344a] text-[#adc6fa]' },
 });
 
-register('speed-dial-open-stage .mui-speed-dial', {
+register('speed-dial-open-stage .rgi-speed-dial', {
   base: { tw: 'flex-row' },
 });

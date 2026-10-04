@@ -21,7 +21,7 @@ const Icons = forwardRef(function Icons(
     <svg
       {...props}
       ref={ref}
-      className={cx('mui-icons', className)}
+      className={cx('rgi-icons', className)}
       width={size}
       height={size}
       viewBox={viewBox}

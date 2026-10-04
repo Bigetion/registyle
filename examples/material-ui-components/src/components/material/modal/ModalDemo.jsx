@@ -104,7 +104,7 @@ function BasicModalDemo() {
           <strong>Keep important details in focus</strong>
           <span>Open a centered surface above the current page.</span>
         </div>
-        <button className="mui-button mui-button-contained" type="button" onClick={() => { setMessage(''); setOpen(true); }}>
+        <button className="rgi-button rgi-button-contained" type="button" onClick={() => { setMessage(''); setOpen(true); }}>
           Preview project
         </button>
       </div>
@@ -121,7 +121,7 @@ function BasicModalDemo() {
         </div>
         <div className="modal-demo-actions">
           <button className="modal-demo-text-button" type="button" onClick={() => { close(); setMessage('Project preview dismissed.'); }}>Close</button>
-          <button className="mui-button mui-button-contained" type="button" onClick={() => { close(); setMessage('Website refresh opened.'); }}>Open project</button>
+          <button className="rgi-button rgi-button-contained" type="button" onClick={() => { close(); setMessage('Website refresh opened.'); }}>Open project</button>
         </div>
       </ModalSurface>
     </div>
@@ -142,7 +142,7 @@ function BackdropModalDemo() {
           <span className="modal-toggle-track"><i /></span>
           Close on backdrop click
         </label>
-        <button className="mui-button mui-button-outlined" type="button" onClick={() => { setMessage(''); setOpen(true); }}>Open modal</button>
+        <button className="rgi-button rgi-button-outlined" type="button" onClick={() => { setMessage(''); setOpen(true); }}>Open modal</button>
       </div>
       <span className="preview-note" role="status">{message || `Backdrop dismissal is ${closeOnBackdrop ? 'enabled' : 'disabled'}.`}</span>
       <ModalSurface
@@ -174,7 +174,7 @@ function AccessibleModalDemo() {
       <div className="modal-accessibility-stage">
         <span className="modal-accessibility-icon"><ShieldCheck size={15} aria-hidden="true" /></span>
         <span><strong>Keyboard-ready modal</strong><small>Focus moves in, stays inside, and returns to the trigger.</small></span>
-        <button className="mui-button mui-button-outlined" type="button" onClick={() => { setMessage(''); setOpen(true); }}>Open accessible modal</button>
+        <button className="rgi-button rgi-button-outlined" type="button" onClick={() => { setMessage(''); setOpen(true); }}>Open accessible modal</button>
       </div>
       <span className="preview-note" role="status">{message || 'Try Tab, Shift + Tab, and Escape.'}</span>
       <ModalSurface
@@ -189,7 +189,7 @@ function AccessibleModalDemo() {
         </div>
         <div className="modal-demo-actions">
           <button className="modal-demo-text-button" type="button" onClick={close}>Cancel</button>
-          <button className="mui-button mui-button-contained" type="button" onClick={() => { close(); setMessage('Accessibility preferences saved.'); }}>Save preferences</button>
+          <button className="rgi-button rgi-button-contained" type="button" onClick={() => { close(); setMessage('Accessibility preferences saved.'); }}>Save preferences</button>
         </div>
       </ModalSurface>
     </div>

@@ -56,7 +56,7 @@ function PopoverDemoExample({ demoId }) {
       <div className="popover-stage">
         <button
           ref={anchorRef}
-          className={cx('mui-button', 'mui-button-outlined', 'popover-trigger')}
+          className={cx('rgi-button', 'rgi-button-outlined', 'popover-trigger')}
           type="button"
           aria-haspopup="dialog"
           aria-expanded={open}
@@ -72,7 +72,7 @@ function PopoverDemoExample({ demoId }) {
         surfaceRef={surfaceRef}
         placement={placement}
         fallbackPlacements={FALLBACK_PLACEMENTS}
-        className="mui-popover"
+        className="rgi-popover"
         role="dialog"
         ariaLabel={isInteractive ? 'Choose workspace color' : isPlacement ? 'Popover placement preview' : 'Project details'}
         onEscape={dismiss}

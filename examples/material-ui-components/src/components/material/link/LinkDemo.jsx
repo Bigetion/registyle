@@ -17,11 +17,11 @@ function InlineLinksDemo() {
           <strong>Keep exploring</strong>
           <p>Browse the workspace guide or visit the project overview to learn more about your team.</p>
           <div className="link-inline-row">
-            <a className="mui-link" href="#workspace-guide" onClick={(event) => preventNavigation(event, setNotice, 'Workspace guide')}>
+            <a className="rgi-link" href="#workspace-guide" onClick={(event) => preventNavigation(event, setNotice, 'Workspace guide')}>
               Workspace guide <ArrowUpRight size={12} aria-hidden="true" />
             </a>
             <span className="link-inline-divider" aria-hidden="true" />
-            <a className="mui-link" href="#project-overview" onClick={(event) => preventNavigation(event, setNotice, 'Project overview')}>
+            <a className="rgi-link" href="#project-overview" onClick={(event) => preventNavigation(event, setNotice, 'Project overview')}>
               Project overview
             </a>
           </div>
@@ -35,10 +35,10 @@ function InlineLinksDemo() {
 function LinkVariantsDemo() {
   const [notice, setNotice] = useState('');
   const links = [
-    ['Default', 'mui-link', 'Default destination'],
-    ['Underlined', 'mui-link mui-link-underlined', 'Underlined destination'],
-    ['Subtle', 'mui-link mui-link-subtle', 'Subtle destination'],
-    ['External', 'mui-link mui-link-external', 'External documentation'],
+    ['Default', 'rgi-link', 'Default destination'],
+    ['Underlined', 'rgi-link rgi-link-underlined', 'Underlined destination'],
+    ['Subtle', 'rgi-link rgi-link-subtle', 'Subtle destination'],
+    ['External', 'rgi-link rgi-link-external', 'External documentation'],
   ];
 
   return (
@@ -71,15 +71,15 @@ function LinkAccessibilityDemo() {
           <strong>Keyboard-friendly navigation</strong>
           <p>Use Tab to focus each available link. Focus styling remains visible and the unavailable destination is not focusable.</p>
           <div className="link-accessibility-row">
-            <a className="mui-link mui-link-underlined" href="#accessibility-guide" onClick={(event) => preventNavigation(event, setNotice, 'Accessibility guide')}>
+            <a className="rgi-link rgi-link-underlined" href="#accessibility-guide" onClick={(event) => preventNavigation(event, setNotice, 'Accessibility guide')}>
               Read accessibility guide <ArrowUpRight size={12} aria-hidden="true" />
             </a>
             {available && (
-              <a className="mui-link mui-link-disabled" href="#coming-soon" aria-disabled="true" tabIndex={-1} onClick={(event) => event.preventDefault()}>
+              <a className="rgi-link rgi-link-disabled" href="#coming-soon" aria-disabled="true" tabIndex={-1} onClick={(event) => event.preventDefault()}>
                 Coming soon
               </a>
             )}
-            {!available && <span className="mui-link-disabled" aria-disabled="true">Unavailable</span>}
+            {!available && <span className="rgi-link-disabled" aria-disabled="true">Unavailable</span>}
           </div>
         </div>
       </div>

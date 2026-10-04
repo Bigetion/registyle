@@ -45,7 +45,7 @@ function ClickAwayExample({ demoId }) {
           </span>
         </div>
         <button
-          className="mui-button mui-button-outlined click-away-trigger"
+          className="rgi-button rgi-button-outlined click-away-trigger"
           type="button"
           ref={anchorRef}
           aria-expanded={open}

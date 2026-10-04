@@ -1,7 +1,7 @@
 import { register } from 'registyle/collector';
 
 register('avatar-stack', {
-  base: { tw: 'flex -space-x-2 [&_.mui-avatar]:border-2 [&_.mui-avatar]:border-[var(--panel)]' },
+  base: { tw: 'flex -space-x-2 [&_.rgi-avatar]:border-2 [&_.rgi-avatar]:border-[var(--panel)]' },
 });
 
 register('avatar-indigo', {
@@ -24,19 +24,19 @@ register('avatar-neutral', {
   base: { tw: 'bg-[#303844] text-[#c0cad8]' },
 });
 
-register('mui-avatar-xs', {
+register('rgi-avatar-xs', {
   base: { tw: '!size-6 text-[8px]' },
 });
 
-register('mui-avatar-sm', {
+register('rgi-avatar-sm', {
   base: { tw: '!size-8 text-[10px]' },
 });
 
-register('mui-avatar-lg', {
+register('rgi-avatar-lg', {
   base: { tw: 'size-12 text-sm [&_svg]:size-5' },
 });
 
-register('mui-avatar-xl', {
+register('rgi-avatar-xl', {
   base: { tw: 'size-14 text-base [&_svg]:size-6' },
 });
 
@@ -57,7 +57,7 @@ register('avatar-size-label', {
 });
 
 register('avatar-group', {
-  base: { tw: 'flex items-center -space-x-2 [&_.mui-avatar]:border-2 [&_.mui-avatar]:border-[#111720]' },
+  base: { tw: 'flex items-center -space-x-2 [&_.rgi-avatar]:border-2 [&_.rgi-avatar]:border-[#111720]' },
 });
 
 register('avatar-group-overflow', {

@@ -38,8 +38,8 @@ function BadgeCounts() {
         <Badge content={0} label="No unread messages"><MessageCircle size={21} aria-hidden="true" /></Badge>
       </div>
       <div className="badge-actions">
-        <button className="mui-button mui-button-outlined" type="button" onClick={() => setUnread((count) => Math.max(0, count - 1))}>Mark one read</button>
-        <button className="mui-button mui-button-outlined" type="button" onClick={() => setMessages((count) => Math.min(120, count + 1))}>Add message</button>
+        <button className="rgi-button rgi-button-outlined" type="button" onClick={() => setUnread((count) => Math.max(0, count - 1))}>Mark one read</button>
+        <button className="rgi-button rgi-button-outlined" type="button" onClick={() => setMessages((count) => Math.min(120, count + 1))}>Add message</button>
       </div>
       <span className="preview-note" role="status" aria-live="polite">
         {unread} unread notifications · {messages} total messages
@@ -72,10 +72,10 @@ function BadgeDots() {
         </Badge>
       </div>
       <div className="badge-actions">
-        <button className="mui-button mui-button-outlined" type="button" onClick={() => setOnline((value) => !value)}>
+        <button className="rgi-button rgi-button-outlined" type="button" onClick={() => setOnline((value) => !value)}>
           Set {online ? 'offline' : 'online'}
         </button>
-        <button className="mui-button mui-button-outlined" type="button" onClick={() => setCartItems((count) => count + 1)}>
+        <button className="rgi-button rgi-button-outlined" type="button" onClick={() => setCartItems((count) => count + 1)}>
           Add to cart
         </button>
       </div>
@@ -99,7 +99,7 @@ function BadgeVisibility() {
           <span className="badge-task-anchor" aria-hidden="true">Tasks</span>
         </Badge>
       </div>
-      <button className="mui-button mui-button-outlined" type="button" onClick={() => setVisible((value) => !value)}>
+      <button className="rgi-button rgi-button-outlined" type="button" onClick={() => setVisible((value) => !value)}>
         {visible ? 'Hide notification badge' : 'Show notification badge'}
       </button>
       <span className="preview-note" role="status" aria-live="polite">

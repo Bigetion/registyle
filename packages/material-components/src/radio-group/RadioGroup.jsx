@@ -30,21 +30,21 @@ const RadioGroup = forwardRef(function RadioGroup(
       ref={ref}
       id={id}
       disabled={disabled}
-      className={cx('mui-radio-group', `mui-radio-group-${orientation}`, className)}
+      className={cx('rgi-radio-group', `rgi-radio-group-${orientation}`, className)}
     >
-      {legend != null && <legend className="mui-radio-group-legend">{legend}</legend>}
+      {legend != null && <legend className="rgi-radio-group-legend">{legend}</legend>}
       {options.map((option, index) => {
         const optionId = `${generatedId}-option-${index}`;
         const optionDisabled = disabled || option.disabled;
         return (
           <label
-            className={cx('mui-radio-option', optionDisabled && 'mui-radio-option-disabled')}
+            className={cx('rgi-radio-option', optionDisabled && 'rgi-radio-option-disabled')}
             htmlFor={optionId}
             key={option.value}
           >
             <input
               id={optionId}
-              className="mui-radio-option-input peer"
+              className="rgi-radio-option-input peer"
               type="radio"
               name={groupName}
               value={option.value}
@@ -58,22 +58,22 @@ const RadioGroup = forwardRef(function RadioGroup(
             />
             <span
               className={cx(
-                'mui-radio-option-indicator',
-                selectedValue === option.value && 'mui-radio-option-indicator-checked',
+                'rgi-radio-option-indicator',
+                selectedValue === option.value && 'rgi-radio-option-indicator-checked',
               )}
               aria-hidden="true"
             >
               <span
                 className={cx(
-                  'mui-radio-option-dot',
-                  selectedValue === option.value && 'mui-radio-option-dot-visible',
+                  'rgi-radio-option-dot',
+                  selectedValue === option.value && 'rgi-radio-option-dot-visible',
                 )}
               />
             </span>
-            <span className="mui-radio-option-copy">
-              <span className="mui-radio-option-label">{option.label}</span>
+            <span className="rgi-radio-option-copy">
+              <span className="rgi-radio-option-label">{option.label}</span>
               {option.description && (
-                <span className="mui-radio-option-description">{option.description}</span>
+                <span className="rgi-radio-option-description">{option.description}</span>
               )}
             </span>
           </label>

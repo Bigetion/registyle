@@ -32,7 +32,7 @@ register('progress-track', {
   base: { tw: 'relative' },
 });
 
-register('mui-progress-bar', {
+register('rgi-progress-bar', {
   base: { tw: 'block h-full rounded-full bg-[var(--mui-blue)] transition-[width] duration-300' },
 });
 

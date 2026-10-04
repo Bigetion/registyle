@@ -44,7 +44,7 @@ function ProfileSkeletonDemo() {
         <ProfileCard loaded={loaded} />
       </div>
       <div className="skeleton-controls">
-        <button className="mui-button mui-button-outlined" type="button" onClick={() => setLoaded((current) => !current)}>
+        <button className="rgi-button rgi-button-outlined" type="button" onClick={() => setLoaded((current) => !current)}>
           {loaded ? <><RotateCcw size={13} aria-hidden="true" /> Show loading state</> : <><Check size={13} aria-hidden="true" /> Load profile</>}
         </button>
         <span className="preview-note" role="status">{loaded ? 'Profile content is ready.' : 'Loading profile details…'}</span>

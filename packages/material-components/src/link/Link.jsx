@@ -11,9 +11,9 @@ const Link = forwardRef(function Link(
       {...props}
       ref={ref}
       className={cx(
-        'mui-link',
-        `mui-link-underline-${underline}`,
-        color !== 'primary' && `mui-link-color-${color}`,
+        'rgi-link',
+        `rgi-link-underline-${underline}`,
+        color !== 'primary' && `rgi-link-color-${color}`,
         className,
       )}
     >

@@ -1,3 +1,3 @@
 import { register } from 'registyle/collector';
 
-register('mui-click-away-listener', { base: { tw: 'contents' } });
+register('rgi-click-away-listener', { base: { tw: 'contents' } });

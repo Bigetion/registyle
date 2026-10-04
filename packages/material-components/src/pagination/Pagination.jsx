@@ -44,7 +44,7 @@ const Pagination = forwardRef(function Pagination(
     <button
       key={type}
       type="button"
-      className="mui-pagination-button"
+      className="rgi-pagination-button"
       aria-label={getItemAriaLabel(type, target)}
       disabled={disabled || isDisabled}
       onClick={(event) => change(target, event)}
@@ -57,22 +57,22 @@ const Pagination = forwardRef(function Pagination(
       {...props}
       ref={ref}
       aria-label={props['aria-label'] ?? 'Pagination'}
-      className={cx('mui-pagination', className)}
+      className={cx('rgi-pagination', className)}
     >
-      <ul className="mui-pagination-list">
+      <ul className="rgi-pagination-list">
         <li>{button('previous', '‹', current - 1, current <= 1)}</li>
         {pages.map(({ page: pageNumber, key, ellipsis }) => (
           <li key={key}>
             {ellipsis ? (
-              <span className="mui-pagination-ellipsis" aria-hidden="true">
+              <span className="rgi-pagination-ellipsis" aria-hidden="true">
                 …
               </span>
             ) : (
               <button
                 type="button"
                 className={cx(
-                  'mui-pagination-button',
-                  pageNumber === current && 'mui-pagination-current',
+                  'rgi-pagination-button',
+                  pageNumber === current && 'rgi-pagination-current',
                 )}
                 aria-current={pageNumber === current ? 'page' : undefined}
                 aria-label={getItemAriaLabel('page', pageNumber)}

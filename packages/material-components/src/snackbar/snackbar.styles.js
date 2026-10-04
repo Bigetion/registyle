@@ -1,6 +1,6 @@
 import { register } from 'registyle/collector';
 
-register('mui-snackbar', {
+register('rgi-snackbar', {
   base: {
     tw: 'flex w-full max-w-xl items-center gap-3 rounded-lg border px-4 py-3 text-sm shadow-[0_8px_30px_rgba(0,0,0,.28)]',
   },
@@ -19,9 +19,9 @@ register('mui-snackbar', {
     },
   },
 });
-register('mui-snackbar-message', { base: { tw: 'min-w-0 flex-1 leading-relaxed' } });
-register('mui-snackbar-action', { base: { tw: 'flex shrink-0 items-center gap-2' } });
-register('mui-snackbar-close', {
+register('rgi-snackbar-message', { base: { tw: 'min-w-0 flex-1 leading-relaxed' } });
+register('rgi-snackbar-action', { base: { tw: 'flex shrink-0 items-center gap-2' } });
+register('rgi-snackbar-close', {
   base: {
     tw: 'inline-flex size-7 shrink-0 cursor-pointer items-center justify-center rounded border-0 bg-transparent p-0 text-current opacity-70 hover:bg-white/10 hover:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-current',
   },

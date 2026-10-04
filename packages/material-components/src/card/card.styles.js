@@ -1,6 +1,6 @@
 import { register } from 'registyle/collector';
 
-register('mui-card', {
+register('rgi-card', {
   base: { tw: 'overflow-hidden rounded-xl bg-[var(--panel,#111824)] text-[var(--text,#edf2fb)]' },
   modifiers: {
     elevated: { tw: 'border border-[var(--border,#273142)]' },

@@ -23,9 +23,9 @@ const Select = forwardRef(function Select(
     [describedBy, helperText ? helperId : undefined].filter(Boolean).join(' ') || undefined;
 
   return (
-    <div className={cx('mui-select-field', className)}>
+    <div className={cx('rgi-select-field', className)}>
       {label != null && (
-        <label className="mui-select-label" htmlFor={id}>
+        <label className="rgi-select-label" htmlFor={id}>
           {label}
         </label>
       )}
@@ -33,14 +33,14 @@ const Select = forwardRef(function Select(
         {...props}
         ref={ref}
         id={id}
-        className={cx('mui-select', error && 'mui-select-error', inputClassName)}
+        className={cx('rgi-select', error && 'rgi-select-error', inputClassName)}
         aria-describedby={description}
         aria-invalid={error || ariaInvalid || undefined}
       >
         {children}
       </select>
       {helperText != null && (
-        <span className={cx('mui-select-helper', error && 'mui-select-helper-error')} id={helperId}>
+        <span className={cx('rgi-select-helper', error && 'rgi-select-helper-error')} id={helperId}>
           {helperText}
         </span>
       )}

@@ -4,7 +4,7 @@ import { cx } from 'registyle';
 
 function SnackbarMessage({ message, action, onAction, onDismiss }) {
   return (
-    <div className="mui-snackbar" role="status" aria-live="polite" aria-atomic="true">
+    <div className="rgi-snackbar" role="status" aria-live="polite" aria-atomic="true">
       <span className="snackbar-icon" aria-hidden="true"><Check size={14} /></span>
       <span className="snackbar-message">{message}</span>
       {action && (
@@ -74,7 +74,7 @@ function SnackbarDemoExample({ demoId }) {
         {!open && notice && <span className="snackbar-feedback" role="status">{notice}</span>}
       </div>
       <div className="snackbar-controls">
-        <button className="mui-button mui-button-contained" type="button" onClick={showSnackbar}>
+        <button className="rgi-button rgi-button-contained" type="button" onClick={showSnackbar}>
           {isPosition ? 'Preview snackbar' : 'Show notification'}
         </button>
         <span className="preview-note">{open ? 'Automatically dismisses after 5 seconds.' : 'Notification is currently hidden.'}</span>

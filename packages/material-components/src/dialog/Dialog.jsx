@@ -81,7 +81,7 @@ const Dialog = forwardRef(function Dialog(
   return createPortal(
     // biome-ignore lint/a11y/noStaticElementInteractions: The backdrop closes only when the pointer lands outside the dialog.
     <div
-      className="mui-dialog-backdrop"
+      className="rgi-dialog-backdrop"
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) onCloseRef.current?.(event, 'backdropClick');
       }}
@@ -89,7 +89,7 @@ const Dialog = forwardRef(function Dialog(
       <section
         {...props}
         ref={setRef}
-        className={cx('mui-dialog', className)}
+        className={cx('rgi-dialog', className)}
         role="dialog"
         aria-modal="true"
         aria-labelledby={title != null ? titleId : undefined}
@@ -97,16 +97,16 @@ const Dialog = forwardRef(function Dialog(
         tabIndex={-1}
       >
         {(title != null || onClose) && (
-          <header className="mui-dialog-header">
+          <header className="rgi-dialog-header">
             {title != null && (
-              <h2 id={titleId} className="mui-dialog-title">
+              <h2 id={titleId} className="rgi-dialog-title">
                 {title}
               </h2>
             )}
             {onClose && (
               <button
                 type="button"
-                className="mui-dialog-close"
+                className="rgi-dialog-close"
                 aria-label={closeLabel}
                 onClick={(event) => onCloseRef.current?.(event, 'closeButtonClick')}
               >
@@ -116,12 +116,12 @@ const Dialog = forwardRef(function Dialog(
           </header>
         )}
         {description != null && (
-          <p id={descriptionId} className="mui-dialog-description">
+          <p id={descriptionId} className="rgi-dialog-description">
             {description}
           </p>
         )}
-        <div className="mui-dialog-content">{children}</div>
-        {actions != null && <footer className="mui-dialog-actions">{actions}</footer>}
+        <div className="rgi-dialog-content">{children}</div>
+        {actions != null && <footer className="rgi-dialog-actions">{actions}</footer>}
       </section>
     </div>,
     document.body,

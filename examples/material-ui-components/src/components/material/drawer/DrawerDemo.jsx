@@ -145,7 +145,7 @@ function TemporaryDrawerDemo({ sections = false }) {
           <span className="drawer-preview-eyebrow">YOUR WORKSPACE</span>
           <strong>{selected}</strong>
           <span>Open navigation to switch destinations.</span>
-          <button className="mui-button mui-button-outlined" type="button" aria-haspopup="dialog" aria-expanded={open} onClick={() => setOpen(true)}>
+          <button className="rgi-button rgi-button-outlined" type="button" aria-haspopup="dialog" aria-expanded={open} onClick={() => setOpen(true)}>
             <Layers size={13} aria-hidden="true" /> Open navigation
           </button>
         </div>

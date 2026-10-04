@@ -27,7 +27,7 @@ function PaginationControl({ page, pageCount, onChange, variant = 'standard', la
   );
 
   return (
-    <nav className={cx('mui-pagination', variant === 'outlined' && 'mui-pagination-outlined')} aria-label={label}>
+    <nav className={cx('rgi-pagination', variant === 'outlined' && 'rgi-pagination-outlined')} aria-label={label}>
       <button
         className={buttonClass(false, 'pagination-edge-button')}
         type="button"

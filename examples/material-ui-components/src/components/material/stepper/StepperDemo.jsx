@@ -51,9 +51,9 @@ function HorizontalStepperDemo() {
 
   return (
     <div className="stepper-showcase">
-      <ol className="mui-stepper" aria-label="Checkout steps">
+      <ol className="rgi-stepper" aria-label="Checkout steps">
         {STEPS.map(({ label, Icon }, index) => (
-          <li className={cx('mui-step', index < STEPS.length - 1 && 'mui-step-with-connector')} key={label}>
+          <li className={cx('rgi-step', index < STEPS.length - 1 && 'rgi-step-with-connector')} key={label}>
             <span className="stepper-indicator">
               <StepIcon index={index} activeStep={step} Icon={Icon} />
               {index < STEPS.length - 1 && <i className={cx('stepper-connector', index < step && 'stepper-connector-complete')} />}
@@ -102,9 +102,9 @@ function VerticalStepperDemo() {
 
   return (
     <div className="stepper-showcase stepper-vertical-showcase">
-      <ol className="mui-stepper-vertical" aria-label="Setup steps">
+      <ol className="rgi-stepper-vertical" aria-label="Setup steps">
         {STEPS.map(({ label, detail, Icon }, index) => (
-          <li className="mui-step-vertical" key={label}>
+          <li className="rgi-step-vertical" key={label}>
             <button
               className={cx('stepper-vertical-heading', index === step && !complete && 'stepper-vertical-heading-active', index < step && 'stepper-vertical-heading-complete')}
               type="button"
@@ -150,9 +150,9 @@ function AlternativeStepperDemo() {
 
   return (
     <div className="stepper-showcase stepper-alternative-showcase">
-      <ol className="mui-stepper-alternative" aria-label="Project launch milestones">
+      <ol className="rgi-stepper-alternative" aria-label="Project launch milestones">
         {STEPS.map(({ label, Icon }, index) => (
-          <li className="mui-step-alternative" key={label}>
+          <li className="rgi-step-alternative" key={label}>
             <button
               className="stepper-alternative-button"
               type="button"

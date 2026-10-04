@@ -1,6 +1,6 @@
 import { register } from 'registyle/collector';
 
-register('mui-paper', {
+register('rgi-paper', {
   base: { tw: 'bg-[var(--panel,#111824)] text-[var(--text,#edf2fb)]' },
   modifiers: {
     'elevation-0': { tw: 'shadow-none' },

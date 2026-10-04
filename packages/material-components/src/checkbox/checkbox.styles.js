@@ -1,6 +1,6 @@
 import { register } from 'registyle/collector';
 
-register.group('mui-checkbox', {
+register.group('rgi-checkbox', {
   root: {
     tw: 'relative mt-0.5 flex size-[17px] shrink-0 items-center justify-center rounded-[5px] focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[#86a6ff]',
   },

@@ -32,15 +32,15 @@ register('pagination-outlined-demo', {
   base: { tw: 'rounded-lg border border-[#303a49] bg-[#111720] px-2 py-3 sm:p-4' },
 });
 
-register('mui-pagination-outlined .pagination-button', {
+register('rgi-pagination-outlined .pagination-button', {
   base: { tw: 'border border-[#354154] bg-[#171f2c] hover:border-[#536985] hover:bg-[#202b3a]' },
 });
 
-register('mui-pagination-outlined .pagination-button-active', {
+register('rgi-pagination-outlined .pagination-button-active', {
   base: { tw: 'border-[#789fe8] bg-[#263954] text-[#d2e0ff] hover:border-[#789fe8] hover:bg-[#263954]' },
 });
 
-register('mui-pagination-outlined .pagination-button:disabled', {
+register('rgi-pagination-outlined .pagination-button:disabled', {
   base: { tw: 'border-[#2d3643] bg-[#141a23]' },
 });
 
@@ -88,6 +88,6 @@ register('pagination-table-footer', {
   base: { tw: 'flex flex-wrap items-center justify-between gap-2' },
 });
 
-register('pagination-table-footer .mui-pagination', {
+register('pagination-table-footer .rgi-pagination', {
   base: { tw: 'justify-start sm:justify-end' },
 });

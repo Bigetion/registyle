@@ -1,6 +1,6 @@
 import { register } from 'registyle/collector';
 
-register('mui-link', {
+register('rgi-link', {
   base: {
     tw: 'cursor-pointer text-[var(--accent,#315fc4)] focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent,#315fc4)]',
   },

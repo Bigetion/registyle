@@ -57,14 +57,14 @@ const NumberField = forwardRef(function NumberField(
   }
 
   return (
-    <span className={cx('mui-number-field', className)}>
+    <span className={cx('rgi-number-field', className)}>
       {unit && unitPosition === 'start' && (
-        <span className="mui-number-field-unit" aria-hidden="true">
+        <span className="rgi-number-field-unit" aria-hidden="true">
           {unit}
         </span>
       )}
       <button
-        className="mui-number-field-button"
+        className="rgi-number-field-button"
         type="button"
         aria-label={decrementLabel}
         aria-controls={inputId}
@@ -77,7 +77,7 @@ const NumberField = forwardRef(function NumberField(
         {...inputProps}
         ref={setRef}
         id={inputId}
-        className={cx('mui-number-field-input', inputClassName)}
+        className={cx('rgi-number-field-input', inputClassName)}
         type="number"
         value={currentValue}
         min={min}
@@ -92,7 +92,7 @@ const NumberField = forwardRef(function NumberField(
         }}
       />
       <button
-        className="mui-number-field-button"
+        className="rgi-number-field-button"
         type="button"
         aria-label={incrementLabel}
         aria-controls={inputId}
@@ -102,7 +102,7 @@ const NumberField = forwardRef(function NumberField(
         <span aria-hidden="true">+</span>
       </button>
       {unit && unitPosition === 'end' && (
-        <span className="mui-number-field-unit" aria-hidden="true">
+        <span className="rgi-number-field-unit" aria-hidden="true">
           {unit}
         </span>
       )}

@@ -60,7 +60,7 @@ export default function ComponentPageLayout({ component, children }) {
           <span className="hero-emblem-spark"><Sparkles size={15} /></span>
         </div>
         <a
-          className="mui-button mui-button-outlined docs-button"
+          className="rgi-button rgi-button-outlined docs-button"
           href={`https://mui.com/material-ui/react-${component.slug}/`}
           target="_blank"
           rel="noreferrer"

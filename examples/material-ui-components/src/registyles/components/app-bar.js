@@ -8,7 +8,7 @@ register('appbar-preview', {
   base: { tw: 'overflow-hidden rounded-lg border border-[var(--border)] bg-[#0e141e]' },
 });
 
-register('mui-appbar', {
+register('rgi-appbar', {
   base: { tw: 'relative z-10 flex min-h-14 items-center gap-3 border-b border-[var(--border)] bg-[#151c27] px-4 py-2 max-sm:gap-2 max-sm:px-3' },
 });
 

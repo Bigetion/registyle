@@ -19,7 +19,7 @@ const Avatar = forwardRef(function Avatar(
   const accessibleProps =
     !src && accessibleFallbackLabel ? { role: 'img', 'aria-label': accessibleFallbackLabel } : {};
   const content = src ? (
-    <img className="mui-avatar-image" src={src} alt={alt ?? ''} />
+    <img className="rgi-avatar-image" src={src} alt={alt ?? ''} />
   ) : (
     (children ??
     (alt
@@ -38,9 +38,9 @@ const Avatar = forwardRef(function Avatar(
       {...props}
       ref={ref}
       className={cx(
-        'mui-avatar',
-        `mui-avatar-${size}`,
-        color !== 'default' && `mui-avatar-${color}`,
+        'rgi-avatar',
+        `rgi-avatar-${size}`,
+        color !== 'default' && `rgi-avatar-${color}`,
         className,
       )}
       {...accessibleProps}

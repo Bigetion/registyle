@@ -19,7 +19,7 @@ function SurfaceElevationDemo() {
       <div className="paper-elevation-grid">
         {[0, 1, 3].map((level) => (
           <div className="paper-elevation-example" key={level}>
-            <div className={`mui-paper paper-elevation-${level}`}><SurfaceContent label={`Elevation ${level}`} /></div>
+            <div className={`rgi-paper paper-elevation-${level}`}><SurfaceContent label={`Elevation ${level}`} /></div>
             <span>Level {level}</span>
           </div>
         ))}
@@ -48,7 +48,7 @@ function ElevationScaleDemo() {
         ))}
       </div>
       <div className="paper-scale-stage">
-        <div className={cx('mui-paper', 'paper-selected-elevation')} style={{ '--paper-level': level }}>
+        <div className={cx('rgi-paper', 'paper-selected-elevation')} style={{ '--paper-level': level }}>
           <SurfaceContent label={`Elevation ${level}`} />
         </div>
       </div>
@@ -63,15 +63,15 @@ function PaperVariantsDemo() {
   return (
     <div className="paper-demo">
       <div className="paper-variants-grid">
-        <div className="mui-paper paper-contained">
+        <div className="rgi-paper paper-contained">
           <span className="paper-variant-label">CONTAINED</span>
           <SurfaceContent label="Default surface" />
         </div>
-        <div className="mui-paper paper-outlined">
+        <div className="rgi-paper paper-outlined">
           <span className="paper-variant-label">OUTLINED</span>
           <SurfaceContent label="Border emphasis" />
         </div>
-        <div className="mui-paper paper-nested">
+        <div className="rgi-paper paper-nested">
           <span className="paper-variant-label">NESTED</span>
           <p>Use layered surfaces to group related sections.</p>
           <div className="paper-nested-inner"><SurfaceContent label="Nested panel" /></div>

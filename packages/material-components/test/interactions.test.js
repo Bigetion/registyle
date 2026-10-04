@@ -144,7 +144,7 @@ test('Popover ignores inside pointer events and reports outside and Escape reaso
         React.createElement('button', null, 'Inside'),
       ),
     );
-    const popover = document.querySelector('.mui-popover');
+    const popover = document.querySelector('.rgi-popover');
     assert.ok(popover);
     assert.equal(popover.getAttribute('aria-label'), 'More information');
     popover.dispatchEvent(new window.MouseEvent('pointerdown', { bubbles: true }));
@@ -305,7 +305,7 @@ test('Checkbox, RadioGroup, and TextField expose native form and validation beha
     assert.equal(radios[1].checked, true);
 
     const input = harness.mount.querySelector('input[type="email"]');
-    const label = harness.mount.querySelector('.mui-text-field-label');
+    const label = harness.mount.querySelector('.rgi-text-field-label');
     assert.equal(label.htmlFor, input.id);
     assert.equal(input.getAttribute('aria-invalid'), 'true');
     assert.ok(document.getElementById(input.getAttribute('aria-describedby')));
@@ -396,8 +396,8 @@ test('Accordion supports controlled state, disabled state, and accessible panel 
         'Settings content',
       ),
     );
-    const trigger = harness.mount.querySelector('.mui-accordion-trigger');
-    const panel = harness.mount.querySelector('.mui-accordion-panel');
+    const trigger = harness.mount.querySelector('.rgi-accordion-trigger');
+    const panel = harness.mount.querySelector('.rgi-accordion-panel');
     assert.equal(trigger.getAttribute('aria-expanded'), 'false');
     assert.equal(trigger.getAttribute('aria-controls'), panel.id);
     assert.equal(panel.tagName, 'SECTION');
@@ -423,9 +423,9 @@ test('Accordion supports controlled state, disabled state, and accessible panel 
         'Still visible',
       ),
     );
-    const disabledTrigger = harness.mount.querySelector('.mui-accordion-trigger');
+    const disabledTrigger = harness.mount.querySelector('.rgi-accordion-trigger');
     assert.equal(disabledTrigger.disabled, true);
-    assert.equal(harness.mount.querySelector('.mui-accordion-panel').hidden, false);
+    assert.equal(harness.mount.querySelector('.rgi-accordion-panel').hidden, false);
   } finally {
     await harness.dispose();
   }
@@ -463,13 +463,13 @@ test('Alert and Snackbar expose severity semantics and explicit/timeout dismissa
         ),
       ),
     );
-    const alert = harness.mount.querySelector('.mui-alert');
-    const snackbar = harness.mount.querySelector('.mui-snackbar');
+    const alert = harness.mount.querySelector('.rgi-alert');
+    const snackbar = harness.mount.querySelector('.rgi-snackbar');
     assert.equal(alert.getAttribute('role'), 'alert');
-    assert.equal(alert.querySelector('.mui-alert-icon'), null);
+    assert.equal(alert.querySelector('.rgi-alert-icon'), null);
     assert.equal(snackbar.getAttribute('role'), 'alert');
     assert.equal(snackbar.getAttribute('aria-live'), 'assertive');
-    await act(async () => harness.mount.querySelector('.mui-alert-close').click());
+    await act(async () => harness.mount.querySelector('.rgi-alert-close').click());
     assert.deepEqual(alertClose, ['closed']);
     await act(async () => new Promise((resolve) => setTimeout(resolve, 40)));
     assert.deepEqual(snackbarClose, ['timeout']);
@@ -485,7 +485,7 @@ test('Alert and Snackbar expose severity semantics and explicit/timeout dismissa
         'Persistent',
       ),
     );
-    await act(async () => harness.mount.querySelector('.mui-snackbar-close').click());
+    await act(async () => harness.mount.querySelector('.rgi-snackbar-close').click());
     assert.deepEqual(snackbarClose, ['timeout', 'closeButtonClick']);
   } finally {
     await harness.dispose();
@@ -545,13 +545,13 @@ test('Rating, Pagination, ToggleButton, and Stepper honor keyboard, boundary, an
     await act(async () => pagination.querySelector('[aria-label="Go to next page"]').click());
     assert.deepEqual(pages, [3]);
 
-    const toggle = harness.mount.querySelector('.mui-toggle-button');
+    const toggle = harness.mount.querySelector('.rgi-toggle-button');
     assert.equal(toggle.getAttribute('aria-pressed'), 'true');
 
-    const steps = [...harness.mount.querySelectorAll('.mui-step')];
+    const steps = [...harness.mount.querySelectorAll('.rgi-step')];
     assert.equal(steps[0].getAttribute('aria-current'), null);
     assert.equal(steps[1].getAttribute('aria-current'), 'step');
-    assert.equal(steps[0].querySelector('.mui-step-indicator').textContent, '✓');
+    assert.equal(steps[0].querySelector('.rgi-step-indicator').textContent, '✓');
     assert.equal(steps[2].querySelector('button').disabled, true);
     await act(async () => steps[1].querySelector('button').click());
     assert.deepEqual(stepClicks, [1]);
@@ -585,16 +585,16 @@ test('SpeedDial and TransferList update state and announce user actions', async 
       ),
     );
 
-    const speedDial = harness.mount.querySelector('.mui-speed-dial');
-    const trigger = speedDial.querySelector('.mui-speed-dial-trigger');
+    const speedDial = harness.mount.querySelector('.rgi-speed-dial');
+    const trigger = speedDial.querySelector('.rgi-speed-dial-trigger');
     assert.equal(trigger.getAttribute('aria-expanded'), 'false');
     await act(async () => trigger.click());
     assert.equal(trigger.getAttribute('aria-expanded'), 'true');
     await act(async () => speedDial.querySelector('[aria-label="Create"]').click());
     assert.deepEqual(actions, ['Create', 'Create']);
-    assert.equal(speedDial.querySelector('.mui-speed-dial-actions').hidden, true);
+    assert.equal(speedDial.querySelector('.rgi-speed-dial-actions').hidden, true);
 
-    const transfer = harness.mount.querySelector('.mui-transfer-list');
+    const transfer = harness.mount.querySelector('.rgi-transfer-list');
     const sourceCheckbox = transfer.querySelector('input[type="checkbox"]');
     await act(async () => sourceCheckbox.click());
     const moveButton = transfer.querySelector('[aria-label="Move selected to Selected"]');
@@ -602,7 +602,7 @@ test('SpeedDial and TransferList update state and announce user actions', async 
     await act(async () => moveButton.click());
     assert.deepEqual(changes, [[['alpha'], ['alpha']]]);
     assert.equal(
-      transfer.querySelector('[aria-label="Selected"] .mui-transfer-item-label').textContent,
+      transfer.querySelector('[aria-label="Selected"] .rgi-transfer-item-label').textContent,
       'Alpha',
     );
     assert.match(transfer.querySelector('[role="status"]').textContent, /1 item moved to Selected/);
@@ -639,15 +639,15 @@ test('BottomNavigation, Badge, Progress, and Card expose expected semantic outpu
       ),
     );
 
-    const navItems = [...harness.mount.querySelectorAll('.mui-bottom-navigation-item')];
+    const navItems = [...harness.mount.querySelectorAll('.rgi-bottom-navigation-item')];
     assert.equal(navItems[0].getAttribute('aria-current'), 'page');
     await act(async () => navItems[1].click());
     assert.deepEqual(selected, ['settings']);
-    assert.equal(harness.mount.querySelector('.mui-badge').textContent, '99+');
+    assert.equal(harness.mount.querySelector('.rgi-badge').textContent, '99+');
     const progress = harness.mount.querySelector('[role="progressbar"]');
     assert.equal(progress.getAttribute('aria-valuenow'), '25');
     assert.equal(progress.getAttribute('aria-valuemax'), '50');
-    assert.equal(harness.mount.querySelector('.mui-card').tagName, 'SECTION');
+    assert.equal(harness.mount.querySelector('.rgi-card').tagName, 'SECTION');
   } finally {
     await harness.dispose();
   }
@@ -795,38 +795,38 @@ test('buttons, chips, navigation, and presentational primitives preserve semanti
       ),
     );
 
-    const button = harness.mount.querySelector('.mui-button');
+    const button = harness.mount.querySelector('.rgi-button');
     assert.equal(button.type, 'button');
-    assert.ok(button.className.includes('mui-button-outlined'));
-    assert.ok(button.className.includes('mui-button-small'));
-    assert.equal(harness.mount.querySelector('.mui-button-group').getAttribute('role'), 'group');
+    assert.ok(button.className.includes('rgi-button-outlined'));
+    assert.ok(button.className.includes('rgi-button-small'));
+    assert.equal(harness.mount.querySelector('.rgi-button-group').getAttribute('role'), 'group');
 
-    const chips = harness.mount.querySelectorAll('.mui-chip');
+    const chips = harness.mount.querySelectorAll('.rgi-chip');
     assert.equal(chips[0].tagName, 'BUTTON');
     assert.equal(chips[0].getAttribute('aria-pressed'), 'true');
-    await act(async () => chips[1].querySelector('.mui-chip-delete').click());
+    await act(async () => chips[1].querySelector('.rgi-chip-delete').click());
     assert.deepEqual(deleted, ['React']);
 
-    const crumbs = harness.mount.querySelectorAll('.mui-breadcrumbs-item');
+    const crumbs = harness.mount.querySelectorAll('.rgi-breadcrumbs-item');
     assert.equal(crumbs.length, 3);
     assert.equal(crumbs[0].textContent.includes('Home'), true);
     assert.equal(
-      harness.mount.querySelector('.mui-breadcrumbs-ellipsis .sr-only').textContent,
+      harness.mount.querySelector('.rgi-breadcrumbs-ellipsis .sr-only').textContent,
       'More breadcrumb items',
     );
     assert.equal(
       harness.mount
-        .querySelector('.mui-breadcrumbs-item:last-child > span')
+        .querySelector('.rgi-breadcrumbs-item:last-child > span')
         .getAttribute('aria-current'),
       'page',
     );
 
     assert.equal(harness.mount.querySelector('h2').textContent, 'Heading');
     assert.equal(harness.mount.querySelector('[aria-orientation="vertical"]').tagName, 'HR');
-    assert.equal(harness.mount.querySelector('.mui-skeleton').getAttribute('aria-hidden'), 'true');
-    assert.equal(harness.mount.querySelector('ol.mui-list').tagName, 'OL');
-    assert.equal(harness.mount.querySelector('.mui-list-primary').textContent, 'Primary');
-    assert.ok(harness.mount.querySelector('.mui-paper').className.includes('mui-paper-square'));
+    assert.equal(harness.mount.querySelector('.rgi-skeleton').getAttribute('aria-hidden'), 'true');
+    assert.equal(harness.mount.querySelector('ol.rgi-list').tagName, 'OL');
+    assert.equal(harness.mount.querySelector('.rgi-list-primary').textContent, 'Primary');
+    assert.ok(harness.mount.querySelector('.rgi-paper').className.includes('rgi-paper-square'));
   } finally {
     await harness.dispose();
   }

@@ -15,7 +15,7 @@ function NavigationBar({ demoId, selected, onSelect }) {
   const iconsOnly = demoId === 'bottom-navigation-icons';
 
   return (
-    <nav className={cx('mui-bottom-navigation', isCompactLabel && 'bottom-navigation-compact-labels', iconsOnly && 'bottom-navigation-icons-only')} aria-label="Primary navigation">
+    <nav className={cx('rgi-bottom-navigation', isCompactLabel && 'bottom-navigation-compact-labels', iconsOnly && 'bottom-navigation-icons-only')} aria-label="Primary navigation">
       {DESTINATIONS.map(({ label, Icon }) => {
         const active = selected === label;
         return (

@@ -11,7 +11,7 @@ const BottomNavigation = forwardRef(function BottomNavigation(
       {...props}
       ref={ref}
       aria-label={ariaLabel}
-      className={cx('mui-bottom-navigation', className)}
+      className={cx('rgi-bottom-navigation', className)}
     >
       {Children.map(children, (child) =>
         isValidElement(child) && child.props.value !== undefined

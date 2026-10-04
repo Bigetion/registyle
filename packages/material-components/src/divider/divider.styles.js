@@ -1,6 +1,6 @@
 import { register } from 'registyle/collector';
 
-register('mui-divider', {
+register('rgi-divider', {
   base: { tw: 'm-0 shrink-0 border-0 border-[var(--border,#273142)] text-[var(--muted,#9aa8bd)]' },
   modifiers: {
     horizontal: { tw: 'w-full border-t' },
@@ -15,6 +15,6 @@ register('mui-divider', {
   },
 });
 
-register('mui-divider-content', {
+register('rgi-divider-content', {
   base: { tw: 'shrink-0 px-1 text-xs' },
 });

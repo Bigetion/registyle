@@ -1,6 +1,6 @@
 import { register } from 'registyle/collector';
 
-register.group('mui-number-field', {
+register.group('rgi-number-field', {
   root: {
     tw: 'inline-flex min-h-10 items-stretch overflow-hidden rounded-md border border-[var(--border,#64748b)] bg-[var(--surface,#111827)] text-[var(--text,#edf2fb)] focus-within:border-[var(--mui-blue,#547be8)] focus-within:ring-2 focus-within:ring-[var(--mui-blue-soft,rgba(84,123,232,.25))]',
   },

@@ -1,6 +1,6 @@
 import { register } from 'registyle/collector';
 
-register('mui-radio-group', {
+register('rgi-radio-group', {
   base: { tw: 'm-0 flex min-w-0 flex-col gap-2 border-0 p-0 text-[var(--text,#edf2fb)]' },
   modifiers: {
     horizontal: { tw: 'flex-row flex-wrap items-start gap-x-5 gap-y-2' },
@@ -8,7 +8,7 @@ register('mui-radio-group', {
   },
 });
 
-register.group('mui-radio-option', {
+register.group('rgi-radio-option', {
   root: {
     tw: 'relative inline-flex cursor-pointer items-start gap-2.5 text-sm text-[var(--text,#edf2fb)]',
   },
@@ -27,6 +27,6 @@ register.group('mui-radio-option', {
   description: { tw: 'text-xs text-[var(--muted,#94a3b8)]' },
 });
 
-register('mui-radio-group-legend', {
+register('rgi-radio-group-legend', {
   base: { tw: 'mb-2 text-sm font-semibold text-[var(--text,#edf2fb)]' },
 });

@@ -1,10 +1,10 @@
 import { register } from 'registyle/collector';
 
-register('mui-badge-root', {
+register('rgi-badge-root', {
   base: { tw: 'relative inline-flex align-middle' },
 });
 
-register('mui-badge', {
+register('rgi-badge', {
   base: {
     tw: 'absolute z-[1] inline-flex min-w-[18px] h-[18px] items-center justify-center rounded-full border-2 border-[var(--mui-badge-outline,var(--surface,#101722))] px-1 text-[10px] leading-none font-semibold text-white',
   },

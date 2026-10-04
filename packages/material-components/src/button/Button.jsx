@@ -10,10 +10,10 @@ const Button = forwardRef(function Button(
     <button
       {...props}
       className={cx(
-        'mui-button',
-        `mui-button-${variant}`,
-        size !== 'medium' && `mui-button-${size}`,
-        color !== 'primary' && `mui-button-color-${color}`,
+        'rgi-button',
+        `rgi-button-${variant}`,
+        size !== 'medium' && `rgi-button-${size}`,
+        color !== 'primary' && `rgi-button-color-${color}`,
         className,
       )}
       ref={ref}

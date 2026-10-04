@@ -1,6 +1,6 @@
 import { register } from 'registyle/collector';
 
-register.group('mui-radio', {
+register.group('rgi-radio', {
   root: {
     tw: 'relative mt-0.5 flex size-[18px] shrink-0 items-center justify-center rounded-full focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[#86a6ff]',
   },

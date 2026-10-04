@@ -45,7 +45,7 @@ function AppBarDemoExample({ demoId }) {
   return (
     <div className={cx('appbar-demo', isResponsive && 'appbar-demo-responsive')}>
       <div className="appbar-preview">
-        <header className={cx('mui-appbar', isSearch && 'mui-appbar-search', isResponsive && 'mui-appbar-responsive')}>
+        <header className={cx('rgi-appbar', isSearch && 'rgi-appbar-search', isResponsive && 'rgi-appbar-responsive')}>
           {isResponsive && (
             <button
               className="appbar-icon-button appbar-mobile-menu"

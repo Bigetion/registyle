@@ -1,7 +1,7 @@
 import { Bell, LockKeyhole, UserRound } from 'lucide-react';
 
 function Divider({ className = '', ...props }) {
-  return <hr className={`mui-divider ${className}`.trim()} {...props} />;
+  return <hr className={`rgi-divider ${className}`.trim()} {...props} />;
 }
 
 function DividerHorizontal() {
@@ -20,9 +20,9 @@ function DividerVertical() {
   return (
     <div className="divider-toolbar" role="group" aria-label="Account navigation">
       <button type="button"><UserRound size={15} aria-hidden="true" /> Profile</button>
-      <span className="mui-divider-vertical" role="separator" aria-orientation="vertical" />
+      <span className="rgi-divider-vertical" role="separator" aria-orientation="vertical" />
       <button type="button"><LockKeyhole size={15} aria-hidden="true" /> Security</button>
-      <span className="mui-divider-vertical" role="separator" aria-orientation="vertical" />
+      <span className="rgi-divider-vertical" role="separator" aria-orientation="vertical" />
       <button type="button"><Bell size={15} aria-hidden="true" /> Alerts</button>
     </div>
   );
@@ -35,7 +35,7 @@ function DividerInset() {
         <span className="divider-list-icon"><UserRound size={16} aria-hidden="true" /></span>
         <span className="divider-list-copy"><strong>Personal details</strong><small>Name, email, and profile</small></span>
       </div>
-      <Divider className="mui-divider-inset" />
+      <Divider className="rgi-divider-inset" />
       <div className="divider-list-item">
         <span className="divider-list-icon"><LockKeyhole size={16} aria-hidden="true" /></span>
         <span className="divider-list-copy"><strong>Sign-in and security</strong><small>Password and two-step verification</small></span>

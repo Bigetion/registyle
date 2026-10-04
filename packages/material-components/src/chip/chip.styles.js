@@ -1,6 +1,6 @@
 import { register } from 'registyle/collector';
 
-register('mui-chip', {
+register('rgi-chip', {
   base: {
     tw: 'inline-flex h-8 shrink-0 items-center gap-1.5 rounded-full border border-[var(--border,#273142)] px-3 text-xs font-medium text-[var(--text,#edf2fb)] transition-colors',
   },
@@ -19,7 +19,7 @@ register('mui-chip', {
   },
 });
 
-register('mui-chip button', {
+register('rgi-chip button', {
   base: {
     tw: 'inline-flex cursor-pointer items-center justify-center rounded-full border-0 bg-transparent p-0 text-current opacity-70 transition-opacity hover:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-current disabled:cursor-not-allowed',
   },

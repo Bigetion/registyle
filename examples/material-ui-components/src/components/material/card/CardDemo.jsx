@@ -4,7 +4,7 @@ import { cx } from 'registyle';
 
 function ProjectCard() {
   return (
-    <article className="mui-card project-card">
+    <article className="rgi-card project-card">
       <div className="card-project-top">
         <span className="card-project-icon"><Image size={16} aria-hidden="true" /></span>
         <button className="card-more-button" type="button" aria-label="More project actions">
@@ -35,7 +35,7 @@ function ActionCard() {
   const [saved, setSaved] = useState(false);
 
   return (
-    <article className="mui-card action-card">
+    <article className="rgi-card action-card">
       <div className="card-author">
         <span className="card-author-avatar">AM</span>
         <span><strong>Alex Morgan</strong><small>Product design · 2 hours ago</small></span>
@@ -60,7 +60,7 @@ function ActionCard() {
 
 function MediaCard() {
   return (
-    <article className="mui-card media-card">
+    <article className="rgi-card media-card">
       <div className="card-media-visual">
         <div className="card-media-orbit card-media-orbit-one" />
         <div className="card-media-orbit card-media-orbit-two" />

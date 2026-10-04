@@ -1,6 +1,6 @@
 import { register } from 'registyle/collector';
 
-register('mui-table', {
+register('rgi-table', {
   base: { tw: 'w-full border-collapse text-left text-sm text-[var(--text,#edf2fb)]' },
   modifiers: {
     standard: { tw: '[&_th]:px-4 [&_th]:py-3 [&_td]:px-4 [&_td]:py-3' },
@@ -13,16 +13,16 @@ register('mui-table', {
   },
 });
 
-register('mui-table th', {
+register('rgi-table th', {
   base: {
     tw: 'border-b border-[var(--border,#273142)] bg-[var(--mui-table-head,var(--surface,#101722))] font-semibold text-[var(--muted,#9aa8bd)]',
   },
 });
 
-register('mui-table td', {
+register('rgi-table td', {
   base: { tw: 'border-b border-[var(--border,#273142)] align-middle' },
 });
 
-register('mui-table caption', {
+register('rgi-table caption', {
   base: { tw: 'pb-3 text-left font-medium text-[var(--text,#edf2fb)]' },
 });

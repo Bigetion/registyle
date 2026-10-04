@@ -9,10 +9,10 @@ const PLACEMENTS = ['bottom-start', 'bottom-end', 'top-start', 'top-end'];
 
 function MenuList({ items, selectedIndex, onSelect, listRef, label = 'Menu options' }) {
   return (
-    <div className="mui-menu-list" role="menu" aria-label={label}>
+    <div className="rgi-menu-list" role="menu" aria-label={label}>
       {items.map(({ label: itemLabel, Icon, danger = false }, index) => (
         <button
-          className={cx('mui-menu-item', danger && 'mui-menu-item-danger')}
+          className={cx('rgi-menu-item', danger && 'rgi-menu-item-danger')}
           key={itemLabel}
           type="button"
           role="menuitem"
@@ -119,7 +119,7 @@ function ContextMenuDemo() {
         surfaceRef={surfaceRef}
         placement="bottom-end"
         fallbackPlacements={FALLBACK_PLACEMENTS}
-        className="mui-menu-surface"
+        className="rgi-menu-surface"
         role="presentation"
         onEscape={dismissAndRestoreFocus}
       >
@@ -191,7 +191,7 @@ function PlacementMenuDemo() {
       </div>
       <div className="menu-placement-stage">
         <button
-          className="mui-button mui-button-outlined"
+          className="rgi-button rgi-button-outlined"
           type="button"
           ref={anchorRef}
           aria-haspopup="menu"
@@ -208,7 +208,7 @@ function PlacementMenuDemo() {
         surfaceRef={surfaceRef}
         placement={placement}
         fallbackPlacements={FALLBACK_PLACEMENTS}
-        className="mui-menu-surface"
+        className="rgi-menu-surface"
         role="presentation"
         onEscape={dismissAndRestoreFocus}
       >
@@ -268,14 +268,14 @@ function SelectionMenuDemo() {
         surfaceRef={surfaceRef}
         placement="bottom-end"
         fallbackPlacements={FALLBACK_PLACEMENTS}
-        className="mui-menu-surface"
+        className="rgi-menu-surface"
         role="presentation"
         onEscape={dismissAndRestoreFocus}
       >
-        <div className="mui-menu-list" role="menu" aria-label="Sort projects">
+        <div className="rgi-menu-list" role="menu" aria-label="Sort projects">
           {SORT_OPTIONS.map((item, index) => (
             <button
-              className="mui-menu-item"
+              className="rgi-menu-item"
               type="button"
               role="menuitemradio"
               aria-checked={selected === item}

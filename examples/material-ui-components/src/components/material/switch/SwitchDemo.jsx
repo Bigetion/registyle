@@ -64,14 +64,14 @@ function SwitchColors() {
           label="Success green"
           checked={values.green}
           onChange={(checked) => update('green', checked)}
-          variant="mui-switch-success"
+          variant="rgi-switch-success"
         />
         <SwitchControl
           id="switch-color-orange"
           label="Warning orange"
           checked={values.orange}
           onChange={(checked) => update('orange', checked)}
-          variant="mui-switch-warning"
+          variant="rgi-switch-warning"
         />
       </div>
       <span className="preview-note">

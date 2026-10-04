@@ -17,14 +17,14 @@ const SETTINGS_TABS = [
 function TabList({ items, selected, onSelect, idPrefix, variant = 'standard', label = 'Tabs', onKeyDown }) {
   return (
     <div
-      className={cx('mui-tabs-list', variant === 'scrollable' && 'mui-tabs-list-scrollable', variant === 'centered' && 'mui-tabs-list-centered')}
+      className={cx('rgi-tabs-list', variant === 'scrollable' && 'rgi-tabs-list-scrollable', variant === 'centered' && 'rgi-tabs-list-centered')}
       role="tablist"
       aria-label={label}
       onKeyDown={onKeyDown}
     >
       {items.map(({ label: itemLabel, Icon, badge }, index) => (
         <button
-          className={cx('mui-tab', index === selected && 'mui-tab-active', Icon && 'mui-tab-with-icon')}
+          className={cx('rgi-tab', index === selected && 'rgi-tab-active', Icon && 'rgi-tab-with-icon')}
           id={`${idPrefix}-tab-${index}`}
           type="button"
           role="tab"
@@ -34,12 +34,12 @@ function TabList({ items, selected, onSelect, idPrefix, variant = 'standard', la
           key={itemLabel}
           onClick={() => onSelect(index)}
         >
-          <span className="mui-tab-content">
+          <span className="rgi-tab-content">
             {Icon && <Icon size={13} aria-hidden="true" />}
             <span>{itemLabel}</span>
-            {badge !== undefined && <span className="mui-tab-badge">{badge}</span>}
+            {badge !== undefined && <span className="rgi-tab-badge">{badge}</span>}
           </span>
-          {index === selected && <span className="mui-tab-indicator" aria-hidden="true" />}
+          {index === selected && <span className="rgi-tab-indicator" aria-hidden="true" />}
         </button>
       ))}
     </div>
@@ -72,7 +72,7 @@ function useTabKeyboard(setSelected, itemCount, orientation = 'horizontal') {
 function Panel({ idPrefix, index, selected, children }) {
   return (
     <div
-      className="mui-tab-panel"
+      className="rgi-tab-panel"
       id={`${idPrefix}-panel-${index}`}
       role="tabpanel"
       aria-labelledby={`${idPrefix}-tab-${index}`}

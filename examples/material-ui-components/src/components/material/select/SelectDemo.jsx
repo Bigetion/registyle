@@ -101,7 +101,7 @@ export default function SelectDemo({ demoId }) {
 
   return (
     <div className="preview-stack">
-      <span className="mui-label" id={labelId}>{isMultiple ? 'Project teams' : 'Department'}</span>
+      <span className="rgi-label" id={labelId}>{isMultiple ? 'Project teams' : 'Department'}</span>
       <div className="select-control" ref={anchorRef}>
         <button
           className={cx('select-trigger', open && 'select-trigger-open')}

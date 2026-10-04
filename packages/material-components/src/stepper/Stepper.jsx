@@ -23,32 +23,32 @@ const Step = forwardRef(function Step(
       {...props}
       ref={ref}
       className={cx(
-        'mui-step',
-        active && 'mui-step-active',
-        completed && 'mui-step-completed',
-        disabled && 'mui-step-disabled',
+        'rgi-step',
+        active && 'rgi-step-active',
+        completed && 'rgi-step-completed',
+        disabled && 'rgi-step-disabled',
         className,
       )}
       aria-current={active ? 'step' : undefined}
     >
       {onClick ? (
-        <button type="button" className="mui-step-button" disabled={disabled} onClick={onClick}>
-          <span className="mui-step-indicator" aria-hidden="true">
+        <button type="button" className="rgi-step-button" disabled={disabled} onClick={onClick}>
+          <span className="rgi-step-indicator" aria-hidden="true">
             {completed ? '✓' : index + 1}
           </span>
-          <span className="mui-step-copy">
-            <span className="mui-step-label">{content}</span>
-            {description && <span className="mui-step-description">{description}</span>}
+          <span className="rgi-step-copy">
+            <span className="rgi-step-label">{content}</span>
+            {description && <span className="rgi-step-description">{description}</span>}
           </span>
         </button>
       ) : (
-        <span className="mui-step-content">
-          <span className="mui-step-indicator" aria-hidden="true">
+        <span className="rgi-step-content">
+          <span className="rgi-step-indicator" aria-hidden="true">
             {completed ? '✓' : index + 1}
           </span>
-          <span className="mui-step-copy">
-            <span className="mui-step-label">{content}</span>
-            {description && <span className="mui-step-description">{description}</span>}
+          <span className="rgi-step-copy">
+            <span className="rgi-step-label">{content}</span>
+            {description && <span className="rgi-step-description">{description}</span>}
           </span>
         </span>
       )}
@@ -75,9 +75,9 @@ const Stepper = forwardRef(function Stepper(
       {...props}
       ref={ref}
       className={cx(
-        'mui-stepper',
-        `mui-stepper-${orientation}`,
-        alternativeLabel && 'mui-stepper-alternative',
+        'rgi-stepper',
+        `rgi-stepper-${orientation}`,
+        alternativeLabel && 'rgi-stepper-alternative',
         className,
       )}
     >

@@ -28,7 +28,7 @@ function BasicPopperDemo() {
           <span>The surface is portaled to the document and stays aligned as the page changes.</span>
         </div>
         <button
-          className="mui-button mui-button-outlined"
+          className="rgi-button rgi-button-outlined"
           type="button"
           ref={anchorRef}
           aria-haspopup="dialog"
@@ -116,7 +116,7 @@ function PlacementDemo() {
       <div className="popper-placement-stage">
         <span className="popper-demo-eyebrow">LIVE PLACEMENT PREVIEW</span>
         <button
-          className="mui-button mui-button-outlined"
+          className="rgi-button rgi-button-outlined"
           type="button"
           ref={anchorRef}
           aria-haspopup="dialog"
@@ -199,7 +199,7 @@ function OffsetDemo() {
       <div className="popper-offset-stage">
         <span className="popper-demo-eyebrow">OFFSET MODIFIER</span>
         <button
-          className="mui-button mui-button-outlined"
+          className="rgi-button rgi-button-outlined"
           type="button"
           ref={anchorRef}
           aria-haspopup="dialog"

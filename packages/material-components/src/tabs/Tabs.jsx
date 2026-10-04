@@ -39,10 +39,10 @@ const Tabs = forwardRef(function Tabs(
   }
 
   return (
-    <div {...props} className={cx('mui-tabs', `mui-tabs-${orientation}`, className)}>
+    <div {...props} className={cx('rgi-tabs', `rgi-tabs-${orientation}`, className)}>
       <div
         ref={ref}
-        className="mui-tabs-list"
+        className="rgi-tabs-list"
         role="tablist"
         aria-label={ariaLabel}
         aria-orientation={orientation}
@@ -93,7 +93,7 @@ const Tabs = forwardRef(function Tabs(
             id={`${id}-tab-${index}`}
             type="button"
             role="tab"
-            className={cx('mui-tab', safeIndex === index && 'mui-tab-selected')}
+            className={cx('rgi-tab', safeIndex === index && 'rgi-tab-selected')}
             aria-selected={safeIndex === index}
             aria-controls={`${id}-panel-${index}`}
             tabIndex={safeIndex === index ? 0 : -1}
@@ -101,7 +101,7 @@ const Tabs = forwardRef(function Tabs(
             onClick={(event) => select(index, event)}
           >
             {tab.icon && (
-              <span className="mui-tab-icon" aria-hidden="true">
+              <span className="rgi-tab-icon" aria-hidden="true">
                 {tab.icon}
               </span>
             )}
@@ -116,7 +116,7 @@ const Tabs = forwardRef(function Tabs(
           role="tabpanel"
           aria-labelledby={`${id}-tab-${index}`}
           tabIndex={tab.tabIndex ?? 0}
-          className="mui-tab-panel"
+          className="rgi-tab-panel"
           hidden={index !== safeIndex}
         >
           {tab.content}

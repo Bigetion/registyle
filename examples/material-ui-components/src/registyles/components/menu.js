@@ -46,15 +46,15 @@ register('menu-preview-note', {
   base: { tw: 'min-h-8 border-t border-[#303a49] px-3 py-2 text-[8px] text-[var(--muted)]' },
 });
 
-register('mui-menu-surface', {
+register('rgi-menu-surface', {
   base: { tw: 'z-50 w-[min(220px,calc(100vw-24px))] overflow-hidden rounded-lg border border-[#354154] bg-[#171f2c] text-[var(--text)] shadow-[0_16px_38px_rgba(0,0,0,.48)]' },
 });
 
-register('mui-menu-list', {
+register('rgi-menu-list', {
   base: { tw: 'flex flex-col p-1' },
 });
 
-register('mui-menu-item-danger', {
+register('rgi-menu-item-danger', {
   base: { tw: 'text-[#f09a9a] hover:bg-[#4a252c] hover:text-[#ffb4b4] focus-visible:bg-[#4a252c] [&_svg]:text-[#e78d96]' },
 });
 
@@ -75,7 +75,7 @@ register('menu-placement-option-active', {
 });
 
 register('menu-placement-stage', {
-  base: { tw: 'flex min-h-[150px] flex-col items-center justify-center gap-3 rounded-lg border border-dashed border-[#303a49] bg-[#0d121b] p-5 [&_.mui-button]:gap-2' },
+  base: { tw: 'flex min-h-[150px] flex-col items-center justify-center gap-3 rounded-lg border border-dashed border-[#303a49] bg-[#0d121b] p-5 [&_.rgi-button]:gap-2' },
 });
 
 register('menu-placement-stage .preview-note', {
@@ -98,6 +98,6 @@ register('menu-selection-card + .preview-note', {
   base: { tw: 'text-center text-[8px]' },
 });
 
-register('mui-menu-item[aria-checked="true"]', {
+register('rgi-menu-item[aria-checked="true"]', {
   base: { tw: 'bg-[#20304a] text-[#d9e5ff] [&_svg]:ml-auto [&_svg]:text-[#9edab7]' },
 });

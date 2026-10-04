@@ -12,8 +12,8 @@ const ButtonGroup = forwardRef(function ButtonGroup(
       ref={ref}
       role={props.role ?? 'group'}
       className={cx(
-        'mui-button-group',
-        orientation === 'vertical' && 'mui-button-group-vertical',
+        'rgi-button-group',
+        orientation === 'vertical' && 'rgi-button-group-vertical',
         className,
       )}
     >

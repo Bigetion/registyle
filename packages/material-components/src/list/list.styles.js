@@ -1,6 +1,6 @@
 import { register } from 'registyle/collector';
 
-register('mui-list', {
+register('rgi-list', {
   base: { tw: 'm-0 flex list-none flex-col p-2 text-[var(--text,#edf2fb)]' },
   modifiers: {
     dense: { tw: 'py-1' },
@@ -8,7 +8,7 @@ register('mui-list', {
   },
 });
 
-register('mui-list-item', {
+register('rgi-list-item', {
   base: { tw: 'flex min-h-12 items-center gap-3 px-4 py-2 text-sm' },
   modifiers: {
     divider: { tw: 'border-b border-[var(--border,#273142)] last:border-b-0' },
@@ -16,14 +16,14 @@ register('mui-list-item', {
   },
 });
 
-register('mui-list-item-text', {
+register('rgi-list-item-text', {
   base: { tw: 'flex min-w-0 flex-col gap-1' },
 });
 
-register('mui-list-primary', {
+register('rgi-list-primary', {
   base: { tw: 'font-medium' },
 });
 
-register('mui-list-secondary', {
+register('rgi-list-secondary', {
   base: { tw: 'text-xs text-[var(--muted,#9aa8bd)]' },
 });

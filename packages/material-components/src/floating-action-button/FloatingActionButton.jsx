@@ -22,9 +22,9 @@ const FloatingActionButton = forwardRef(function FloatingActionButton(
       type={type}
       aria-label={ariaLabel ?? label}
       className={cx(
-        'mui-floating-action-button',
-        `mui-floating-action-button-${variant}`,
-        size !== 'medium' && `mui-floating-action-button-${size}`,
+        'rgi-floating-action-button',
+        `rgi-floating-action-button-${variant}`,
+        size !== 'medium' && `rgi-floating-action-button-${size}`,
         className,
       )}
     >

@@ -4,7 +4,7 @@ import { cx } from 'registyle';
 function Avatar({ label, initials, variant, size = 'medium', children }) {
   return (
     <span
-      className={cx('mui-avatar', variant, size !== 'medium' && `mui-avatar-${size}`)}
+      className={cx('rgi-avatar', variant, size !== 'medium' && `rgi-avatar-${size}`)}
       role="img"
       aria-label={label}
     >

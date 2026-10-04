@@ -61,7 +61,7 @@ function ChipDeletable() {
       </div>
       <div className="chip-actions">
         <span className="preview-note" role="status" aria-live="polite">{tags.length} tags remaining</span>
-        <button className="mui-button mui-button-text" type="button" onClick={() => setTags(['Design system', 'React', 'Accessibility'])} disabled={tags.length === 3}>
+        <button className="rgi-button rgi-button-text" type="button" onClick={() => setTags(['Design system', 'React', 'Accessibility'])} disabled={tags.length === 3}>
           Restore tags
         </button>
       </div>

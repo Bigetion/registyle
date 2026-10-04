@@ -96,11 +96,11 @@ register('stepper-alternative-showcase', {
   base: { tw: 'gap-3' },
 });
 
-register('mui-stepper-alternative', {
+register('rgi-stepper-alternative', {
   base: { tw: 'm-0 flex w-full list-none items-start p-0' },
 });
 
-register('mui-step-alternative', {
+register('rgi-step-alternative', {
   base: { tw: 'flex min-w-0 flex-1 items-start' },
 });
 
@@ -128,6 +128,6 @@ register('stepper-vertical-showcase', {
   base: { tw: 'items-center' },
 });
 
-register('stepper-vertical-showcase .mui-stepper-vertical', {
+register('stepper-vertical-showcase .rgi-stepper-vertical', {
   base: { tw: 'max-w-full' },
 });

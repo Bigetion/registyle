@@ -1,6 +1,6 @@
 import { register } from 'registyle/collector';
 
-register('mui-avatar', {
+register('rgi-avatar', {
   base: {
     tw: 'inline-flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[var(--mui-avatar-bg,var(--panel-raised,#273142))] text-sm font-medium text-[var(--mui-avatar-color,var(--text,#edf2fb))] align-middle',
   },
@@ -13,6 +13,6 @@ register('mui-avatar', {
   },
 });
 
-register('mui-avatar img', {
+register('rgi-avatar img', {
   base: { tw: 'size-full object-cover' },
 });

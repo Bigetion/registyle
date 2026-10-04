@@ -99,7 +99,7 @@ function FloatingDemo({ demoId }) {
   return (
     <div className={cx('floating-demo', isClickAway && 'click-away-demo')}>
       <button
-        className={cx('mui-button', 'mui-button-outlined', 'floating-trigger')}
+        className={cx('rgi-button', 'rgi-button-outlined', 'floating-trigger')}
         type="button"
         ref={anchorRef}
         aria-expanded={open}
@@ -139,14 +139,14 @@ function FloatingDemo({ demoId }) {
         ) : (
           <div className={cx('floating-card', isPortal && 'portal-card')}>
             <div className="floating-card-heading">
-              <div className="mui-avatar mui-avatar-green"><Layers size={17} /></div>
+              <div className="rgi-avatar rgi-avatar-green"><Layers size={17} /></div>
               <div><strong>{isPortal ? 'Portal layer' : isClickAway ? 'Click-away listener' : 'Popover content'}</strong><span>Anchored with Popper.js</span></div>
               <button className="floating-close" type="button" onClick={dismiss} aria-label="Close popover"><X size={14} /></button>
             </div>
             <p>Floating content is rendered in a portal and automatically repositions to stay inside the viewport.</p>
             <div className="floating-card-actions">
-              <button className="mui-button mui-button-text" type="button" onClick={dismiss}>Dismiss</button>
-              <button className="mui-button mui-button-contained" type="button" onClick={dismiss}>Got it</button>
+              <button className="rgi-button rgi-button-text" type="button" onClick={dismiss}>Dismiss</button>
+              <button className="rgi-button rgi-button-contained" type="button" onClick={dismiss}>Got it</button>
             </div>
           </div>
         )}
@@ -253,9 +253,9 @@ function SelectionPreview({ demoId }) {
   return (
     <div className="preview-stack">
       <div className="selection-list">
-        <label className="selection-option"><input className="mui-checkbox" type="checkbox" checked={checked} onChange={(event) => setChecked(event.target.checked)} /><span>Send me product updates</span></label>
-        <label className="selection-option"><input className="mui-checkbox" type="checkbox" /><span>Subscribe to newsletter</span></label>
-        <label className="selection-option is-disabled"><input className="mui-checkbox" type="checkbox" disabled /><span>Disabled option</span></label>
+        <label className="selection-option"><input className="rgi-checkbox" type="checkbox" checked={checked} onChange={(event) => setChecked(event.target.checked)} /><span>Send me product updates</span></label>
+        <label className="selection-option"><input className="rgi-checkbox" type="checkbox" /><span>Subscribe to newsletter</span></label>
+        <label className="selection-option is-disabled"><input className="rgi-checkbox" type="checkbox" disabled /><span>Disabled option</span></label>
       </div>
       {demoId.startsWith('checkbox') && demoId.includes('group') && <p className="preview-note">Selected: {checked ? 'product updates' : 'none'}</p>}
     </div>
@@ -270,37 +270,37 @@ function InputPreview({ demoId }) {
   const isNumber = demoId.startsWith('number');
   return (
     <div className="preview-stack input-preview">
-      <label className="mui-input-wrap">
-        <span className="mui-label">{isNumber ? 'Quantity' : isSelect ? 'Department' : 'Email address'}</span>
+      <label className="rgi-input-wrap">
+        <span className="rgi-label">{isNumber ? 'Quantity' : isSelect ? 'Department' : 'Email address'}</span>
         {isSelect ? (
-          <select className="mui-input select-control" value={selected} onChange={(event) => setSelected(event.target.value)}>
+          <select className="rgi-input select-control" value={selected} onChange={(event) => setSelected(event.target.value)}>
             <option value="">Select a department</option>
             {choices.map((choice) => <option key={choice}>{choice}</option>)}
           </select>
         ) : isNumber ? (
-          <span className="number-field"><button type="button" aria-label="Decrease" onClick={() => setValue((number) => Math.max(0, Number(number) - 1))}>−</button><input className="mui-input" type="number" value={value} min={0} max={10} onChange={(event) => setValue(event.target.value)} aria-label="Quantity" /><button type="button" aria-label="Increase" onClick={() => setValue((number) => Math.min(10, Number(number) + 1))}>+</button></span>
+          <span className="number-field"><button type="button" aria-label="Decrease" onClick={() => setValue((number) => Math.max(0, Number(number) - 1))}>−</button><input className="rgi-input" type="number" value={value} min={0} max={10} onChange={(event) => setValue(event.target.value)} aria-label="Quantity" /><button type="button" aria-label="Increase" onClick={() => setValue((number) => Math.min(10, Number(number) + 1))}>+</button></span>
         ) : (
-          <input className="mui-input" type={demoId.includes('validation') ? 'email' : 'text'} placeholder={demoId.includes('adornments') ? 'Search settings' : 'name@example.com'} value={value} onChange={(event) => setValue(event.target.value)} />
+          <input className="rgi-input" type={demoId.includes('validation') ? 'email' : 'text'} placeholder={demoId.includes('adornments') ? 'Search settings' : 'name@example.com'} value={value} onChange={(event) => setValue(event.target.value)} />
         )}
       </label>
       {demoId.includes('validation') && <span className={cx('input-helper', value.includes('@') && 'input-helper-success')}>{value && !value.includes('@') ? 'Enter a valid email address' : value.includes('@') ? 'Looks good' : 'We will never share your email.'}</span>}
-      {demoId.includes('multiple') && <div className="preview-row"><span className="mui-chip mui-chip-primary">React <button type="button" aria-label="Remove React"><X size={12} /></button></span><span className="mui-chip mui-chip-filled">Vue <button type="button" aria-label="Remove Vue"><X size={12} /></button></span></div>}
+      {demoId.includes('multiple') && <div className="preview-row"><span className="rgi-chip rgi-chip-primary">React <button type="button" aria-label="Remove React"><X size={12} /></button></span><span className="rgi-chip rgi-chip-filled">Vue <button type="button" aria-label="Remove Vue"><X size={12} /></button></span></div>}
     </div>
   );
 }
 
 function DisplayPreview({ demoId }) {
-  return <div className="preview-row"><span className="mui-chip mui-chip-filled">Data display</span><span className="mui-chip mui-chip-primary">Material</span><span className="preview-note">Responsive component preview</span></div>;
+  return <div className="preview-row"><span className="rgi-chip rgi-chip-filled">Data display</span><span className="rgi-chip rgi-chip-primary">Material</span><span className="preview-note">Responsive component preview</span></div>;
 }
 
 function FeedbackPreview({ demoId }) {
   const [open, setOpen] = useState(demoId.startsWith('snackbar'));
-  return <div className="snackbar-demo"><button className="mui-button mui-button-contained" type="button" onClick={() => setOpen(true)}>Show notification</button>{open && <div className="snackbar"><span>File saved successfully</span><button type="button" onClick={() => setOpen(false)}>UNDO</button><button type="button" aria-label="Dismiss" onClick={() => setOpen(false)}><X size={14} /></button></div>}</div>;
+  return <div className="snackbar-demo"><button className="rgi-button rgi-button-contained" type="button" onClick={() => setOpen(true)}>Show notification</button>{open && <div className="snackbar"><span>File saved successfully</span><button type="button" onClick={() => setOpen(false)}>UNDO</button><button type="button" aria-label="Dismiss" onClick={() => setOpen(false)}><X size={14} /></button></div>}</div>;
 }
 
 function SurfacePreview({ demoId }) {
   const [selected, setSelected] = useState(0);
-  return <div className="preview-row"><span className="mui-chip mui-chip-filled"><Layers size={14} /> Surface</span><span className="preview-note">Composable content surface</span></div>;
+  return <div className="preview-row"><span className="rgi-chip rgi-chip-filled"><Layers size={14} /> Surface</span><span className="preview-note">Composable content surface</span></div>;
 }
 
 function NavigationPreview({ demoId }) {
@@ -310,7 +310,7 @@ function NavigationPreview({ demoId }) {
   if (demoId.startsWith('stepper')) return <div className="stepper-demo">{['Details', 'Address', 'Payment'].map((name, index) => <button key={name} type="button" onClick={() => setStep(index)}><span className={cx('step-number', index < step && 'step-complete')}>{index < step ? <Check size={13} /> : index + 1}</span><span className={cx(index === step && 'step-current')}>{name}</span>{index < 2 && <i />}</button>)}</div>;
   if (demoId.startsWith('speed-dial')) return <div className="speed-dial-demo"><button className="fab-control" type="button" aria-expanded={open} aria-label={open ? 'Close quick actions' : 'Open quick actions'} onClick={() => setOpen((value) => !value)}>{open ? <X size={19} /> : <Plus size={20} />}</button>{open && <div className="speed-dial-actions">{[[Image, 'Upload image'], [FileText, 'New document'], [Mail, 'Send email']].map(([Icon, name]) => <button key={name} type="button" onClick={() => { setSelected(name); setOpen(false); }}><span>{name}</span><i><Icon size={15} /></i></button>)}</div>}<span className="preview-note">{typeof selected === 'string' ? selected : 'Quick actions'}</span></div>;
   if (demoId.startsWith('tabs') || demoId.startsWith('bottom-navigation')) return <div className={cx('tab-demo', demoId.startsWith('bottom-navigation') && 'bottom-navigation-demo')}>{['Overview', 'Activity', 'Settings'].map((name, index) => <button className={cx(selected === index && 'tab-active')} key={name} type="button" onClick={() => setSelected(index)}>{demoId.startsWith('bottom') && [Home, Activity, Settings].map((Icon, iconIndex) => iconIndex === index && <Icon key={name} size={16} />)}{name}</button>)}</div>;
-  return <div className="preview-row"><button className="mui-button mui-button-outlined" type="button" onClick={() => setSelected((value) => value + 1)}><Menu size={14} /> Open navigation</button><span className="preview-note">Selected destination: {selected ? 'Components' : 'Overview'}</span></div>;
+  return <div className="preview-row"><button className="rgi-button rgi-button-outlined" type="button" onClick={() => setSelected((value) => value + 1)}><Menu size={14} /> Open navigation</button><span className="preview-note">Selected destination: {selected ? 'Components' : 'Overview'}</span></div>;
 }
 
 function DemoPreview({ component, demoId }) {
@@ -368,7 +368,7 @@ function DemoPreview({ component, demoId }) {
   if (demoId.startsWith('alert') || demoId.startsWith('dialog') || demoId.startsWith('progress') || demoId.startsWith('snackbar')) return <FeedbackPreview demoId={demoId} />;
   if (demoId.startsWith('accordion') || demoId.startsWith('app-bar') || demoId.startsWith('card') || demoId.startsWith('paper')) return <SurfacePreview demoId={demoId} />;
   if (demoId.startsWith('bottom-navigation') || demoId.startsWith('drawer')) return <NavigationPreview demoId={demoId} />;
-  return <div className="preview-row"><span className="mui-chip mui-chip-primary">{component.name}</span><span className="preview-note">Interactive {component.name.toLowerCase()} example</span></div>;
+  return <div className="preview-row"><span className="rgi-chip rgi-chip-primary">{component.name}</span><span className="preview-note">Interactive {component.name.toLowerCase()} example</span></div>;
 }
 
 export default DemoPreview;

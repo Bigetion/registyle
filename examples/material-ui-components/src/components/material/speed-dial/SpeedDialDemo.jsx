@@ -20,7 +20,7 @@ function SpeedDial({ open, onToggle, direction = 'up', onSelect, label = 'Quick 
 
   return (
     <div
-      className={cx('mui-speed-dial', `mui-speed-dial-${direction}`)}
+      className={cx('rgi-speed-dial', `rgi-speed-dial-${direction}`)}
       onKeyDown={(event) => {
         if (event.key === 'Escape' && open) {
           event.preventDefault();
@@ -29,10 +29,10 @@ function SpeedDial({ open, onToggle, direction = 'up', onSelect, label = 'Quick 
         }
       }}
     >
-      <div className={cx('mui-speed-dial-actions', !open && 'mui-speed-dial-actions-hidden')} aria-hidden={!open}>
+      <div className={cx('rgi-speed-dial-actions', !open && 'rgi-speed-dial-actions-hidden')} aria-hidden={!open}>
         {ACTIONS.map(({ label: action, Icon }) => (
           <button
-            className="mui-speed-dial-action"
+            className="rgi-speed-dial-action"
             type="button"
             key={action}
             tabIndex={open ? 0 : -1}
@@ -46,7 +46,7 @@ function SpeedDial({ open, onToggle, direction = 'up', onSelect, label = 'Quick 
         ))}
       </div>
       <button
-        className="mui-speed-dial-fab"
+        className="rgi-speed-dial-fab"
         type="button"
         ref={fabRef}
         aria-label={open ? 'Close quick actions' : label}

@@ -63,20 +63,20 @@ function TransferList({
   }
 
   function renderItems(sideItems, selection, setSelection, side) {
-    if (!sideItems.length) return <p className="mui-transfer-list-empty">No items</p>;
+    if (!sideItems.length) return <p className="rgi-transfer-list-empty">No items</p>;
 
     return sideItems.map(({ id, label, description }) => (
-      <label className="mui-transfer-item" key={id}>
+      <label className="rgi-transfer-item" key={id}>
         <input
           checked={selection.includes(id)}
-          className="mui-transfer-checkbox"
+          className="rgi-transfer-checkbox"
           onChange={(event) => toggleSelection(id, event.currentTarget.checked, setSelection)}
           type="checkbox"
         />
-        <span className="mui-transfer-item-copy">
-          <span className="mui-transfer-item-label">{label}</span>
+        <span className="rgi-transfer-item-copy">
+          <span className="rgi-transfer-item-label">{label}</span>
           {description != null && (
-            <span className="mui-transfer-item-description">{description}</span>
+            <span className="rgi-transfer-item-description">{description}</span>
           )}
         </span>
         <span className="sr-only">{side}</span>
@@ -85,20 +85,20 @@ function TransferList({
   }
 
   return (
-    <div className={cx('mui-transfer-list', className)}>
-      <section className="mui-transfer-panel" aria-labelledby={`${generatedId}-source`}>
-        <h3 className="mui-transfer-heading" id={`${generatedId}-source`}>
+    <div className={cx('rgi-transfer-list', className)}>
+      <section className="rgi-transfer-panel" aria-labelledby={`${generatedId}-source`}>
+        <h3 className="rgi-transfer-heading" id={`${generatedId}-source`}>
           {sourceTitle}
-          <span className="mui-transfer-count">{sourceItems.length}</span>
+          <span className="rgi-transfer-count">{sourceItems.length}</span>
         </h3>
-        <fieldset className="mui-transfer-items" aria-label={sourceTitle}>
+        <fieldset className="rgi-transfer-items" aria-label={sourceTitle}>
           {renderItems(sourceItems, sourceSelection, setSourceSelection, sourceTitle)}
         </fieldset>
       </section>
 
-      <fieldset className="mui-transfer-actions" aria-label="Move items">
+      <fieldset className="rgi-transfer-actions" aria-label="Move items">
         <button
-          className="mui-transfer-action"
+          className="rgi-transfer-action"
           type="button"
           aria-label={`Move selected to ${targetTitle}`}
           disabled={!sourceSelection.some((id) => sourceItems.some((item) => item.id === id))}
@@ -107,7 +107,7 @@ function TransferList({
           <span aria-hidden="true">→</span>
         </button>
         <button
-          className="mui-transfer-action"
+          className="rgi-transfer-action"
           type="button"
           aria-label={`Move all to ${targetTitle}`}
           disabled={!sourceItems.length}
@@ -116,7 +116,7 @@ function TransferList({
           <span aria-hidden="true">»</span>
         </button>
         <button
-          className="mui-transfer-action"
+          className="rgi-transfer-action"
           type="button"
           aria-label={`Move selected to ${sourceTitle}`}
           disabled={!targetSelection.some((id) => targetItems.some((item) => item.id === id))}
@@ -125,7 +125,7 @@ function TransferList({
           <span aria-hidden="true">←</span>
         </button>
         <button
-          className="mui-transfer-action"
+          className="rgi-transfer-action"
           type="button"
           aria-label={`Move all to ${sourceTitle}`}
           disabled={!targetItems.length}
@@ -135,16 +135,16 @@ function TransferList({
         </button>
       </fieldset>
 
-      <section className="mui-transfer-panel" aria-labelledby={`${generatedId}-target`}>
-        <h3 className="mui-transfer-heading" id={`${generatedId}-target`}>
+      <section className="rgi-transfer-panel" aria-labelledby={`${generatedId}-target`}>
+        <h3 className="rgi-transfer-heading" id={`${generatedId}-target`}>
           {targetTitle}
-          <span className="mui-transfer-count">{targetItems.length}</span>
+          <span className="rgi-transfer-count">{targetItems.length}</span>
         </h3>
-        <fieldset className="mui-transfer-items" aria-label={targetTitle}>
+        <fieldset className="rgi-transfer-items" aria-label={targetTitle}>
           {renderItems(targetItems, targetSelection, setTargetSelection, targetTitle)}
         </fieldset>
       </section>
-      <span className="mui-transfer-status" role="status" aria-live="polite">
+      <span className="rgi-transfer-status" role="status" aria-live="polite">
         {announcement}
       </span>
     </div>
