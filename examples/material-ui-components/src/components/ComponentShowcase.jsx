@@ -701,6 +701,21 @@ const POPPER_DEMOS = {
   },
 };
 
+const PORTAL_DEMOS = {
+  portal: {
+    title: 'Portal to document.body',
+    caption: 'Render a notification outside its React parent and verify that it is mounted directly under document.body.',
+  },
+  'portal-popover': {
+    title: 'Custom portal target',
+    caption: 'Mount content into a chosen DOM node while keeping React event propagation connected to its owner.',
+  },
+  'portal-layering': {
+    title: 'Escape clipping',
+    caption: 'Render a floating layer outside an overflow-hidden parent so it remains visible beyond the container.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -811,6 +826,8 @@ export default function ComponentShowcase({ component }) {
                                                                                                                                                     ? MODAL_DEMOS[demoId]
                                                                                                                                                       : component.slug === 'popper'
                                                                                                                                                         ? POPPER_DEMOS[demoId]
+                                                                                                                                                          : component.slug === 'portal'
+                                                                                                                                                            ? PORTAL_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel

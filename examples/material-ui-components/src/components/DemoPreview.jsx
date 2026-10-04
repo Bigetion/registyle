@@ -49,6 +49,7 @@ import TabsDemo from './material/tabs/TabsDemo.jsx';
 import ClickAwayListenerDemo from './material/click-away-listener/ClickAwayListenerDemo.jsx';
 import ModalDemo from './material/modal/ModalDemo.jsx';
 import PopperDemo from './material/popper/PopperDemo.jsx';
+import PortalDemo from './material/portal/PortalDemo.jsx';
 import BadgeDemo from './material/badge/BadgeDemo.jsx';
 import ButtonGroupDemo from './material/button-group/ButtonGroupDemo.jsx';
 import ChipDemo from './material/chip/ChipDemo.jsx';
@@ -314,6 +315,7 @@ function NavigationPreview({ demoId }) {
 }
 
 function DemoPreview({ component, demoId }) {
+  if (component.slug === 'portal') return <PortalDemo demoId={demoId} />;
   if (component.slug === 'popper') return <PopperDemo demoId={demoId} />;
   if (component.slug === 'modal') return <ModalDemo demoId={demoId} />;
   if (component.slug === 'click-away-listener') return <ClickAwayListenerDemo demoId={demoId} />;
@@ -359,7 +361,7 @@ function DemoPreview({ component, demoId }) {
   if (component.slug === 'number-field') return <NumberFieldDemo demoId={demoId} />;
   if (component.slug === 'radio-group') return <RadioGroupDemo demoId={demoId} />;
   if (component.slug === 'rating') return <RatingDemo demoId={demoId} />;
-  if (demoId.startsWith('tooltip') || demoId.startsWith('popover') || demoId.startsWith('autocomplete') || demoId.startsWith('portal')) return <FloatingDemo demoId={demoId} />;
+  if (demoId.startsWith('tooltip') || demoId.startsWith('popover') || demoId.startsWith('autocomplete')) return <FloatingDemo demoId={demoId} />;
   if (demoId.startsWith('button')) return <ButtonPreview demoId={demoId} />;
   if (demoId.startsWith('checkbox')) return <SelectionPreview demoId={demoId} />;
   if (demoId.startsWith('text-field')) return <InputPreview demoId={demoId} />;
