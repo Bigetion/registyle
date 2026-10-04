@@ -1,9 +1,5 @@
 import { register } from 'registyle/collector';
 
-register('mui-avatar', {
-  base: { tw: 'inline-flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#334a72] text-[12px] font-semibold tracking-[.01em] text-[#e6eeff]' },
-});
-
 register('avatar-stack', {
   base: { tw: 'flex -space-x-2 [&_.mui-avatar]:border-2 [&_.mui-avatar]:border-[var(--panel)]' },
 });

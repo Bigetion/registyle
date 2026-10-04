@@ -76,15 +76,17 @@
     "test:types": "tsc --noEmit --strict --skipLibCheck --module NodeNext --moduleResolution NodeNext --target ESNext type-tests/consumer.ts",
     "test:codesandbox": "node test/codesandbox-detection.test.js",
     "lint": "npx @biomejs/biome check .",
+    "lint:material-components": "biome check packages/material-components",
     "lint:fix": "npx @biomejs/biome check --write .",
     "prepublishOnly": "npm test"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.5.15",
     "@tailwindcss/postcss": "^4.3.3",
     "postcss": "^8.5.28",
     "postcss-selector-parser": "^7.1.1",
-    "vite": "^6.4.3",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vite": "^6.4.3"
   },
   "peerDependencies": {
     "@tailwindcss/postcss": "^4.3.3",
@@ -93,10 +95,18 @@
     "vite": "^6.4.3"
   },
   "peerDependenciesMeta": {
-    "@tailwindcss/postcss": { "optional": true },
-    "postcss": { "optional": true },
-    "postcss-selector-parser": { "optional": true },
-    "vite": { "optional": true }
+    "@tailwindcss/postcss": {
+      "optional": true
+    },
+    "postcss": {
+      "optional": true
+    },
+    "postcss-selector-parser": {
+      "optional": true
+    },
+    "vite": {
+      "optional": true
+    }
   },
   "keywords": [
     "css",

@@ -36,10 +36,6 @@ register('snackbar-stage-end', {
   base: { tw: 'justify-end' },
 });
 
-register('mui-snackbar', {
-  base: { tw: 'flex w-full max-w-[440px] items-center gap-2.5 rounded-lg border border-[#3a424e] bg-[#252a32] px-3 py-2.5 text-[10px] text-white shadow-[0_10px_30px_rgba(0,0,0,.35)]' },
-});
-
 register('snackbar-icon', {
   base: { tw: 'inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-[#244336] text-[#8cddb3]' },
 });

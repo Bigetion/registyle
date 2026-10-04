@@ -11,7 +11,9 @@ npm run dev
 
 Run `npm run build` to verify the production bundle. Styles are defined in `src/registyles` and collected from `src/registyles/index.js`; the app loads the generated stylesheet through `virtual:registyle.css`.
 
-Each component has its own modules, following the `register-component-demo` example:
+Reusable React APIs and their base styles for all 47 components live in the standalone `@registyle/material-components` package under `packages/material-components`; showcase pages, interactive demos, and demo-only styles remain in this application. The app's Registyle manifest imports the package style manifest so component base rules are included in the generated stylesheet. Shared base style registrations have been removed from demo style modules to keep package styles and showcase-only styles separate.
+
+Each component page retains its own demo and source context:
 
 ```text
 src/pages/components/button/Page.jsx

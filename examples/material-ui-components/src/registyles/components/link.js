@@ -28,10 +28,6 @@ register('link-inline-row', {
   base: { tw: 'mt-1 flex flex-wrap items-center gap-2.5' },
 });
 
-register('mui-link', {
-  base: { tw: 'inline-flex w-fit cursor-pointer items-center gap-1 text-[9px] font-medium text-[#a9c4ff] no-underline underline-offset-4 hover:text-white hover:underline focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#8baeff]' },
-});
-
 register('mui-link-underlined', {
   base: { tw: 'underline' },
 });

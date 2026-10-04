@@ -8,10 +8,6 @@ register('pagination-demo-heading', {
   base: { tw: 'flex flex-wrap items-center justify-between gap-2 [&_strong]:text-[10px] [&_strong]:font-semibold [&_span]:text-[8px] [&_span]:text-[var(--muted)]' },
 });
 
-register('mui-pagination', {
-  base: { tw: 'flex flex-wrap items-center justify-center gap-1' },
-});
-
 register('pagination-button', {
   base: { tw: 'inline-flex min-h-8 min-w-8 cursor-pointer items-center justify-center gap-1 rounded-md border border-transparent bg-transparent px-2 text-[9px] font-medium text-[#aeb9c9] hover:bg-white/5 hover:text-white focus-visible:outline-2 focus-visible:outline-[#8baeff] disabled:cursor-not-allowed disabled:opacity-40' },
 });

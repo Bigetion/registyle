@@ -4,22 +4,6 @@ register('breadcrumbs-demo', {
   base: { tw: 'flex w-full max-w-[620px] flex-col gap-4 rounded-lg border border-[var(--border)] bg-[#111720] p-4' },
 });
 
-register('mui-breadcrumbs', {
-  base: { tw: 'min-w-0 overflow-x-auto' },
-});
-
-register('mui-breadcrumbs ol', {
-  base: { tw: 'm-0 flex min-w-0 list-none flex-wrap items-center gap-1.5 p-0 text-[9px]' },
-});
-
-register('mui-breadcrumbs li', {
-  base: { tw: 'flex min-w-0 shrink-0 items-center gap-1.5' },
-});
-
-register('mui-breadcrumbs a', {
-  base: { tw: 'inline-flex max-w-[180px] items-center truncate rounded-sm text-[#a9c4ff] no-underline hover:text-white focus-visible:outline-2 focus-visible:outline-[#8baeff]' },
-});
-
 register('breadcrumbs-current-item', {
   base: { tw: 'max-w-[200px] truncate font-medium text-[var(--text)]' },
 });

@@ -54,10 +54,6 @@ register('mui-menu-list', {
   base: { tw: 'flex flex-col p-1' },
 });
 
-register('mui-menu-item', {
-  base: { tw: 'flex min-h-8 w-full cursor-pointer items-center gap-2.5 rounded-md border-0 bg-transparent px-2.5 text-left text-[9px] text-[#c1cad7] hover:bg-white/5 hover:text-white focus-visible:bg-white/5 focus-visible:outline-2 focus-visible:outline-[#8baeff] [&_svg]:shrink-0 [&_svg]:text-[#8494aa]' },
-});
-
 register('mui-menu-item-danger', {
   base: { tw: 'text-[#f09a9a] hover:bg-[#4a252c] hover:text-[#ffb4b4] focus-visible:bg-[#4a252c] [&_svg]:text-[#e78d96]' },
 });

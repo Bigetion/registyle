@@ -6,12 +6,13 @@
     "useIgnoreFile": true
   },
   "files": {
-    "ignore": [
-      "node_modules",
-      "dist",
-      "examples/*/node_modules",
-      "examples/*/dist",
-      "coverage"
+    "includes": [
+      "**",
+      "!**/node_modules",
+      "!**/dist",
+      "!examples/*/node_modules",
+      "!examples/*/dist",
+      "!**/coverage"
     ]
   },
   "formatter": {
@@ -30,7 +31,7 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true,
+      "preset": "recommended",
       "suspicious": {
         "noDuplicateObjectKeys": "error"
       },
@@ -39,8 +40,7 @@
         "noUnusedImports": "warn"
       },
       "style": {
-        "useConst": "warn",
-        "noVar": "error"
+        "useConst": "warn"
       }
     }
   }

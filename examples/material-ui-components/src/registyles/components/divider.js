@@ -4,10 +4,6 @@ register('divider-demo', {
   base: { tw: 'flex w-full max-w-[520px] flex-col gap-3 text-xs text-[var(--muted)]' },
 });
 
-register('mui-divider', {
-  base: { tw: 'm-0 h-px w-full shrink-0 border-0 bg-[var(--border)]' },
-});
-
 register('divider-label', {
   base: { tw: 'text-xs font-medium text-[var(--text)]' },
 });

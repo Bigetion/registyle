@@ -4,14 +4,6 @@ register('stepper-showcase', {
   base: { tw: 'flex w-full max-w-[680px] flex-col gap-3 rounded-lg border border-[#303a49] bg-[#111720] p-3 sm:gap-4 sm:p-5' },
 });
 
-register('mui-stepper', {
-  base: { tw: 'm-0 flex w-full list-none items-start p-0' },
-});
-
-register('mui-step', {
-  base: { tw: 'flex min-w-0 flex-1 flex-col items-center gap-1.5' },
-});
-
 register('stepper-indicator', {
   base: { tw: 'flex w-full items-center' },
 });
@@ -70,14 +62,6 @@ register('stepper-primary-button', {
 
 register('stepper-complete-message', {
   base: { tw: 'flex min-h-[60px] flex-col items-center justify-center gap-1 [&_span]:inline-flex [&_span]:size-6 [&_span]:items-center [&_span]:justify-center [&_span]:rounded-full [&_span]:bg-[#203b32] [&_span]:text-[#a6e2c0] [&_strong]:text-[10px] [&_strong]:font-semibold [&_small]:text-[8px] [&_small]:text-[var(--muted)]' },
-});
-
-register('mui-stepper-vertical', {
-  base: { tw: 'm-0 flex w-full max-w-[430px] list-none flex-col p-0' },
-});
-
-register('mui-step-vertical', {
-  base: { tw: 'relative flex min-h-8 flex-wrap items-start gap-x-2.5' },
 });
 
 register('stepper-vertical-heading', {

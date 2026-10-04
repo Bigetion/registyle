@@ -4,10 +4,6 @@ register('card-demo', {
   base: { tw: 'w-full max-w-[360px]' },
 });
 
-register('mui-card', {
-  base: { tw: 'w-full overflow-hidden rounded-xl border border-[var(--border)] bg-[#141b26] shadow-[0_12px_30px_rgba(0,0,0,.18)]' },
-});
-
 register('project-card', {
   base: { tw: 'max-w-[350px] p-4' },
 });

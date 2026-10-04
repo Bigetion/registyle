@@ -1,6 +1,5 @@
-import { useEffect, useId, useRef, useState } from 'react';
-import { Check } from 'lucide-react';
-import { cx } from 'registyle';
+import { useId, useState } from 'react';
+import { Checkbox } from '@registyle/material-components';
 
 const PREFERENCES = [
   { id: 'product', label: 'Product updates', description: 'News about features and releases.' },
@@ -9,29 +8,15 @@ const PREFERENCES = [
 ];
 
 function CheckboxControl({ id, label, description, checked, disabled = false, indeterminate = false, onChange }) {
-  const inputRef = useRef(null);
-
-  useEffect(() => {
-    if (inputRef.current) inputRef.current.indeterminate = indeterminate;
-  }, [indeterminate]);
-
   return (
     <label className="selection-option">
-      <span className={cx('mui-checkbox', disabled && 'mui-checkbox-disabled')}>
-        <input
-          className="mui-checkbox-input"
-          ref={inputRef}
-          id={id}
-          type="checkbox"
-          checked={checked}
-          disabled={disabled}
-          aria-checked={indeterminate ? 'mixed' : checked}
-          onChange={onChange}
-        />
-        <span className={cx('mui-checkbox-indicator', checked && 'mui-checkbox-checked', indeterminate && 'mui-checkbox-indeterminate')} aria-hidden="true">
-          {indeterminate ? <span className="mui-checkbox-dash" /> : checked ? <Check size={13} strokeWidth={2.5} /> : null}
-        </span>
-      </span>
+      <Checkbox
+        id={id}
+        checked={checked}
+        disabled={disabled}
+        indeterminate={indeterminate}
+        onChange={onChange}
+      />
       <span className="selection-copy">
         <span>{label}</span>
         {description && <span className="preview-note">{description}</span>}

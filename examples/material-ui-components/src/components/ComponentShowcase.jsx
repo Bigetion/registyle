@@ -7,6 +7,10 @@ const styleSources = import.meta.glob('../registyles/components/*.js', {
   import: 'default',
 });
 
+const COMPONENT_STYLE_NOTES = {
+  checkbox: 'Base component styles are provided by @registyle/material-components/checkbox.',
+};
+
 const BUTTON_DEMOS = {
   button: {
     title: 'Button variants',
@@ -725,7 +729,7 @@ function titleFromDemo(id) {
 
 export default function ComponentShowcase({ component }) {
   const stylePath = `../registyles/components/${component.slug}.js`;
-  const styleSource = styleSources[stylePath];
+  const styleSource = styleSources[stylePath] ?? COMPONENT_STYLE_NOTES[component.slug];
 
   if (typeof styleSource !== 'string') {
     throw new Error(`Missing Registyle source for "${component.slug}" at ${stylePath}`);

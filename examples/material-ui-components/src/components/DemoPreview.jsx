@@ -24,6 +24,7 @@ import {
   X,
 } from 'lucide-react';
 import { cx } from 'registyle';
+import { Button } from '@registyle/material-components';
 import { PopperSurface, useClickAway } from './Popper.jsx';
 import AutocompleteDemo from './material/autocomplete/AutocompleteDemo.jsx';
 import AvatarDemo from './material/avatar/AvatarDemo.jsx';
@@ -160,7 +161,6 @@ function ButtonPreview({ demoId }) {
   const [loading, setLoading] = useState(false);
   const [pressed, setPressed] = useState(false);
   const timerRef = useRef(null);
-  const buttonClass = 'mui-button';
 
   useEffect(() => () => window.clearTimeout(timerRef.current), []);
 
@@ -169,9 +169,9 @@ function ButtonPreview({ demoId }) {
       <div className="button-example-section">
         <span className="button-example-label">Semantic variants</span>
         <div className="button-example-row">
-          <button className={cx(buttonClass, 'mui-button-color-success')} type="button"><Check size={14} /> Success</button>
-          <button className={cx(buttonClass, 'mui-button-color-warning')} type="button"><Info size={14} /> Warning</button>
-          <button className={cx(buttonClass, 'mui-button-color-danger')} type="button"><Trash2 size={14} /> Delete</button>
+          <Button color="success"><Check size={14} /> Success</Button>
+          <Button color="warning"><Info size={14} /> Warning</Button>
+          <Button color="danger"><Trash2 size={14} /> Delete</Button>
         </div>
         <span className="preview-note">Reserve semantic colors for actions where intent matters.</span>
       </div>
@@ -183,9 +183,9 @@ function ButtonPreview({ demoId }) {
       <div className="button-example-section">
         <span className="button-example-label">Adjust the visual density</span>
         <div className="button-example-row">
-          <button className={cx(buttonClass, 'mui-button-text', 'mui-button-small')} type="button">Small</button>
-          <button className={cx(buttonClass, 'mui-button-outlined')} type="button">Medium</button>
-          <button className={cx(buttonClass, 'mui-button-contained', 'mui-button-large')} type="button">Large action</button>
+          <Button variant="text" size="small">Small</Button>
+          <Button variant="outlined">Medium</Button>
+          <Button size="large">Large action</Button>
         </div>
         <span className="preview-note">Use one consistent size within a related control group.</span>
       </div>
@@ -197,8 +197,8 @@ function ButtonPreview({ demoId }) {
       <div className="button-example-section">
         <span className="button-example-label">Icon placement</span>
         <div className="button-example-row">
-          <button className={cx(buttonClass, 'mui-button-contained')} type="button"><Plus size={15} /> Create project</button>
-          <button className={cx(buttonClass, 'mui-button-outlined')} type="button">Continue <ArrowRight size={15} /></button>
+          <Button><Plus size={15} /> Create project</Button>
+          <Button variant="outlined">Continue <ArrowRight size={15} /></Button>
           <button className="button-example-icon-button" type="button" aria-label="Add item"><Plus size={17} /></button>
         </div>
         <span className="preview-note">Icon-only actions include an accessible label.</span>
@@ -211,8 +211,7 @@ function ButtonPreview({ demoId }) {
       <div className="button-example-section">
         <span className="button-example-label">Async action state</span>
         <div className="button-example-row">
-          <button
-            className={cx(buttonClass, 'mui-button-contained')}
+          <Button
             type="button"
             disabled={loading}
             aria-busy={loading}
@@ -226,7 +225,7 @@ function ButtonPreview({ demoId }) {
           >
             {loading ? <Activity className="spin" size={14} /> : <Check size={14} />}
             {loading ? 'Saving changes…' : pressed ? 'Saved' : 'Save changes'}
-          </button>
+          </Button>
           <span className="button-example-status" role="status">
             {loading ? 'Please wait while your changes are saved.' : pressed ? 'Your changes are saved.' : 'Click to preview a pending action.'}
           </span>
@@ -239,10 +238,10 @@ function ButtonPreview({ demoId }) {
     <div className="button-example-section">
       <span className="button-example-label">Choose a visual hierarchy</span>
       <div className="button-example-row">
-        <button className={cx(buttonClass, 'mui-button-contained')} type="button" onClick={() => setPressed(true)}>Contained</button>
-        <button className={cx(buttonClass, 'mui-button-outlined')} type="button">Outlined</button>
-        <button className={cx(buttonClass, 'mui-button-text')} type="button">Text button</button>
-        <button className={cx(buttonClass, 'mui-button-contained')} type="button" disabled>Disabled</button>
+        <Button onClick={() => setPressed(true)}>Contained</Button>
+        <Button variant="outlined">Outlined</Button>
+        <Button variant="text">Text button</Button>
+        <Button disabled>Disabled</Button>
       </div>
       {pressed && <span className="preview-note" role="status">Button action selected.</span>}
     </div>

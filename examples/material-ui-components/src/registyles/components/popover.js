@@ -38,10 +38,6 @@ register('popover-trigger', {
   base: { tw: 'gap-2' },
 });
 
-register('mui-popover', {
-  base: { tw: 'z-50 w-[min(320px,calc(100vw-32px))] overflow-hidden rounded-lg border border-[#354154] bg-[#171f2c] text-[var(--text)] shadow-[0_16px_38px_rgba(0,0,0,.48)]' },
-});
-
 register('popover-content', {
   base: { tw: 'p-3.5' },
 });

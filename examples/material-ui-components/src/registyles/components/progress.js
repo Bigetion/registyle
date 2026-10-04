@@ -28,10 +28,6 @@ register('progress-value', {
   base: { tw: 'shrink-0 text-[11px] font-semibold tabular-nums text-[#a9c4ff]' },
 });
 
-register('mui-progress-track', {
-  base: { tw: 'h-1.5 w-full overflow-hidden rounded-full bg-[#293343]' },
-});
-
 register('progress-track', {
   base: { tw: 'relative' },
 });

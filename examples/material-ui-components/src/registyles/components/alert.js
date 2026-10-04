@@ -1,15 +1,5 @@
 import { register } from 'registyle/collector';
 
-register('mui-alert', {
-  base: { tw: 'flex w-full items-start gap-2.5 rounded-lg border px-3 py-2.5 text-[10px]' },
-  modifiers: {
-    'info': { tw: 'border-[#164e78] bg-[#102a3c] text-[#90caf9]' },
-    'success': { tw: 'border-[#285b2b] bg-[#162d18] text-[#a5d6a7]' },
-    'warning': { tw: 'border-[#715013] bg-[#33270e] text-[#ffcc80]' },
-    'error': { tw: 'border-[#742d28] bg-[#351816] text-[#ef9a9a]' },
-  },
-});
-
 register('alert-stack', {
   base: { tw: 'flex w-full max-w-[620px] flex-col gap-2' },
 });

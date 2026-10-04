@@ -1,0 +1,15 @@
+import { register } from 'registyle/collector';
+
+register('mui-skeleton', {
+  base: { tw: 'block max-w-full bg-[var(--mui-skeleton,#303b4c)]' },
+  modifiers: {
+    text: { tw: 'h-[1em] origin-left scale-y-75 rounded-sm' },
+    rectangular: { tw: 'rounded-md' },
+    circular: { tw: 'aspect-square rounded-full' },
+    pulse: { tw: 'animate-pulse' },
+    wave: {
+      tw: 'relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-[mui-skeleton-wave_1.6s_ease-in-out_infinite] before:bg-[linear-gradient(90deg,transparent,var(--mui-skeleton-highlight,rgba(255,255,255,.12)),transparent)]',
+    },
+  },
+});
+register('@keyframes mui-skeleton-wave', { '100%': { transform: 'translateX(100%)' } });

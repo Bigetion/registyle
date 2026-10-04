@@ -4,20 +4,12 @@ register('tabs-showcase', {
   base: { tw: 'flex w-full max-w-[680px] flex-col gap-3 rounded-lg border border-[#303a49] bg-[#111720] p-3 sm:p-4' },
 });
 
-register('mui-tabs-list', {
-  base: { tw: 'relative flex w-full items-stretch overflow-x-auto border-b border-[#303a49] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden' },
-});
-
 register('mui-tabs-list-centered', {
   base: { tw: 'justify-center' },
 });
 
 register('mui-tabs-list-scrollable', {
   base: { tw: 'justify-start' },
-});
-
-register('mui-tab', {
-  base: { tw: 'relative inline-flex min-h-10 shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-t-md border-0 bg-transparent px-3 text-[8px] font-medium text-[#94a1b3] transition-colors hover:bg-[#1b2431] hover:text-white focus-visible:outline-2 focus-visible:outline-[#8baeff] sm:px-4 sm:text-[9px]' },
 });
 
 register('mui-tab-active', {
@@ -42,10 +34,6 @@ register('mui-tab-with-icon', {
 
 register('mui-tab-badge', {
   base: { tw: 'inline-flex min-w-4 items-center justify-center rounded-full bg-[#263954] px-1 py-0.5 text-[7px] text-[#bfd2f6]' },
-});
-
-register('mui-tab-panel', {
-  base: { tw: 'min-h-[75px] outline-none focus-visible:outline-2 focus-visible:outline-[#8baeff]' },
 });
 
 register('tabs-overview-card', {

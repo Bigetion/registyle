@@ -16,10 +16,6 @@ register('speed-dial-kicker', {
   base: { tw: 'text-[7px] font-semibold tracking-[.14em] text-[#90a8cd]' },
 });
 
-register('mui-speed-dial', {
-  base: { tw: 'relative z-10 flex shrink-0 items-center gap-2' },
-});
-
 register('mui-speed-dial-up', {
   base: { tw: 'flex-col' },
 });
@@ -32,10 +28,6 @@ register('mui-speed-dial-left', {
   base: { tw: 'flex-row-reverse' },
 });
 
-register('mui-speed-dial-actions', {
-  base: { tw: 'flex items-center gap-2 transition-all duration-200' },
-});
-
 register('mui-speed-dial-actions-hidden', {
   base: { tw: 'pointer-events-none invisible scale-95 opacity-0' },
 });
@@ -46,10 +38,6 @@ register('mui-speed-dial-up .mui-speed-dial-actions', {
 
 register('mui-speed-dial-down .mui-speed-dial-actions', {
   base: { tw: 'flex-col' },
-});
-
-register('mui-speed-dial-action', {
-  base: { tw: 'relative inline-flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-full border border-[#39485e] bg-[#1c2737] text-[#c4d5f2] shadow-[0_5px_14px_#0006] transition-transform hover:scale-105 hover:bg-[#273a54] focus-visible:outline-2 focus-visible:outline-[#8baeff]' },
 });
 
 register('speed-dial-action-tooltip', {

@@ -40,10 +40,6 @@ register('bottom-navigation-unread', {
   base: { tw: 'inline-flex shrink-0 items-center gap-1 rounded-full bg-[#24344a] px-2 py-1 text-[7px] font-medium text-[#c1d3f4]' },
 });
 
-register('mui-bottom-navigation', {
-  base: { tw: 'flex min-h-[62px] w-full items-stretch justify-around border-t border-[#2b3543] bg-[#171f2b] px-2 py-1' },
-});
-
 register('bottom-navigation-item', {
   base: { tw: 'relative flex min-w-0 flex-1 cursor-pointer appearance-none flex-col items-center justify-center gap-1 rounded-md border-0 bg-transparent px-2 py-1 text-[#8491a4] shadow-none transition-colors hover:bg-white/[.035] focus-visible:outline-2 focus-visible:outline-[#8baeff]' },
 });

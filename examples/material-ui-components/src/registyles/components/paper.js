@@ -12,10 +12,6 @@ register('paper-elevation-example', {
   base: { tw: 'flex flex-col items-center gap-2 [&>span]:text-[8px] [&>span]:text-[var(--muted)]' },
 });
 
-register('mui-paper', {
-  base: { tw: 'rounded-lg bg-[#161e2a] text-[var(--text)]' },
-});
-
 register('paper-content', {
   base: { tw: 'flex min-w-0 items-center gap-2.5' },
 });
