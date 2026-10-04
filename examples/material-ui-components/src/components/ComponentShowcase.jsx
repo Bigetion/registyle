@@ -671,6 +671,21 @@ const CLICK_AWAY_DEMOS = {
   },
 };
 
+const MODAL_DEMOS = {
+  modal: {
+    title: 'Project preview',
+    caption: 'Present focused content above the page and return users to their context when it closes.',
+  },
+  'modal-basic': {
+    title: 'Backdrop behavior',
+    caption: 'Choose whether clicking the backdrop dismisses the modal; interactions inside remain contained.',
+  },
+  'modal-accessibility': {
+    title: 'Keyboard accessibility',
+    caption: 'Keep keyboard focus inside the modal, support Escape, and restore focus when it closes.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -777,6 +792,8 @@ export default function ComponentShowcase({ component }) {
                                                                                                                                             ? TABS_DEMOS[demoId]
                                                                                                                                               : component.slug === 'click-away-listener'
                                                                                                                                                 ? CLICK_AWAY_DEMOS[demoId]
+                                                                                                                                                  : component.slug === 'modal'
+                                                                                                                                                    ? MODAL_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel
