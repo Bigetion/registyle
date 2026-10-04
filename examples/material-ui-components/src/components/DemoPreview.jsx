@@ -44,6 +44,7 @@ import LinkDemo from './material/link/LinkDemo.jsx';
 import MenuDemo from './material/menu/MenuDemo.jsx';
 import PaginationDemo from './material/pagination/PaginationDemo.jsx';
 import SpeedDialDemo from './material/speed-dial/SpeedDialDemo.jsx';
+import StepperDemo from './material/stepper/StepperDemo.jsx';
 import BadgeDemo from './material/badge/BadgeDemo.jsx';
 import ButtonGroupDemo from './material/button-group/ButtonGroupDemo.jsx';
 import ChipDemo from './material/chip/ChipDemo.jsx';
@@ -331,6 +332,7 @@ function DemoPreview({ component, demoId }) {
   if (component.slug === 'menu') return <MenuDemo demoId={demoId} />;
   if (component.slug === 'pagination') return <PaginationDemo demoId={demoId} />;
   if (component.slug === 'speed-dial') return <SpeedDialDemo demoId={demoId} />;
+  if (component.slug === 'stepper') return <StepperDemo demoId={demoId} />;
   if (component.slug === 'link') return <LinkDemo demoId={demoId} />;
   if (component.slug === 'drawer') return <DrawerDemo demoId={demoId} />;
   if (component.slug === 'breadcrumbs') return <BreadcrumbsDemo demoId={demoId} />;
@@ -375,7 +377,7 @@ function DemoPreview({ component, demoId }) {
   if (demoId.startsWith('avatar') || demoId.startsWith('badge') || demoId.startsWith('chip') || demoId.startsWith('divider') || demoId.startsWith('icons') || demoId.startsWith('material-icons') || demoId.startsWith('list') || demoId.startsWith('table') || demoId.startsWith('typography')) return <DisplayPreview demoId={demoId} />;
   if (demoId.startsWith('alert') || demoId.startsWith('dialog') || demoId.startsWith('progress') || demoId.startsWith('snackbar') || demoId.startsWith('modal')) return <FeedbackPreview demoId={demoId} />;
   if (demoId.startsWith('accordion') || demoId.startsWith('app-bar') || demoId.startsWith('card') || demoId.startsWith('paper')) return <SurfacePreview demoId={demoId} />;
-  if (demoId.startsWith('tabs') || demoId.startsWith('stepper') || demoId.startsWith('bottom-navigation') || demoId.startsWith('drawer')) return <NavigationPreview demoId={demoId} />;
+  if (demoId.startsWith('tabs') || demoId.startsWith('bottom-navigation') || demoId.startsWith('drawer')) return <NavigationPreview demoId={demoId} />;
   return <div className="preview-row"><span className="mui-chip mui-chip-primary">{component.name}</span><span className="preview-note">Interactive {component.name.toLowerCase()} example</span></div>;
 }
 

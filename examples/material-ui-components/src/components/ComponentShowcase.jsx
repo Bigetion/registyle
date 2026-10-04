@@ -626,6 +626,21 @@ const SPEED_DIAL_DEMOS = {
   },
 };
 
+const STEPPER_DEMOS = {
+  stepper: {
+    title: 'Horizontal stepper',
+    caption: 'Guide a checkout flow through ordered steps, showing progress and the active section.',
+  },
+  'stepper-vertical': {
+    title: 'Vertical stepper',
+    caption: 'Keep step details and controls together in a compact, expandable vertical flow.',
+  },
+  'stepper-alternative': {
+    title: 'Alternative labels',
+    caption: 'Place labels beneath step indicators and allow direct navigation between milestones.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -726,6 +741,8 @@ export default function ComponentShowcase({ component }) {
                                                                                                                                 ? PAGINATION_DEMOS[demoId]
                                                                                                                                   : component.slug === 'speed-dial'
                                                                                                                                     ? SPEED_DIAL_DEMOS[demoId]
+                                                                                                                                      : component.slug === 'stepper'
+                                                                                                                                        ? STEPPER_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel
