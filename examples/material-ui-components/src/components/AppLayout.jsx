@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import {
   ArrowUpRight,
   CircleHelp,
@@ -11,6 +12,109 @@ import {
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { cx } from 'registyle';
 import { componentGroups, componentCatalog } from '../data/components.js';
+
+function MobileNavigationDrawer({ groups, onClose }) {
+  const drawerRef = useRef(null);
+  const closeButtonRef = useRef(null);
+
+  useEffect(() => {
+    const previousFocus = document.activeElement;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    closeButtonRef.current?.focus();
+
+    function handleKeyDown(event) {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        onClose();
+        return;
+      }
+      if (event.key !== 'Tab') return;
+
+      const focusable = [...drawerRef.current.querySelectorAll(
+        'button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])',
+      )];
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && (document.activeElement === first || !drawerRef.current.contains(document.activeElement))) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && (document.activeElement === last || !drawerRef.current.contains(document.activeElement))) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = previousOverflow;
+      if (previousFocus instanceof HTMLElement && previousFocus.isConnected) previousFocus.focus();
+    };
+  }, [onClose]);
+
+  if (typeof document === 'undefined') return null;
+
+  return createPortal(
+    <div
+      className="mobile-drawer-overlay"
+      role="presentation"
+      onPointerDown={(event) => {
+        if (event.target === event.currentTarget) onClose();
+      }}
+    >
+      <aside
+        className="mobile-drawer"
+        ref={drawerRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Component navigation"
+      >
+        <div className="mobile-drawer-header">
+          <span className="brand-mark" aria-hidden="true"><span>M</span></span>
+          <span className="brand-lockup"><span className="brand-name">Material Studio</span><span className="brand-subtitle">Explore library</span></span>
+          <button
+            className="mui-icon-button mobile-drawer-close"
+            ref={closeButtonRef}
+            type="button"
+            aria-label="Close navigation drawer"
+            onClick={onClose}
+          >
+            <X size={17} aria-hidden="true" />
+          </button>
+        </div>
+        <div className="mobile-drawer-scroll">
+          {groups.map(({ group, items }) => (
+            <nav className="nav-section" key={group} aria-label={group}>
+              <h2 className="nav-heading">
+                {group}
+                <span className="nav-group-count">{items.length.toString().padStart(2, '0')}</span>
+              </h2>
+              {items.map(({ name, badge, slug }) => (
+                <NavLink
+                  className={({ isActive }) => cx(isActive ? 'nav-link-active' : 'nav-link')}
+                  key={slug}
+                  to={`/components/${slug}`}
+                  onClick={onClose}
+                >
+                  {name}
+                  {badge && <span className="new-chip">{badge}</span>}
+                </NavLink>
+              ))}
+            </nav>
+          ))}
+        </div>
+        <div className="sidebar-bottom">
+          <div className="sidebar-bottom-icon"><ShieldCheck size={14} /></div>
+          <span><strong>Built with Registyle</strong><small>Semantic styling, made simple</small></span>
+          <ExternalLink size={12} />
+        </div>
+      </aside>
+    </div>,
+    document.body,
+  );
+}
 
 export default function AppLayout() {
   const [query, setQuery] = useState('');
@@ -39,14 +143,6 @@ export default function AppLayout() {
     setMobileNavOpen(false);
     window.scrollTo({ top: 0, behavior: 'auto' });
   }, [location.pathname]);
-
-  useEffect(() => {
-    function closeNavigation(event) {
-      if (event.key === 'Escape') setMobileNavOpen(false);
-    }
-    window.addEventListener('keydown', closeNavigation);
-    return () => window.removeEventListener('keydown', closeNavigation);
-  }, []);
 
   useEffect(() => {
     function handleShortcut(event) {
@@ -157,16 +253,8 @@ export default function AppLayout() {
       </header>
 
       <div className="app-layout">
-        {mobileNavOpen && (
-          <button
-            className="mobile-nav-backdrop"
-            type="button"
-            aria-label="Close navigation"
-            onClick={() => setMobileNavOpen(false)}
-          />
-        )}
         <aside
-          className={cx('sidebar', mobileNavOpen && 'sidebar-open')}
+          className="sidebar"
           aria-label="Component navigation"
         >
           <div className="sidebar-intro">
@@ -220,6 +308,12 @@ export default function AppLayout() {
           <Outlet />
         </main>
       </div>
+      {mobileNavOpen && (
+        <MobileNavigationDrawer
+          groups={filteredGroups}
+          onClose={() => setMobileNavOpen(false)}
+        />
+      )}
     </div>
   );
 }

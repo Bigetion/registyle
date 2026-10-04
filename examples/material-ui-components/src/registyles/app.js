@@ -20,10 +20,7 @@ register.all({
   },
   'app-layout': { tw: 'flex min-h-screen pt-14' },
   'sidebar': {
-    tw: 'fixed bottom-0 left-0 top-14 z-10 flex w-[276px] flex-col overflow-hidden border-r border-[#202938] bg-[linear-gradient(180deg,#0b0f17,#0a0e15)] px-3.5 py-5 max-lg:w-[246px] max-md:top-14 max-md:hidden',
-  },
-  'sidebar-open': {
-    tw: 'max-md:!flex max-md:w-[min(300px,_85vw)] max-md:shadow-[8px_0_24px_#0008]',
+    tw: 'fixed bottom-0 left-0 top-14 z-10 flex w-[276px] flex-col overflow-hidden border-r border-[#202938] bg-[linear-gradient(180deg,#0b0f17,#0a0e15)] px-3.5 py-5 max-lg:w-[246px] max-md:hidden',
   },
   'sidebar-scroll': {
     tw: 'min-h-0 flex-1 overflow-y-auto pb-2 [scrollbar-width:thin] [scrollbar-color:#354156_transparent]',
@@ -78,7 +75,6 @@ register.all({
   },
   'source-link': { tw: 'font-medium text-[var(--mui-blue)] hover:underline' },
   'mobile-menu': { tw: 'hidden shrink-0 max-md:inline-flex max-sm:size-8' },
-  'mobile-nav-backdrop': { tw: 'fixed inset-x-0 bottom-0 top-14 z-[9] cursor-default border-0 bg-[#05070b]/60 p-0 backdrop-blur-[1px] md:hidden' },
   'mobile-nav': { tw: 'flex gap-1 overflow-x-auto border-b border-[var(--border)] px-3 py-2 md:hidden [&_a]:no-underline' },
   'mobile-nav-link': {
     tw: 'shrink-0 rounded-md px-3 py-2 text-xs text-[var(--muted)] hover:bg-[var(--panel-raised)]',

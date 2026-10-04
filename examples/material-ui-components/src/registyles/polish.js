@@ -9,6 +9,24 @@ register.all({
     tw: 'inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] bg-[#ffffff03] px-2.5 py-1.5 text-[10px] font-medium text-[var(--muted)] no-underline transition-colors hover:border-[#455675] hover:text-white max-sm:hidden',
   },
   'help-button': { tw: 'size-8 shrink-0 border border-transparent text-[var(--muted)] no-underline hover:border-[var(--border)] hover:text-white max-sm:hidden' },
+  'mobile-drawer-overlay': {
+    tw: 'fixed inset-0 z-[60] flex bg-[#05070b]/65 backdrop-blur-[1px] md:hidden',
+  },
+  'mobile-drawer': {
+    tw: 'flex h-full w-[min(340px,88vw)] flex-col border-r border-[#293448] bg-[linear-gradient(180deg,#0d121c,#0a0e15)] px-3.5 pb-3 pt-4 shadow-[18px_0_48px_rgba(0,0,0,.52)]',
+  },
+  'mobile-drawer-header': {
+    tw: 'mb-3 flex shrink-0 items-center gap-2.5 border-b border-[#222b3a] px-1 pb-4',
+  },
+  'mobile-drawer-close': {
+    tw: 'ml-auto size-8 shrink-0 border border-[#293448] text-[var(--muted)] hover:border-[#455675] hover:bg-white/5 hover:text-white',
+  },
+  'mobile-drawer-scroll': {
+    tw: 'min-h-0 flex-1 overflow-y-auto pb-2 [scrollbar-width:thin] [scrollbar-color:#354156_transparent]',
+  },
+  'mobile-drawer .nav-section': { tw: 'mb-5' },
+  'mobile-drawer .nav-heading': { tw: 'mt-4' },
+  'mobile-drawer .sidebar-bottom': { tw: 'mt-2' },
   'sidebar-bottom-icon': { tw: 'flex size-7 items-center justify-center rounded-lg border border-[#2b3b37] bg-[#111e1c] text-[#80d6b1]' },
   'component-hero': {
     tw: 'relative mb-7 flex min-h-[220px] items-center justify-between gap-8 overflow-hidden rounded-2xl border border-[#29354a] bg-[linear-gradient(115deg,rgba(18,26,40,.98),rgba(14,19,30,.92)_58%,rgba(26,35,55,.76))] px-8 py-8 shadow-[0_18px_55px_rgba(0,0,0,.18)] max-sm:min-h-0 max-sm:flex-wrap max-sm:gap-5 max-sm:px-5 max-sm:py-6',
