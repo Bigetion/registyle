@@ -78,7 +78,7 @@ export function useClickAway(open, anchorRef, popperRef, onDismiss) {
     function handlePointerDown(event) {
       if (anchorRef.current?.contains(event.target)) return;
       if (popperRef.current?.contains(event.target)) return;
-      onDismiss();
+      onDismiss(event);
     }
 
     document.addEventListener('pointerdown', handlePointerDown, true);

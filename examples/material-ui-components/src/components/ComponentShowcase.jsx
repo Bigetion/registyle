@@ -656,6 +656,21 @@ const TABS_DEMOS = {
   },
 };
 
+const CLICK_AWAY_DEMOS = {
+  'click-away': {
+    title: 'Outside click',
+    caption: 'Dismiss a panel with an outside interaction while clicks inside its content leave it open.',
+  },
+  'click-away-portal': {
+    title: 'Portaled content',
+    caption: 'Treat content rendered in a body portal as inside the listener and dismiss it from elsewhere.',
+  },
+  'click-away-touch': {
+    title: 'Touch and pointer events',
+    caption: 'Use one pointer listener for mouse, pen, and touch dismissal instead of separate event handlers.',
+  },
+};
+
 function titleFromDemo(id) {
   return id
     .split('-')
@@ -760,6 +775,8 @@ export default function ComponentShowcase({ component }) {
                                                                                                                                         ? STEPPER_DEMOS[demoId]
                                                                                                                                           : component.slug === 'tabs'
                                                                                                                                             ? TABS_DEMOS[demoId]
+                                                                                                                                              : component.slug === 'click-away-listener'
+                                                                                                                                                ? CLICK_AWAY_DEMOS[demoId]
             : undefined;
         return (
           <DemoPanel
