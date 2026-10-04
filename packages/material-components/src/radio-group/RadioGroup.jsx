@@ -44,7 +44,7 @@ const RadioGroup = forwardRef(function RadioGroup(
           >
             <input
               id={optionId}
-              className="mui-radio-option-input"
+              className="mui-radio-option-input peer"
               type="radio"
               name={groupName}
               value={option.value}
