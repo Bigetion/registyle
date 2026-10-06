@@ -76,7 +76,7 @@
     "test:types": "tsc --noEmit --strict --skipLibCheck --module NodeNext --moduleResolution NodeNext --target ESNext type-tests/consumer.ts",
     "test:codesandbox": "node test/codesandbox-detection.test.js",
     "lint": "npx @biomejs/biome check .",
-    "lint:material-components": "biome check packages/material-components",
+    "lint:ui-components": "biome check packages/ui-components",
     "lint:fix": "npx @biomejs/biome check --write .",
     "prepublishOnly": "npm test"
   },

@@ -8,7 +8,7 @@ on:
 
 jobs:
   lint:
-    name: Material Components lint
+    name: UI Components lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -17,7 +17,7 @@ jobs:
           node-version: 20
           cache: 'npm'
       - run: npm ci
-      - run: npm run lint:material-components
+      - run: npm run lint:ui-components
 
   test:
     name: Test (Node ${{ matrix.node-version }})
@@ -34,8 +34,8 @@ jobs:
       - run: npm ci
       - run: npm test
 
-  material-components:
-    name: Material Components (Node ${{ matrix.node-version }})
+  ui-components:
+    name: UI Components (Node ${{ matrix.node-version }})
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -46,10 +46,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-          cache-dependency-path: packages/material-components/package-lock.json
+          cache-dependency-path: packages/ui-components/package-lock.json
       - run: npm ci
-        working-directory: packages/material-components
+        working-directory: packages/ui-components
       - run: npm test
-        working-directory: packages/material-components
+        working-directory: packages/ui-components
       - run: npm run typecheck
-        working-directory: packages/material-components
+        working-directory: packages/ui-components
