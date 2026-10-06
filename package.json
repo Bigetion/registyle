@@ -72,7 +72,7 @@
     "node": ">=18"
   },
   "scripts": {
-    "test": "node --test && npm run test:types && npm run test:codesandbox",
+    "test": "node --test test/*.test.js && npm run test:types && npm run test:codesandbox",
     "test:types": "tsc --noEmit --strict --skipLibCheck --module NodeNext --moduleResolution NodeNext --target ESNext type-tests/consumer.ts",
     "test:codesandbox": "node test/codesandbox-detection.test.js",
     "lint": "npx @biomejs/biome check .",
