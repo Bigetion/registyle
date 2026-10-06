@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
-      - run: npm ci
+      - run: npm ci --include=dev
       - run: npm run lint:ui-components
 
   test:
@@ -31,7 +31,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: npm ci
+      - run: npm ci --include=dev
       - run: npm test
 
   ui-components:
@@ -46,8 +46,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-          cache-dependency-path: packages/ui-components/package-lock.json
-      - run: npm ci
+          cache-dependency-path: |
+            package-lock.json
+            packages/ui-components/package-lock.json
+      - run: npm ci --include=dev
+      - run: npm ci --include=dev
         working-directory: packages/ui-components
       - run: npm test
         working-directory: packages/ui-components
