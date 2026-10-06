@@ -48,14 +48,14 @@ export type {
   FloatingActionButtonVariant,
 } from './floating-action-button/floating-action-button.js';
 export { default as FloatingActionButton } from './floating-action-button/floating-action-button.js';
+export type { IconGlyphName, IconGlyphProps } from './icon-glyph/icon-glyph.js';
+export { default as IconGlyph } from './icon-glyph/icon-glyph.js';
 export type { IconsProps } from './icons/icons.js';
 export { default as Icons } from './icons/icons.js';
 export type { LinkProps } from './link/link.js';
 export { default as Link } from './link/link.js';
 export type { ListItemProps, ListItemTextProps, ListProps } from './list/list.js';
 export { default as List, ListItem, ListItemText } from './list/list.js';
-export type { IconGlyphName, IconGlyphProps } from './icon-glyph/icon-glyph.js';
-export { default as IconGlyph } from './icon-glyph/icon-glyph.js';
 export type { MenuItemProps, MenuProps } from './menu/menu.js';
 export { default as Menu, MenuItem } from './menu/menu.js';
 export type { ModalCloseReason, ModalProps } from './modal/modal.js';

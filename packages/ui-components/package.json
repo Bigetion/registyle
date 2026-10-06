@@ -8,6 +8,9 @@
     "url": "git+https://github.com/Bigetion/registyle.git",
     "directory": "packages/ui-components"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "license": "MIT",
   "type": "module",
   "engines": {

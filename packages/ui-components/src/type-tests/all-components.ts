@@ -17,10 +17,10 @@ import {
   Divider,
   Drawer,
   FloatingActionButton,
+  IconGlyph,
   Icons,
   Link,
   List,
-  IconGlyph,
   Menu,
   Modal,
   NumberField,
@@ -65,10 +65,10 @@ import DialogOnly from '@registyle/ui-components/dialog';
 import DividerOnly from '@registyle/ui-components/divider';
 import DrawerOnly from '@registyle/ui-components/drawer';
 import FloatingActionButtonOnly from '@registyle/ui-components/floating-action-button';
+import IconGlyphOnly from '@registyle/ui-components/icon-glyph';
 import IconsOnly from '@registyle/ui-components/icons';
 import LinkOnly from '@registyle/ui-components/link';
 import ListOnly from '@registyle/ui-components/list';
-import IconGlyphOnly from '@registyle/ui-components/icon-glyph';
 import MenuOnly from '@registyle/ui-components/menu';
 import ModalOnly from '@registyle/ui-components/modal';
 import NumberFieldOnly from '@registyle/ui-components/number-field';

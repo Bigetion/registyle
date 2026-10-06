@@ -2,6 +2,18 @@
 
 Standalone React components styled with Registyle. All 47 Registyle UI components and their base styles live in this package; interactive showcase content and demo-only styles remain in the example application.
 
+Install the package and its peer dependencies:
+
+```sh
+npm install @registyle/ui-components registyle react react-dom
+```
+
+Install `@popperjs/core` too if you use Popper, Popover, or Menu:
+
+```sh
+npm install @popperjs/core
+```
+
 ```jsx
 import { Button, Checkbox, Chip, Dialog, Tabs, TextField } from '@registyle/ui-components';
 
